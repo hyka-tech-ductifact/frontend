@@ -14,13 +14,6 @@
             "sourceRoot": "src",
             "prefix": "app",
             "architect": {
-                "lint": {
-                    "builder": "@angular-eslint/builder:lint",
-                    "options": {
-                        "eslintConfig": ".eslintrc.json",
-                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
-                    }
-                },
                 "build": {
                     "builder": "@angular/build:application",
                     "options": {
@@ -28,11 +21,6 @@
                         "polyfills": ["zone.js"],
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
-                        "stylePreprocessorOptions": {
-                            "sass": {
-                                "silenceDeprecations": ["import"]
-                            }
-                        },
                         "assets": [{
                             "glob": "**/*",
                             "input": "public"
@@ -72,11 +60,7 @@
                             {
                                 "input": "src/theme/variables.css"
                             }
-                        ],
-                        "outputPath": {
-                            "base": "www",
-                            "browser": ""
-                        }
+                        ]
                     },
                     "configurations": {
                         "production": {
