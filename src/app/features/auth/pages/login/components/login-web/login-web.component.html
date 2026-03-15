@@ -56,7 +56,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="flex items-start space-x-5 p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 hover:bg-white/15 transition-all">
+                    <!-- <div class="flex items-start space-x-5 p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 hover:bg-white/15 transition-all">
                         <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
                             <i class="fa-solid fa-shield-halved text-white text-2xl"></i>
                         </div>
@@ -68,7 +68,7 @@
                                 {{ 'AUTH.FEATURES.SECURITY_DESC' | translate }}
                             </p>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="flex items-start space-x-5 p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 hover:bg-white/15 transition-all">
                         <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
                             <i class="fa-solid fa-users text-white text-2xl"></i>
@@ -104,19 +104,6 @@
     <!-- ── RIGHT PANEL (form) ──────────────────────────────────── -->
     <div [class]="rightPanelClass()">
         <div class="w-full max-w-md">
-            <!-- Left-panel toggle button (desktop only) -->
-            <button type="button" class="hidden lg:flex items-center justify-center mb-8 px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50 transition-all self-start" (click)="toggleLeftPanel()">
-        <i
-          class="fa-solid mr-1.5"
-          [class.fa-angles-left]="!isLeftPanelCollapsed()"
-          [class.fa-angles-right]="isLeftPanelCollapsed()"
-        ></i>
-        {{
-          (isLeftPanelCollapsed() ? 'AUTH.LOGIN.SHOW_PANEL' : 'AUTH.LOGIN.HIDE_PANEL') | translate
-        }}
-      </button>
-
-            <!-- Desktop header -->
             <div class="mb-10">
                 <h2 class="text-3xl font-extrabold text-slate-900 mb-2">{{ formTitle() | translate }}</h2>
                 <p class="text-slate-500">{{ formSubtitle() | translate }}</p>
@@ -268,35 +255,22 @@
           <div class="flex-1 h-px bg-slate-200"></div>
         </div>
 
-        <!-- First / Last Name -->
-        <div class="grid grid-cols-2 gap-4">
-          <div class="space-y-2">
-            <label class="text-sm font-semibold text-slate-700 ml-1">{{
-              'AUTH.SIGNUP.FIRST_NAME_LABEL' | translate
-            }}</label>
-            <div class="relative group">
-              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <i
-                  class="fa-solid fa-user text-slate-400 group-focus-within:text-sky-500 transition-colors"
-                ></i>
-              </div>
-              <input
-                type="text"
-                formControlName="firstName"
-                [placeholder]="'AUTH.SIGNUP.FIRST_NAME_PLACEHOLDER' | translate"
-                class="w-full h-12 pl-11 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
-              />
+        <!-- Full Name -->
+        <div class="space-y-2">
+          <label class="text-sm font-semibold text-slate-700 ml-1">{{
+            'AUTH.SIGNUP.FULL_NAME_LABEL' | translate
+          }}</label>
+          <div class="relative group">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <i
+                class="fa-solid fa-user text-slate-400 group-focus-within:text-sky-500 transition-colors"
+              ></i>
             </div>
-          </div>
-          <div class="space-y-2">
-            <label class="text-sm font-semibold text-slate-700 ml-1">{{
-              'AUTH.SIGNUP.LAST_NAME_LABEL' | translate
-            }}</label>
             <input
               type="text"
-              formControlName="lastName"
-              [placeholder]="'AUTH.SIGNUP.LAST_NAME_PLACEHOLDER' | translate"
-              class="w-full h-12 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
+              formControlName="fullName"
+              [placeholder]="'AUTH.SIGNUP.FULL_NAME_PLACEHOLDER' | translate"
+              class="w-full h-12 pl-11 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
             />
           </div>
         </div>

@@ -68,8 +68,7 @@ export class LoginWebComponent {
   });
 
   readonly signupForm = new FormGroup({
-    firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
+    fullName: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     phone: new FormControl(''),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
