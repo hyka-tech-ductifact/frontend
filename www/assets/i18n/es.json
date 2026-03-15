@@ -1,0 +1,75 @@
+{
+    "AUTH": {
+        "LOGIN": {
+            "TITLE_WELCOME": "Bienvenido de vuelta",
+            "TITLE_CREATE": "Crear cuenta",
+            "SUBTITLE_WELCOME": "Soluciones inteligentes para tus sistemas de aire",
+            "SUBTITLE_CREATE": "Únete a Ductifact para una gestión de flujo de aire más inteligente",
+            "SIGN_IN_TAB": "Iniciar sesión",
+            "SIGN_UP_TAB": "Registrarse",
+            "EMAIL_LABEL": "Correo electrónico",
+            "EMAIL_PLACEHOLDER": "nombre@empresa.com",
+            "PASSWORD_LABEL": "Contraseña",
+            "PASSWORD_PLACEHOLDER": "Introduce tu contraseña",
+            "REMEMBER_ME": "Recordarme",
+            "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
+            "SIGNING_IN": "INICIANDO SESIÓN...",
+            "SIGN_IN_BTN": "INICIAR SESIÓN",
+            "NEW_TO_DUCTIFACT": "¿Nuevo en Ductifact?",
+            "CREATE_ACCOUNT_LINK": "Crea una cuenta",
+            "DIVIDER_OR": "O",
+            "DIVIDER_OR_EMAIL": "O CONTINÚA CON EMAIL",
+            "SHOW_PANEL": "Mostrar panel",
+            "HIDE_PANEL": "Ocultar panel"
+        },
+        "SIGNUP": {
+            "FIRST_NAME_LABEL": "Nombre",
+            "FIRST_NAME_PLACEHOLDER": "Juan",
+            "LAST_NAME_LABEL": "Apellido",
+            "LAST_NAME_PLACEHOLDER": "García",
+            "FULL_NAME_LABEL": "Nombre completo",
+            "FULL_NAME_PLACEHOLDER": "Juan García",
+            "PHONE_LABEL": "Número de teléfono",
+            "PHONE_PLACEHOLDER": "+34 600 000 000",
+            "PASSWORD_CREATE_PLACEHOLDER": "Crea una contraseña segura",
+            "PASSWORD_HINT": "Usa 8+ caracteres con letras, números y símbolos",
+            "CONFIRM_PASSWORD_LABEL": "Confirmar contraseña",
+            "CONFIRM_PASSWORD_PLACEHOLDER": "Vuelve a introducir tu contraseña",
+            "TERMS_AGREE": "Acepto los",
+            "CREATE_ACCOUNT_BTN": "CREAR CUENTA",
+            "ALREADY_HAVE_ACCOUNT": "¿Ya tienes una cuenta?",
+            "SIGN_IN_LINK": "Iniciar sesión",
+            "DIVIDER_OR_EMAIL": "O REGÍSTRATE CON EMAIL"
+        },
+        "SOCIAL": {
+            "GOOGLE": "Google",
+            "APPLE": "Apple",
+            "CONTINUE_GOOGLE": "Continuar con Google",
+            "CONTINUE_APPLE": "Continuar con Apple",
+            "SIGNUP_GOOGLE": "Registrarse con Google",
+            "SIGNUP_APPLE": "Registrarse con Apple"
+        },
+        "FEATURES": {
+            "HERO_TITLE": "Plataforma Inteligente de Gestión de Conductos de Aire",
+            "HERO_SUBTITLE": "Transforma tus operaciones HVAC con analíticas impulsadas por IA, monitoreo en tiempo real y herramientas avanzadas de optimización.",
+            "ANALYSIS_TITLE": "Análisis Avanzado de Conductos",
+            "ANALYSIS_DESC": "Optimiza el flujo de aire con algoritmos de IA propietarios diseñados para la máxima eficiencia y ahorro energético.",
+            "ANALYSIS_DESC_SHORT": "Optimiza el flujo de aire con nuestros algoritmos de IA propietarios diseñados para la eficiencia.",
+            "MONITORING_TITLE": "Monitoreo en Tiempo Real",
+            "MONITORING_DESC": "Rastrea métricas de presión, temperatura y caudal al instante desde cualquier lugar.",
+            "SECURITY_TITLE": "Seguridad Empresarial",
+            "SECURITY_DESC": "Cifrado y protocolos de seguridad bancaria para proteger tus datos sensibles.",
+            "COLLABORATION_TITLE": "Colaboración en Equipo",
+            "COLLABORATION_DESC": "Herramientas de trabajo en equipo para coordinar entre departamentos y ubicaciones."
+        },
+        "FOOTER": {
+            "COPYRIGHT": "© 2024 Ductifact Inc.",
+            "ALL_RIGHTS_RESERVED": "© 2024 Ductifact Inc. Todos los derechos reservados.",
+            "PRIVACY_POLICY": "Política de Privacidad",
+            "TERMS_OF_SERVICE": "Términos de Servicio"
+        }
+    },
+    "COMMON": {
+        "AND": "y"
+    }
+}

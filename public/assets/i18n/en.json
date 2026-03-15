@@ -1,0 +1,75 @@
+{
+    "AUTH": {
+        "LOGIN": {
+            "TITLE_WELCOME": "Welcome Back",
+            "TITLE_CREATE": "Create Account",
+            "SUBTITLE_WELCOME": "Smart solutions for your air systems",
+            "SUBTITLE_CREATE": "Join Ductifact for smarter airflow management",
+            "SIGN_IN_TAB": "Sign In",
+            "SIGN_UP_TAB": "Sign Up",
+            "EMAIL_LABEL": "Email Address",
+            "EMAIL_PLACEHOLDER": "name@company.com",
+            "PASSWORD_LABEL": "Password",
+            "PASSWORD_PLACEHOLDER": "Enter your password",
+            "REMEMBER_ME": "Remember me",
+            "FORGOT_PASSWORD": "Forgot Password?",
+            "SIGNING_IN": "SIGNING IN...",
+            "SIGN_IN_BTN": "SIGN IN",
+            "NEW_TO_DUCTIFACT": "New to Ductifact?",
+            "CREATE_ACCOUNT_LINK": "Create an account",
+            "DIVIDER_OR": "OR",
+            "DIVIDER_OR_EMAIL": "OR CONTINUE WITH EMAIL",
+            "SHOW_PANEL": "Show panel",
+            "HIDE_PANEL": "Hide panel"
+        },
+        "SIGNUP": {
+            "FIRST_NAME_LABEL": "First Name",
+            "FIRST_NAME_PLACEHOLDER": "John",
+            "LAST_NAME_LABEL": "Last Name",
+            "LAST_NAME_PLACEHOLDER": "Doe",
+            "FULL_NAME_LABEL": "Full Name",
+            "FULL_NAME_PLACEHOLDER": "John Doe",
+            "PHONE_LABEL": "Phone Number",
+            "PHONE_PLACEHOLDER": "+1 (555) 000-0000",
+            "PASSWORD_CREATE_PLACEHOLDER": "Create a strong password",
+            "PASSWORD_HINT": "Use 8+ characters with letters, numbers & symbols",
+            "CONFIRM_PASSWORD_LABEL": "Confirm Password",
+            "CONFIRM_PASSWORD_PLACEHOLDER": "Re-enter your password",
+            "TERMS_AGREE": "I agree to the",
+            "CREATE_ACCOUNT_BTN": "CREATE ACCOUNT",
+            "ALREADY_HAVE_ACCOUNT": "Already have an account?",
+            "SIGN_IN_LINK": "Sign in",
+            "DIVIDER_OR_EMAIL": "OR SIGN UP WITH EMAIL"
+        },
+        "SOCIAL": {
+            "GOOGLE": "Google",
+            "APPLE": "Apple",
+            "CONTINUE_GOOGLE": "Continue with Google",
+            "CONTINUE_APPLE": "Continue with Apple",
+            "SIGNUP_GOOGLE": "Sign up with Google",
+            "SIGNUP_APPLE": "Sign up with Apple"
+        },
+        "FEATURES": {
+            "HERO_TITLE": "Smart Air Duct Management Platform",
+            "HERO_SUBTITLE": "Transform your HVAC operations with AI-powered analytics, real-time monitoring, and advanced optimization tools.",
+            "ANALYSIS_TITLE": "Advanced Duct Analysis",
+            "ANALYSIS_DESC": "Optimize airflow with proprietary AI algorithms designed for maximum efficiency and energy savings.",
+            "ANALYSIS_DESC_SHORT": "Optimize airflow with our proprietary AI algorithms designed for efficiency.",
+            "MONITORING_TITLE": "Real-time Monitoring",
+            "MONITORING_DESC": "Track pressure, temperature and flow metrics instantly from anywhere.",
+            "SECURITY_TITLE": "Enterprise Security",
+            "SECURITY_DESC": "Bank-level encryption and security protocols to protect your sensitive data.",
+            "COLLABORATION_TITLE": "Team Collaboration",
+            "COLLABORATION_DESC": "Seamless teamwork tools for coordinating across departments and locations."
+        },
+        "FOOTER": {
+            "COPYRIGHT": "© 2024 Ductifact Inc.",
+            "ALL_RIGHTS_RESERVED": "© 2024 Ductifact Inc. All rights reserved.",
+            "PRIVACY_POLICY": "Privacy Policy",
+            "TERMS_OF_SERVICE": "Terms of Service"
+        }
+    },
+    "COMMON": {
+        "AND": "and"
+    }
+}
