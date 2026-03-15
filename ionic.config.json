@@ -1,5 +1,5 @@
 {
-  "name": "ionic-app",
-  "integrations": {},
-  "type": "angular-standalone"
+    "name": "ductifact",
+    "integrations": {},
+    "type": "angular-standalone"
 }

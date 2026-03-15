@@ -1,1 +1,30 @@
+@import "tailwindcss";
+
+/* ── Tailwind v4: Design System Tokens (migrated from tailwind.config.js) ────
+   Replaces theme.extend in v3. These become utilities like text-primary,
+   bg-brand-dark, shadow-soft, etc. automatically.                             */
+
+@theme {
+    /* Brand colors */
+    --color-primary: #0ea5e9;
+    --color-secondary: #3b82f6;
+    --color-accent: #0284c7;
+    --color-danger: #ef4444;
+    --color-bg-light: #f0f9ff;
+    --color-brand-light: #e0f2fe;
+    --color-brand: #0284c7;
+    --color-brand-dark: #0c4a6e;
+    /* Shadows */
+    --shadow-soft: 0 10px 40px -10px rgba(14, 165, 233, 0.08);
+    --shadow-float: 0 20px 25px -5px rgba(14, 165, 233, 0.15), 0 10px 10px -5px rgba(14, 165, 233, 0.04);
+}
+
+
+/* ── Shared custom utilities ─────────────────────────────────────────────── */
+
+.gradient-header {
+    background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #38bdf8 100%);
+}
+
+
 /* You can add global styles to this file, and also import other style files */
