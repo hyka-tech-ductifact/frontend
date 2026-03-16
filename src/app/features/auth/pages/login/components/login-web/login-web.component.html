@@ -223,7 +223,7 @@
 
       <!-- ── SIGNUP FORM ──────────────── -->
       @if (activeTab() === 'signup') {
-      <form [formGroup]="signupForm" class="space-y-5">
+      <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()" class="space-y-5">
         <!-- Social Buttons -->
         <div class="grid grid-cols-2 gap-3 mb-6">
           <button

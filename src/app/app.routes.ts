@@ -6,6 +6,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/auth/pages/login/login.component').then((m) => m.LoginComponent),
   },
+  // {
+  //   path: 'dashboard',
+  //   loadComponent: () =>
+  //     import('./features/dashboard/pages/dashboard/dashboard.component').then(
+  //       (m) => m.DashboardComponent
+  //     ),
+  // },
   {
     path: '',
     redirectTo: 'login',
