@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import type { LoginCredentials } from '../../../../../../core/models/auth.models';
+import type {
+  LoginCredentials,
+  SignupCredentials,
+} from '../../../../../../core/models/auth.models';
 
 type AuthTab = 'login' | 'signup';
 
@@ -18,7 +21,9 @@ const INACTIVE_TAB_CLASS =
 })
 export class LoginWebComponent {
   readonly isLoading = input(false);
+  readonly error = input<string | null>(null);
   readonly loginSubmit = output<LoginCredentials>();
+  readonly signupSubmit = output<SignupCredentials>();
 
   readonly activeTab = signal<AuthTab>('login');
   readonly isLeftPanelCollapsed = signal(false);
@@ -107,5 +112,20 @@ export class LoginWebComponent {
     }
     const { email, password } = this.loginForm.value;
     this.loginSubmit.emit({ email: email!, password: password! });
+  }
+
+  onSignupSubmit(): void {
+    if (this.signupForm.invalid) {
+      this.signupForm.markAllAsTouched();
+      return;
+    }
+    const { fullName, email, phone, password, confirmPassword } = this.signupForm.value;
+    this.signupSubmit.emit({
+      fullName: fullName!,
+      email: email!,
+      phone: phone ?? undefined,
+      password: password!,
+      confirmPassword: confirmPassword!,
+    });
   }
 }
