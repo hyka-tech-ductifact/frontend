@@ -9,9 +9,9 @@ import type {
 type AuthTab = 'login' | 'signup';
 
 const ACTIVE_TAB_CLASS =
-  'flex-1 py-3.5 text-sm font-semibold rounded-xl bg-white text-sky-600 shadow-sm transition-all ring-1 ring-black/5';
+  'flex-1 py-3.5 text-sm font-semibold !rounded-2xl bg-white text-sky-600 shadow-sm transition-all ring-1 ring-black/5';
 const INACTIVE_TAB_CLASS =
-  'flex-1 py-3.5 text-sm font-semibold rounded-xl text-slate-500 hover:text-slate-700 transition-all';
+  'flex-1 py-3.5 text-sm font-semibold !rounded-2xl text-slate-500 hover:text-slate-700 transition-all';
 
 @Component({
   selector: 'app-login-web',
@@ -81,30 +81,53 @@ export class LoginWebComponent {
     terms: new FormControl(false, [Validators.requiredTrue]),
   });
 
+  /**
+   *
+   * @param tab
+   */
   switchTab(tab: AuthTab): void {
     this.activeTab.set(tab);
   }
 
+  /**
+   *
+   */
   toggleLeftPanel(): void {
     this.isLeftPanelCollapsed.update((v) => !v);
   }
 
+  /**
+   *
+   * @param event
+   */
   onPasswordInput(event: Event): void {
     this.signupPasswordValue.set((event.target as HTMLInputElement).value);
   }
 
+  /**
+   *
+   */
   toggleLoginPassword(): void {
     this.showLoginPassword.update((v) => !v);
   }
 
+  /**
+   *
+   */
   toggleSignupPassword(): void {
     this.showSignupPassword.update((v) => !v);
   }
 
+  /**
+   *
+   */
   toggleConfirmPassword(): void {
     this.showConfirmPassword.update((v) => !v);
   }
 
+  /**
+   *
+   */
   onLoginSubmit(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -114,6 +137,9 @@ export class LoginWebComponent {
     this.loginSubmit.emit({ email: email!, password: password! });
   }
 
+  /**
+   *
+   */
   onSignupSubmit(): void {
     if (this.signupForm.invalid) {
       this.signupForm.markAllAsTouched();
