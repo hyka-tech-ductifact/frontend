@@ -48,11 +48,11 @@ export class LoginWebComponent {
     this.activeTab() === 'login' ? 'AUTH.LOGIN.SUBTITLE_WELCOME' : 'AUTH.LOGIN.SUBTITLE_CREATE'
   );
 
-  readonly rightPanelClass = computed(() =>
-    this.isLeftPanelCollapsed()
-      ? 'relative w-full flex items-center justify-center p-8 lg:p-12 xl:p-16'
-      : 'relative w-full lg:w-[45%] xl:w-[42%] flex items-center justify-center p-8 lg:p-12 xl:p-16'
-  );
+  // readonly rightPanelClass = computed(() =>
+  //   this.isLeftPanelCollapsed()
+  //     ? 'relative w-full flex items-center justify-center p-8 lg:p-12 xl:p-16'
+  //     : 'relative w-full lg:w-[45%] xl:w-[42%] flex items-center justify-center p-8 lg:p-12 xl:p-16'
+  // );
 
   readonly passwordStrength = computed(() => {
     const value = this.signupPasswordValue();

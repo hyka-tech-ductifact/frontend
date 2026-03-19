@@ -1,314 +1,369 @@
 <ion-content>
-    <div class="w-full bg-gradient-to-br from-sky-50 via-white to-blue-50 px-6 py-8 flex flex-col max-w-md mx-auto font-sans min-h-full">
-        <!-- Logo Section -->
-        <div class="text-center mb-10">
-            <div class="mb-4 flex flex-col items-center justify-center">
-                <div class="w-20 h-20 mb-2">
-                    <!-- TODO: Replace with local asset and NgOptimizedImage -->
-                    <img src="assets/icons/ductifact-logo.png" alt="Ductifact logo" class="w-full h-full object-contain" />
-                </div>
-                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">DUCTIFACT</h1>
-            </div>
-            @if (activeTab() === 'login') {
-            <h2 class="text-xl font-bold text-slate-800 mt-2">
-                {{ 'AUTH.LOGIN.TITLE_WELCOME' | translate }}
-            </h2>
-            <p class="text-sm text-slate-500 mt-1">{{ 'AUTH.LOGIN.SUBTITLE_WELCOME' | translate }}</p>
-            } @else {
-            <h2 class="text-xl font-bold text-slate-800 mt-2">
-                {{ 'AUTH.LOGIN.TITLE_CREATE' | translate }}
-            </h2>
-            <p class="text-sm text-slate-500 mt-1">{{ 'AUTH.LOGIN.SUBTITLE_CREATE' | translate }}</p>
-            }
+  <div
+    class="w-full bg-gradient-to-br from-sky-50 via-white to-blue-50 px-6 py-8 flex flex-col max-w-md mx-auto font-sans min-h-full"
+  >
+    <!-- Logo Section -->
+    <div class="text-center mb-10">
+      <div class="mb-4 flex flex-col items-center justify-center">
+        <div class="w-20 h-20 mb-2">
+          <!-- TODO: Replace with local asset and NgOptimizedImage -->
+          <img
+            src="assets/icons/ductifact-logo.png"
+            alt="Ductifact logo"
+            class="w-full h-full object-contain"
+          />
         </div>
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">DUCTIFACT</h1>
+      </div>
+      @if (activeTab() === 'login') {
+        <h2 class="text-xl font-bold text-slate-800 mt-2">
+          {{ 'AUTH.LOGIN.TITLE_WELCOME' | translate }}
+        </h2>
+        <p class="text-sm text-slate-500 mt-1 leading-snug">
+          {{ 'AUTH.LOGIN.SUBTITLE_WELCOME' | translate }}
+        </p>
+      } @else {
+        <h2 class="text-xl font-bold text-slate-800 mt-2">
+          {{ 'AUTH.LOGIN.TITLE_CREATE' | translate }}
+        </h2>
+        <p class="text-sm text-slate-500 mt-1 leading-snug">
+          {{ 'AUTH.LOGIN.SUBTITLE_CREATE' | translate }}
+        </p>
+      }
+    </div>
 
-        <!-- Auth Tabs -->
-        <div class="flex bg-slate-100 rounded-2xl p-1.5 shadow-inner mb-8">
-            <button type="button" [class]="loginTabClass()" (click)="switchTab('login')">
+    <!-- Auth Tabs -->
+    <div class="h-12 flex bg-slate-100 !rounded-xl p-1.5 shadow-inner mb-8 select-none">
+      <button type="button" [class]="loginTabClass()" (click)="switchTab('login')">
         {{ 'AUTH.LOGIN.SIGN_IN_TAB' | translate }}
       </button>
-            <button type="button" [class]="signupTabClass()" (click)="switchTab('signup')">
+      <button type="button" [class]="signupTabClass()" (click)="switchTab('signup')">
         {{ 'AUTH.LOGIN.SIGN_UP_TAB' | translate }}
       </button>
+    </div>
+
+    <!-- ── LOGIN FORM ────────────────────────────────────────────── -->
+    @if (activeTab() === 'login') {
+      <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" class="space-y-5">
+        <!-- Social Buttons -->
+        <div class="space-y-3 mb-6">
+          <button
+            type="button"
+            class="w-full h-12 bg-white border border-slate-200 !rounded-xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm"
+          >
+            <i class="fa-brands fa-google text-xl text-red-500"></i>
+            <span class="text-sm font-semibold text-slate-700">{{
+              'AUTH.SOCIAL.CONTINUE_GOOGLE' | translate
+            }}</span>
+          </button>
+          <button
+            type="button"
+            class="w-full h-12 bg-white border border-slate-200 !rounded-2xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm"
+          >
+            <i class="fa-brands fa-apple text-xl text-slate-900"></i>
+            <span class="text-sm font-semibold text-slate-700">{{
+              'AUTH.SOCIAL.CONTINUE_APPLE' | translate
+            }}</span>
+          </button>
         </div>
 
-        <!-- ── LOGIN FORM ────────────────────────────────────────────── -->
-        @if (activeTab() === 'login') {
-        <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" class="space-y-5">
-            <!-- Social Buttons -->
-            <div class="space-y-3 mb-6">
-                <button type="button" class="w-full h-12 bg-white border border-slate-200 rounded-xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm">
-          <i class="fa-brands fa-google text-xl text-red-500"></i>
-          <span class="text-sm font-semibold text-slate-700">{{
-            'AUTH.SOCIAL.CONTINUE_GOOGLE' | translate
+        <!-- Divider -->
+        <div class="flex items-center my-6">
+          <div class="flex-1 h-px bg-slate-200"></div>
+          <span class="px-4 text-xs text-slate-400 font-medium tracking-wider">{{
+            'AUTH.LOGIN.DIVIDER_OR_EMAIL' | translate
           }}</span>
-        </button>
-                <button type="button" class="w-full h-12 bg-white border border-slate-200 rounded-xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm">
-          <i class="fa-brands fa-apple text-xl text-slate-900"></i>
-          <span class="text-sm font-semibold text-slate-700">{{
-            'AUTH.SOCIAL.CONTINUE_APPLE' | translate
-          }}</span>
-        </button>
-            </div>
+          <div class="flex-1 h-px bg-slate-200"></div>
+        </div>
 
-            <!-- Divider -->
-            <div class="flex items-center my-6">
-                <div class="flex-1 h-px bg-slate-200"></div>
-                <span class="px-4 text-xs text-slate-400 font-medium tracking-wider">{{
-          'AUTH.LOGIN.DIVIDER_OR_EMAIL' | translate
-        }}</span> >
-                <div class="flex-1 h-px bg-slate-200"></div>
-            </div>
+        <!-- Email -->
+        <div class="space-y-2">
+          <label class="text-sm font-semibold text-slate-700 ml-1">{{
+            'AUTH.LOGIN.EMAIL_LABEL' | translate
+          }}</label>
+          <ion-item lines="none" class="custom-input">
+            <ion-icon slot="start" name="mail-outline"></ion-icon>
+            <ion-input
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              formControlName="email"
+              [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"
+            ></ion-input>
+          </ion-item>
+        </div>
 
-            <!-- Email -->
-            <div class="space-y-2">
-                <label class="text-sm font-semibold text-slate-700 ml-1">{{
-          'AUTH.LOGIN.EMAIL_LABEL' | translate
-        }}</label>
-                <ion-item lines="none" class="custom-input">
-                    <ion-icon slot="start" name="mail-outline"></ion-icon>
-                    <ion-input type="email" formControlName="email" [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"></ion-input>
-                </ion-item>
-            </div>
+        <!-- Password -->
+        <div class="space-y-2">
+          <label class="text-sm font-semibold text-slate-700 ml-1">{{
+            'AUTH.LOGIN.PASSWORD_LABEL' | translate
+          }}</label>
+          <ion-item lines="none" class="custom-input">
+            <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+            <ion-input
+              [type]="showLoginPassword() ? 'text' : 'password'"
+              autocomplete="current-password"
+              formControlName="password"
+              [placeholder]="'AUTH.LOGIN.PASSWORD_PLACEHOLDER' | translate"
+            ></ion-input>
+            <button type="button" slot="end" class="toggle-btn" (click)="toggleLoginPassword()">
+              <ion-icon [name]="showLoginPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+            </button>
+          </ion-item>
+        </div>
 
-            <!-- Password -->
-            <div class="space-y-2">
-                <label class="text-sm font-semibold text-slate-700 ml-1">{{
-          'AUTH.LOGIN.PASSWORD_LABEL' | translate
-        }}</label>
-                <ion-item lines="none" class="custom-input">
-                    <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-                    <ion-input [type]="showLoginPassword() ? 'text' : 'password'" formControlName="password" [placeholder]="'AUTH.LOGIN.PASSWORD_PLACEHOLDER' | translate"></ion-input>
-                    <button type="button" slot="end" class="toggle-btn" (click)="toggleLoginPassword()">
-            <ion-icon [name]="showLoginPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
-          </button>
-                </ion-item>
-            </div>
+        <!-- Remember / Forgot -->
+        <div class="flex items-center justify-between pt-1">
+          <ion-checkbox formControlName="rememberMe" labelPlacement="end" class="custom-checkbox">
+            {{ 'AUTH.LOGIN.REMEMBER_ME' | translate }}
+          </ion-checkbox>
+          <a
+            href="#"
+            class="text-sm font-semibold text-sky-600 hover:text-sky-700 transition-colors"
+            >{{ 'AUTH.LOGIN.FORGOT_PASSWORD' | translate }}</a
+          >
+        </div>
 
-            <!-- Remember / Forgot -->
-            <div class="flex items-center justify-between pt-1">
-                <ion-checkbox formControlName="rememberMe" labelPlacement="end" class="custom-checkbox">
-                    {{ 'AUTH.LOGIN.REMEMBER_ME' | translate }}
-                </ion-checkbox>
-                <a href="#" class="text-sm font-semibold text-sky-600 hover:text-sky-700 transition-colors">{{ 'AUTH.LOGIN.FORGOT_PASSWORD' | translate }}</a
+        <!-- Submit -->
+        <button
+          type="submit"
+          [disabled]="isLoading()"
+          class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
-      </div>
-
-      <!-- Submit -->
-      <button
-        type="submit"
-        [disabled]="isLoading()"
-        class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-      >
-        @if (isLoading()) {
-        <ion-spinner
-          name="crescent"
-          style="--color: #ffffff; width: 1rem; height: 1rem"
-        ></ion-spinner>
-        {{ 'AUTH.LOGIN.SIGNING_IN' | translate }} } @else {
-        {{ 'AUTH.LOGIN.SIGN_IN_BTN' | translate }} }
-      </button>
-    </form>
+          @if (isLoading()) {
+            <ion-spinner
+              name="crescent"
+              style="--color: #ffffff; width: 1rem; height: 1rem"
+            ></ion-spinner>
+            {{ 'AUTH.LOGIN.SIGNING_IN' | translate }}
+          } @else {
+            {{ 'AUTH.LOGIN.SIGN_IN_BTN' | translate }}
+          }
+        </button>
+      </form>
     }
 
     <!-- ── SIGNUP FORM ───────────────────────────────────────────── -->
     @if (activeTab() === 'signup') {
-    <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()" class="space-y-5">
-      <!-- Social Buttons -->
-      <div class="space-y-3 mb-6">
-        <button
-          type="button"
-          class="w-full h-12 bg-white border border-slate-200 rounded-xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm"
-        >
-          <i class="fa-brands fa-google text-xl text-red-500"></i>
-          <span class="text-sm font-semibold text-slate-700">Sign up with Google</span>
-        </button>
-        <button
-          type="button"
-          class="w-full h-12 bg-white border border-slate-200 rounded-xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm"
-        >
-          <i class="fa-brands fa-apple text-xl text-slate-900"></i>
-          <span class="text-sm font-semibold text-slate-700">Sign up with Apple</span>
-        </button>
-      </div>
-
-      <!-- Divider -->
-      <div class="flex items-center my-6">
-        <div class="flex-1 h-px bg-slate-200"></div>
-        <span class="px-4 text-xs text-slate-400 font-medium tracking-wider"
-          >OR SIGN UP WITH EMAIL</span
-        >
-        <div class="flex-1 h-px bg-slate-200"></div>
-      </div>
-
-      <!-- Full Name -->
-      <div class="space-y-2">
-        <label class="text-sm font-semibold text-slate-700 ml-1">{{
-          'AUTH.SIGNUP.FULL_NAME_LABEL' | translate
-        }}</label>
-        <ion-item lines="none" class="custom-input">
-          <ion-icon slot="start" name="person-outline"></ion-icon>
-          <ion-input
-            type="text"
-            formControlName="fullName"
-            [placeholder]="'AUTH.SIGNUP.FULL_NAME_PLACEHOLDER' | translate"
-          ></ion-input>
-        </ion-item>
-      </div>
-
-      <!-- Email -->
-      <div class="space-y-2">
-        <label class="text-sm font-semibold text-slate-700 ml-1">{{
-          'AUTH.LOGIN.EMAIL_LABEL' | translate
-        }}</label>
-        <ion-item lines="none" class="custom-input">
-          <ion-icon slot="start" name="mail-outline"></ion-icon>
-          <ion-input
-            type="email"
-            formControlName="email"
-            [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"
-          ></ion-input>
-        </ion-item>
-      </div>
-
-      <!-- Phone -->
-      <div class="space-y-2">
-        <label class="text-sm font-semibold text-slate-700 ml-1">{{
-          'AUTH.SIGNUP.PHONE_LABEL' | translate
-        }}</label>
-        <ion-item lines="none" class="custom-input">
-          <ion-icon slot="start" name="call-outline"></ion-icon>
-          <ion-input
-            type="tel"
-            formControlName="phone"
-            [placeholder]="'AUTH.SIGNUP.PHONE_PLACEHOLDER' | translate"
-          ></ion-input>
-        </ion-item>
-      </div>
-
-      <!-- Password + Strength -->
-      <div class="space-y-2">
-        <label class="text-sm font-semibold text-slate-700 ml-1">{{
-          'AUTH.LOGIN.PASSWORD_LABEL' | translate
-        }}</label>
-        <ion-item lines="none" class="custom-input">
-          <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-          <ion-input
-            [type]="showSignupPassword() ? 'text' : 'password'"
-            formControlName="password"
-            [placeholder]="'AUTH.SIGNUP.PASSWORD_CREATE_PLACEHOLDER' | translate"
-            (ionInput)="onPasswordInput($event)"
-          ></ion-input>
-          <button type="button" slot="end" class="toggle-btn" (click)="toggleSignupPassword()">
-            <ion-icon [name]="showSignupPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+      <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()" class="space-y-5">
+        <!-- Social Buttons -->
+        <div class="space-y-3 mb-6">
+          <button
+            type="button"
+            class="w-full h-12 bg-white border border-slate-200 !rounded-xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm"
+          >
+            <i class="fa-brands fa-google text-xl text-red-500"></i>
+            <span class="text-sm font-semibold text-slate-700">{{
+              'AUTH.SOCIAL.SIGNUP_GOOGLE' | translate
+            }}</span>
           </button>
-        </ion-item>
-        <!-- Strength Bars -->
-        <div class="flex space-x-1 mt-2 px-1">
-          @for (bar of strengthBars; track bar) {
-          <div
-            class="flex-1 h-1 rounded-full transition-colors duration-300"
-            [class.bg-slate-200]="bar >= passwordStrength()"
-            [class.bg-red-500]="bar < passwordStrength() && passwordStrength() <= 1"
-            [class.bg-yellow-500]="bar < passwordStrength() && passwordStrength() === 2"
-            [class.bg-blue-400]="bar < passwordStrength() && passwordStrength() === 3"
-            [class.bg-green-500]="bar < passwordStrength() && passwordStrength() >= 4"
-          ></div>
-          }
-        </div>
-        <p class="text-xs text-slate-500 mt-1 ml-1">
-          {{ 'AUTH.SIGNUP.PASSWORD_HINT' | translate }}
-        </p>
-      </div>
-
-      <!-- Confirm Password -->
-      <div class="space-y-2">
-        <label class="text-sm font-semibold text-slate-700 ml-1">{{
-          'AUTH.SIGNUP.CONFIRM_PASSWORD_LABEL' | translate
-        }}</label>
-        <ion-item lines="none" class="custom-input">
-          <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-          <ion-input
-            [type]="showConfirmPassword() ? 'text' : 'password'"
-            formControlName="confirmPassword"
-            [placeholder]="'AUTH.SIGNUP.CONFIRM_PASSWORD_PLACEHOLDER' | translate"
-          ></ion-input>
-          <button type="button" slot="end" class="toggle-btn" (click)="toggleConfirmPassword()">
-            <ion-icon [name]="showConfirmPassword() ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+          <button
+            type="button"
+            class="w-full h-12 bg-white border border-slate-200 !rounded-xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm"
+          >
+            <i class="fa-brands fa-apple text-xl text-slate-900"></i>
+            <span class="text-sm font-semibold text-slate-700">{{
+              'AUTH.SOCIAL.SIGNUP_APPLE' | translate
+            }}</span>
           </button>
-        </ion-item>
+        </div>
+
+        <!-- Divider -->
+        <div class="flex items-center my-6">
+          <div class="flex-1 h-px bg-slate-200"></div>
+          <span class="px-4 text-xs text-slate-400 font-medium tracking-wider">{{
+            'AUTH.SIGNUP.DIVIDER_OR_EMAIL' | translate
+          }}</span>
+          <div class="flex-1 h-px bg-slate-200"></div>
+        </div>
+
+        <!-- Full Name -->
+        <div class="space-y-2">
+          <label class="text-sm font-semibold text-slate-700 ml-1">{{
+            'AUTH.SIGNUP.FULL_NAME_LABEL' | translate
+          }}</label>
+          <ion-item lines="none" class="custom-input">
+            <ion-icon slot="start" name="person-outline"></ion-icon>
+            <ion-input
+              type="text"
+              formControlName="fullName"
+              [placeholder]="'AUTH.SIGNUP.FULL_NAME_PLACEHOLDER' | translate"
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <!-- Email -->
+        <div class="space-y-2">
+          <label class="text-sm font-semibold text-slate-700 ml-1">{{
+            'AUTH.LOGIN.EMAIL_LABEL' | translate
+          }}</label>
+          <ion-item lines="none" class="custom-input">
+            <ion-icon slot="start" name="mail-outline"></ion-icon>
+            <ion-input
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              formControlName="email"
+              [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <!-- Phone -->
+        <div class="space-y-2">
+          <label class="text-sm font-semibold text-slate-700 ml-1">{{
+            'AUTH.SIGNUP.PHONE_LABEL' | translate
+          }}</label>
+          <ion-item lines="none" class="custom-input">
+            <ion-icon slot="start" name="call-outline"></ion-icon>
+            <ion-input
+              type="tel"
+              autocomplete="tel"
+              formControlName="phone"
+              [placeholder]="'AUTH.SIGNUP.PHONE_PLACEHOLDER' | translate"
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <!-- Password + Strength -->
+        <div class="space-y-2">
+          <label class="text-sm font-semibold text-slate-700 ml-1">{{
+            'AUTH.LOGIN.PASSWORD_LABEL' | translate
+          }}</label>
+          <ion-item lines="none" class="custom-input">
+            <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+            <ion-input
+              [type]="showSignupPassword() ? 'text' : 'password'"
+              autocomplete="new-password"
+              formControlName="password"
+              [placeholder]="'AUTH.SIGNUP.PASSWORD_CREATE_PLACEHOLDER' | translate"
+              (ionInput)="onPasswordInput($event)"
+            ></ion-input>
+            <button type="button" slot="end" class="toggle-btn" (click)="toggleSignupPassword()">
+              <ion-icon
+                [name]="showSignupPassword() ? 'eye-off-outline' : 'eye-outline'"
+              ></ion-icon>
+            </button>
+          </ion-item>
+          <!-- Strength Bars -->
+          <div class="flex space-x-1 mt-2 px-1">
+            @for (bar of strengthBars; track bar) {
+              <div
+                class="flex-1 h-1 rounded-full transition-colors duration-300"
+                [class.bg-slate-200]="bar >= passwordStrength()"
+                [class.bg-red-500]="bar < passwordStrength() && passwordStrength() <= 1"
+                [class.bg-yellow-500]="bar < passwordStrength() && passwordStrength() === 2"
+                [class.bg-blue-400]="bar < passwordStrength() && passwordStrength() === 3"
+                [class.bg-green-500]="bar < passwordStrength() && passwordStrength() >= 4"
+              ></div>
+            }
+          </div>
+          <p class="text-xs text-slate-500 mt-1 ml-1">
+            {{ 'AUTH.SIGNUP.PASSWORD_HINT' | translate }}
+          </p>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="space-y-2">
+          <label class="text-sm font-semibold text-slate-700 ml-1">{{
+            'AUTH.SIGNUP.CONFIRM_PASSWORD_LABEL' | translate
+          }}</label>
+          <ion-item lines="none" class="custom-input">
+            <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+            <ion-input
+              [type]="showConfirmPassword() ? 'text' : 'password'"
+              autocomplete="new-password"
+              formControlName="confirmPassword"
+              [placeholder]="'AUTH.SIGNUP.CONFIRM_PASSWORD_PLACEHOLDER' | translate"
+            ></ion-input>
+            <button type="button" slot="end" class="toggle-btn" (click)="toggleConfirmPassword()">
+              <ion-icon
+                [name]="showConfirmPassword() ? 'eye-off-outline' : 'eye-outline'"
+              ></ion-icon>
+            </button>
+          </ion-item>
+        </div>
+
+        <!-- Terms -->
+        <div class="flex items-center gap-3 pt-2">
+          <ion-checkbox
+            formControlName="terms"
+            class="custom-checkbox flex-shrink-0"
+          ></ion-checkbox>
+          <label class="text-xs text-slate-600 leading-relaxed">
+            {{ 'AUTH.SIGNUP.TERMS_AGREE' | translate }}
+            <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
+              'AUTH.FOOTER.TERMS_OF_SERVICE' | translate
+            }}</a>
+            {{ 'COMMON.AND' | translate }}
+            <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
+              'AUTH.FOOTER.PRIVACY_POLICY' | translate
+            }}</a>
+          </label>
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide"
+        >
+          {{ 'AUTH.SIGNUP.CREATE_ACCOUNT_BTN' | translate }}
+        </button>
+      </form>
+    }
+
+    <!-- Features Section -->
+    <div class="mt-10 space-y-4 pt-8 border-t border-slate-200">
+      <div class="flex items-start space-x-4 p-3 rounded-xl hover:bg-white/60 transition-colors">
+        <div
+          class="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm"
+        >
+          <i class="fa-solid fa-wind text-sky-600 text-lg"></i>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-slate-900">
+            {{ 'AUTH.FEATURES.ANALYSIS_TITLE' | translate }}
+          </h3>
+          <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
+            {{ 'AUTH.FEATURES.ANALYSIS_DESC_SHORT' | translate }}
+          </p>
+        </div>
       </div>
-
-      <!-- Terms -->
-      <div class="flex items-start gap-3 pt-2">
-        <ion-checkbox
-          formControlName="terms"
-          class="custom-checkbox mt-0.5 flex-shrink-0"
-        ></ion-checkbox>
-        <label class="text-xs text-slate-600 leading-relaxed">
-          {{ 'AUTH.SIGNUP.TERMS_AGREE' | translate }}
-          <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
-            'AUTH.FOOTER.TERMS_OF_SERVICE' | translate
-          }}</a> {{ 'COMMON.AND' | translate }}
-                <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
-            'AUTH.FOOTER.PRIVACY_POLICY' | translate
-          }}</a>
-                </label>
-            </div>
-
-            <!-- Submit -->
-            <button type="submit" class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide">
-        {{ 'AUTH.SIGNUP.CREATE_ACCOUNT_BTN' | translate }}
-      </button>
-        </form>
-        }
-
-        <!-- Features Section -->
-        <div class="mt-10 space-y-4 pt-8 border-t border-slate-200">
-            <div class="flex items-start space-x-4 p-3 rounded-xl hover:bg-white/60 transition-colors">
-                <div class="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <i class="fa-solid fa-wind text-sky-600 text-lg"></i>
-                </div>
-                <div>
-                    <h3 class="text-sm font-bold text-slate-900">
-                        {{ 'AUTH.FEATURES.ANALYSIS_TITLE' | translate }}
-                    </h3>
-                    <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                        {{ 'AUTH.FEATURES.ANALYSIS_DESC_SHORT' | translate }}
-                    </p>
-                </div>
-            </div>
-            <div class="flex items-start space-x-4 p-3 rounded-xl hover:bg-white/60 transition-colors">
-                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <i class="fa-solid fa-chart-line text-blue-600 text-lg"></i>
-                </div>
-                <div>
-                    <h3 class="text-sm font-bold text-slate-900">
-                        {{ 'AUTH.FEATURES.MONITORING_TITLE' | translate }}
-                    </h3>
-                    <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                        {{ 'AUTH.FEATURES.MONITORING_DESC' | translate }}
-                    </p>
-                </div>
-            </div>
-            <div class="flex items-start space-x-4 p-3 rounded-xl hover:bg-white/60 transition-colors">
-                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <i class="fa-solid fa-users text-blue-600 text-lg"></i>
-                </div>
-                <div>
-                    <h3 class="text-sm font-bold text-slate-900">
-                        {{ 'AUTH.FEATURES.COLLABORATION_TITLE' | translate }}
-                    </h3>
-                    <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                        {{ 'AUTH.FEATURES.COLLABORATION_DESC' | translate }}
-                    </p>
-                </div>
-            </div>
+      <div class="flex items-start space-x-4 p-3 rounded-xl hover:bg-white/60 transition-colors">
+        <div
+          class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm"
+        >
+          <i class="fa-solid fa-chart-line text-blue-600 text-lg"></i>
         </div>
-
-        <!-- Footer -->
-        <div class="mt-auto pt-8 text-center pb-4">
-            <p class="text-xs text-slate-400">{{ 'AUTH.FOOTER.ALL_RIGHTS_RESERVED' | translate }}</p>
+        <div>
+          <h3 class="text-sm font-bold text-slate-900">
+            {{ 'AUTH.FEATURES.MONITORING_TITLE' | translate }}
+          </h3>
+          <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
+            {{ 'AUTH.FEATURES.MONITORING_DESC' | translate }}
+          </p>
         </div>
+      </div>
+      <div class="flex items-start space-x-4 p-3 rounded-xl hover:bg-white/60 transition-colors">
+        <div
+          class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm"
+        >
+          <i class="fa-solid fa-users text-blue-600 text-lg"></i>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-slate-900">
+            {{ 'AUTH.FEATURES.COLLABORATION_TITLE' | translate }}
+          </h3>
+          <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
+            {{ 'AUTH.FEATURES.COLLABORATION_DESC' | translate }}
+          </p>
+        </div>
+      </div>
     </div>
+
+    <!-- Footer -->
+    <div class="mt-auto pt-8 text-center pb-4">
+      <p class="text-xs text-slate-400">{{ 'AUTH.FOOTER.ALL_RIGHTS_RESERVED' | translate }}</p>
+    </div>
+  </div>
 </ion-content>

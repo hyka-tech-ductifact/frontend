@@ -26,9 +26,9 @@ import type {
 type AuthTab = 'login' | 'signup';
 
 const ACTIVE_TAB_CLASS =
-  'flex-1 py-3 text-sm font-semibold rounded-xl bg-white text-sky-600 shadow-sm transition-all ring-1 ring-black/5';
+  'flex-1 py-3 text-sm font-semibold !rounded-xl bg-white text-sky-600 shadow-sm transition-all ring-1 ring-black/5 active:scale-95';
 const INACTIVE_TAB_CLASS =
-  'flex-1 py-3 text-sm font-semibold rounded-xl text-slate-500 hover:text-slate-700 transition-all';
+  'flex-1 py-3 text-sm font-semibold !rounded-xl text-slate-500 hover:text-slate-700 transition-all active:scale-95';
 
 @Component({
   selector: 'app-login-mobile',
@@ -59,11 +59,11 @@ export class LoginMobileComponent {
   readonly signupPasswordValue = signal('');
 
   readonly loginTabClass = computed(() =>
-    this.activeTab() === 'login' ? ACTIVE_TAB_CLASS : INACTIVE_TAB_CLASS
+    this.activeTab() === 'login' ? ACTIVE_TAB_CLASS : INACTIVE_TAB_CLASS,
   );
 
   readonly signupTabClass = computed(() =>
-    this.activeTab() === 'signup' ? ACTIVE_TAB_CLASS : INACTIVE_TAB_CLASS
+    this.activeTab() === 'signup' ? ACTIVE_TAB_CLASS : INACTIVE_TAB_CLASS,
   );
 
   readonly passwordStrength = computed(() => {
@@ -78,6 +78,9 @@ export class LoginMobileComponent {
 
   readonly strengthBars = [0, 1, 2, 3];
 
+  /**
+   *
+   */
   constructor() {
     addIcons({
       mailOutline,
@@ -104,27 +107,47 @@ export class LoginMobileComponent {
     terms: new FormControl(false, [Validators.requiredTrue]),
   });
 
+  /**
+   *
+   * @param tab
+   */
   switchTab(tab: AuthTab): void {
     this.activeTab.set(tab);
   }
 
+  /**
+   *
+   * @param event
+   */
   onPasswordInput(event: Event): void {
     const customEvent = event as CustomEvent<{ value: string | null | undefined }>;
     this.signupPasswordValue.set(customEvent.detail?.value ?? '');
   }
 
+  /**
+   *
+   */
   toggleLoginPassword(): void {
     this.showLoginPassword.update((v) => !v);
   }
 
+  /**
+   *
+   */
   toggleSignupPassword(): void {
     this.showSignupPassword.update((v) => !v);
   }
 
+  /**
+   *
+   */
   toggleConfirmPassword(): void {
     this.showConfirmPassword.update((v) => !v);
   }
 
+  /**
+   *
+   */
   onLoginSubmit(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -134,6 +157,9 @@ export class LoginMobileComponent {
     this.loginSubmit.emit({ email: email!, password: password! });
   }
 
+  /**
+   *
+   */
   onSignupSubmit(): void {
     if (this.signupForm.invalid) {
       this.signupForm.markAllAsTouched();
