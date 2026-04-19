@@ -1,14 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { Platform } from '@ionic/angular/standalone';
 import { Keyboard } from '@capacitor/keyboard';
 import { Capacitor } from '@capacitor/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceService } from './core/services/device.service';
+import { WebLayoutComponent } from './layouts/web-layout/web-layout.component';
+import { MobileLayoutComponent } from './layouts/mobile-layout/mobile-layout.component';
 
 @Component({
   selector: 'app-root',
-  imports: [IonApp, IonRouterOutlet],
+  imports: [WebLayoutComponent, MobileLayoutComponent],
   templateUrl: './app.component.html',
   standalone: true,
   styleUrls: ['./app.component.scss'],
@@ -17,7 +18,7 @@ import { DeviceService } from './core/services/device.service';
 export class AppComponent implements OnInit {
   private platform = inject(Platform);
   private translate = inject(TranslateService);
-  private deviceService = inject(DeviceService);
+  protected readonly deviceService = inject(DeviceService);
 
   ngOnInit() {
     this.initializeApp();

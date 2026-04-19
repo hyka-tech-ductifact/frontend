@@ -28,7 +28,7 @@ export class LoginComponent {
     this.errorMessage.set(null);
     try {
       await this.authService.login(credentials.email, credentials.password);
-      await this.router.navigate(['/dashboard']);
+      await this.router.navigate(['/client']);
     } catch {
       this.errorMessage.set('AUTH.LOGIN.ERROR_INVALID_CREDENTIALS');
       await this.showErrorToast('AUTH.LOGIN.ERROR_INVALID_CREDENTIALS');
@@ -43,7 +43,7 @@ export class LoginComponent {
     this.errorMessage.set(null);
     try {
       await this.authService.signup(credentials);
-      await this.router.navigate(['/dashboard']);
+      await this.router.navigate(['/client']);
     } catch {
       this.errorMessage.set('AUTH.LOGIN.ERROR_SIGNUP_FAILED');
       await this.showErrorToast('AUTH.LOGIN.ERROR_SIGNUP_FAILED');
