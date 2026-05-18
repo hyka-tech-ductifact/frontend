@@ -1,0 +1,56 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true
+  },
+  "ignorePatterns": ["projects/**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json", // El de la raíz
+          "tsconfig.app.json", // El de la aplicación (¡Este es el importante!)
+          "tsconfig.spec.json" // El de los tests
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:jsdoc/recommended"
+      ],
+      "plugins": ["@typescript-eslint", "jsdoc"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "@typescript-eslint/no-explicit-any": "error",
+        "jsdoc/require-jsdoc": [
+          "error",
+          {
+            "publicOnly": false,
+            "require": {
+              "MethodDefinition": true,
+              "FunctionDeclaration": true,
+              "ArrowFunctionExpression": true,
+              "FunctionExpression": true
+            }
+          }
+        ],
+        "jsdoc/require-description": [
+          "error",
+          {
+            "contexts": ["any"]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {}
+    }
+  ]
+}

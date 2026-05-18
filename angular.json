@@ -1,0 +1,164 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "ductifact-frontend": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "app",
+            "architect": {
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "eslintConfig": ".eslintrc.json",
+                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+                    }
+                },
+                "build": {
+                    "builder": "@angular/build:application",
+                    "options": {
+                        "browser": "src/main.ts",
+                        "polyfills": ["zone.js"],
+                        "tsConfig": "tsconfig.app.json",
+                        "inlineStyleLanguage": "scss",
+                        "stylePreprocessorOptions": {
+                            "sass": {
+                                "silenceDeprecations": ["import"]
+                            }
+                        },
+                        "assets": [{
+                            "glob": "**/*",
+                            "input": "public"
+                        }],
+                        "styles": [
+                            "src/styles.scss",
+                            {
+                                "input": "node_modules/@ionic/angular/css/core.css"
+                            },
+                            {
+                                "input": "node_modules/@ionic/angular/css/normalize.css"
+                            },
+                            {
+                                "input": "node_modules/@ionic/angular/css/structure.css"
+                            },
+                            {
+                                "input": "node_modules/@ionic/angular/css/typography.css"
+                            },
+                            {
+                                "input": "node_modules/@ionic/angular/css/display.css"
+                            },
+                            {
+                                "input": "node_modules/@ionic/angular/css/padding.css"
+                            },
+                            {
+                                "input": "node_modules/@ionic/angular/css/float-elements.css"
+                            },
+                            {
+                                "input": "node_modules/@ionic/angular/css/text-alignment.css"
+                            },
+                            {
+                                "input": "node_modules/@ionic/angular/css/text-transformation.css"
+                            },
+                            {
+                                "input": "node_modules/@ionic/angular/css/flex-utils.css"
+                            },
+                            {
+                                "input": "src/theme/variables.css"
+                            }
+                        ],
+                        "outputPath": {
+                            "base": "www",
+                            "browser": ""
+                        }
+                    },
+                    "configurations": {
+                        "production": {
+                            "budgets": [{
+                                    "type": "initial",
+                                    "maximumWarning": "500kB",
+                                    "maximumError": "1MB"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "4kB",
+                                    "maximumError": "8kB"
+                                }
+                            ],
+                            "outputHashing": "all"
+                        },
+                        "development": {
+                            "optimization": false,
+                            "extractLicenses": false,
+                            "sourceMap": true
+                        }
+                    },
+                    "defaultConfiguration": "production"
+                },
+                "serve": {
+                    "builder": "@angular/build:dev-server",
+                    "configurations": {
+                        "production": {
+                            "buildTarget": "ductifact-frontend:build:production"
+                        },
+                        "development": {
+                            "buildTarget": "ductifact-frontend:build:development"
+                        }
+                    },
+                    "defaultConfiguration": "development"
+                },
+                "extract-i18n": {
+                    "builder": "@angular/build:extract-i18n"
+                },
+                "test": {
+                    "builder": "@angular-builders/jest:run",
+                    "options": {
+                        "tsConfig": "tsconfig.spec.json"
+                    }
+                },
+                "ionic-cordova-serve": {
+                    "builder": "@ionic/angular-toolkit:cordova-serve",
+                    "options": {
+                        "cordovaBuildTarget": "ductifact-frontend:ionic-cordova-build",
+                        "devServerTarget": "ductifact-frontend:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "cordovaBuildTarget": "ductifact-frontend:ionic-cordova-build:production",
+                            "devServerTarget": "ductifact-frontend:serve:production"
+                        }
+                    }
+                },
+                "ionic-cordova-build": {
+                    "builder": "@ionic/angular-toolkit:cordova-build",
+                    "options": {
+                        "browserTarget": "ductifact-frontend:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "ductifact-frontend:build:production"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "cli": {
+        "analytics": "694d2a25-b990-4f49-8182-fe3438afa6be",
+        "schematicCollections": ["@ionic/angular-toolkit"]
+    },
+    "schematics": {
+        "@ionic/angular-toolkit:component": {
+            "styleext": "scss"
+        },
+        "@ionic/angular-toolkit:page": {
+            "styleext": "scss"
+        }
+    }
+}

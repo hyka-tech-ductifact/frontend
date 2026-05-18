@@ -1,0 +1,15 @@
+node_modules/
+dist/
+www/
+.angular/
+.git/
+.github/
+android/
+ios/
+coverage/
+*.md
+.editorconfig
+.eslintrc.json
+.prettierrc
+.DS_Store
+Thumbs.db

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">DuctiFact</string>
+    <string name="title_activity_main">DuctiFact</string>
+    <string name="package_name">com.hyka.DuctiFact</string>
+    <string name="custom_url_scheme">com.hyka.DuctiFact</string>
+</resources>

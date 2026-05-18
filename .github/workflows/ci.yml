@@ -1,0 +1,143 @@
+name: CI
+
+# ─── When it runs ───────────────────────────────────────────
+# - PRs to main: new features and fixes
+# - PRs to release: hotfixes for production (see CONTRIBUTING.md §4)
+# - Push to main: validates merged code
+# - workflow_call: allows CD to re-run CI before deploying
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main, release]
+  workflow_call:
+
+# ─── Cancel outdated runs ───────────────────────────────────
+# If a new push arrives on the same branch, cancel the previous run.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# ─── Shared environment variables ────────────────────────────
+env:
+  CI: "1"
+  NODE_VERSION: "22"
+
+# ─── Jobs ────────────────────────────────────────────────────
+jobs:
+
+  # ── 0. PR validation (branch name + title format) ───────────
+  pr-rules:
+    name: PR Rules
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate branch name and target
+        env:
+          BRANCH: ${{ github.head_ref }}
+          BASE: ${{ github.base_ref }}
+        run: make validate-branch
+
+      - name: Validate PR title (Conventional Commits)
+        uses: amannn/action-semantic-pull-request@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            chore
+          requireScope: false
+          subjectPattern: ^.+$
+          subjectPatternError: "PR title must have a description after the type, e.g. 'feat: add login page'"
+
+  # ── 1. Lint + formatting ──────────────────────────────────
+  lint:
+    name: Lint & Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: make lint
+
+      - name: Check formatting
+        run: make fmt-check
+
+  # ── 2. Unit tests ─────────────────────────────────────────
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: make test-ci
+
+  # ── 3. Production build ───────────────────────────────────
+  build:
+    name: Build
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Production build
+        run: make build
+
+  # ── 4. Docker smoke test ──────────────────────────────────
+  docker-smoke:
+    name: Docker Smoke
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create Docker network
+        run: docker network create ductifact || true
+
+      - name: Build and start
+        run: make docker-start
+
+      - name: Health check
+        run: |
+          for i in 1 2 3 4 5; do
+            if curl --fail --silent http://localhost:4200 > /dev/null; then
+              echo "✅ Frontend is healthy"
+              exit 0
+            fi
+            echo "Waiting for frontend... (attempt $i/5)"
+            sleep 3
+          done
+          echo "❌ Frontend failed health check"
+          exit 1
+
+      - name: Teardown
+        if: always()
+        run: make docker-stop
