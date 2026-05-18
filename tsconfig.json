@@ -14,17 +14,16 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "preserve",
-    "noImplicitAny": true /* Prohíbe el uso de 'any' implícito */,
-    "strictNullChecks": true /* Te obliga a manejar null/undefined */,
-    "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true
+    "noImplicitAny": true,                    /* Prohíbe el uso de 'any' implícito */
+    "strictNullChecks": true,                 /* Te obliga a manejar null/undefined */
+    "forceConsistentCasingInFileNames": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "typeCheckHostBindings": true,
-    "strictInjectionParameters": true /* Inyección de dependencias estricta */,
-    "strictInputAccessModifiers": true /* Inputs de componentes protegidos */,
-    "strictTemplates": true /* ¡IMPORTANTE! Valida tipos incluso en el HTML */
+    "strictInjectionParameters": true,        /* Inyección de dependencias estricta */
+    "strictInputAccessModifiers": true,       /* Inputs de componentes protegidos */
+    "strictTemplates": true                   /* ¡IMPORTANTE! Valida tipos incluso en el HTML */
   },
   "files": [],
   "references": [
