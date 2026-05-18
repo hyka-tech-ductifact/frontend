@@ -1,0 +1,84 @@
+// ── Host / ion-content background ────────────────────────────────────────────
+:host {
+  display: contents;
+}
+
+ion-content {
+  --background: linear-gradient(to bottom right, #f0f9ff, #ffffff, #eff6ff);
+}
+
+// ── ion-item: custom Tailwind-like input container ────────────────────────────
+ion-item.custom-input {
+  --background: #f8fafc; // slate-50
+  --border-color: #e2e8f0; // slate-200
+  --border-width: 1px;
+  --border-style: solid;
+  --border-radius: 0.75rem;
+  --min-height: 3rem;
+  --padding-start: 0.75rem;
+  --inner-padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --highlight-height: 0;
+  --highlight-color-focused: transparent;
+  margin-bottom: 0;
+  overflow: hidden;
+
+  ion-icon[slot='start'] {
+    color: #94a3b8; // slate-400
+    font-size: 1rem;
+    margin-inline-end: 0.5rem;
+    transition: color 200ms;
+  }
+}
+
+ion-item.custom-input.item-has-focus {
+  --background: #ffffff;
+  --border-color: #0ea5e9; // sky-500
+  box-shadow: 0 0 0 4px rgb(14 165 233 / 0.1);
+
+  ion-icon[slot='start'] {
+    color: #0ea5e9; // sky-500
+  }
+}
+
+// ── ion-input ────────────────────────────────────────────────────────────────
+ion-input {
+  --color: #0f172a; // slate-900
+  --placeholder-color: #94a3b8; // slate-400
+  --padding-top: 0;
+  --padding-bottom: 0;
+  font-size: 0.875rem;
+}
+
+// ── Password toggle button (slot="end") ──────────────────────────────────────
+.toggle-btn {
+  background: transparent;
+  border: none;
+  padding: 0 0.75rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  height: 100%;
+
+  ion-icon {
+    font-size: 1.125rem;
+    color: #94a3b8; // slate-400
+    transition: color 150ms;
+
+    &:hover {
+      color: #475569; // slate-600
+    }
+  }
+}
+
+// ── ion-checkbox ─────────────────────────────────────────────────────────────
+ion-checkbox.custom-checkbox {
+  --checkbox-background-checked: #0ea5e9; // sky-500
+  --border-color: #cbd5e1; // slate-300
+  --border-color-checked: #0ea5e9;
+  --checkmark-color: #ffffff;
+  --size: 1.125rem;
+  font-size: 0.875rem;
+  color: #475569; // slate-600
+}

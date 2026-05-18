@@ -1,0 +1,15 @@
+@if (deviceService.isMobile()) {
+  <app-client-mobile
+    [clients]="clientService.clients()"
+    [isLoading]="clientService.isLoading()"
+    (addClient)="onAddClient()"
+    (deleteClient)="onDeleteClient($event)"
+  />
+} @else {
+  <app-client-web
+    [clients]="clientService.clients()"
+    [isLoading]="clientService.isLoading()"
+    (addClient)="onAddClient()"
+    (deleteClient)="onDeleteClient($event)"
+  />
+}
