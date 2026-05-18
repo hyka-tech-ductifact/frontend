@@ -1,49 +1,49 @@
 :host {
-    display: contents;
+  display: contents;
 }
 
 .menu-toolbar {
-    --background: transparent;
-    --border-color: transparent;
-    padding: 0;
-    height: auto;
+  --background: transparent;
+  --border-color: transparent;
+  padding: 0;
+  height: auto;
 }
 
 .menu-header {
-    background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #38bdf8 100%);
-    padding: 1.5rem;
-    padding-bottom: 2rem;
-    border-bottom-right-radius: 2rem;
+  background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #38bdf8 100%);
+  padding: 1.5rem;
+  padding-bottom: 2rem;
+  border-bottom-right-radius: 2rem;
 }
 
 .menu-content {
-    --background: #ffffff;
+  --background: #ffffff;
 }
 
 .menu-item {
-    --padding-start: 1.5rem;
-    --inner-padding-end: 1.5rem;
-    --min-height: 3.5rem;
-    --background: transparent;
-    --background-activated: #f0f9ff;
-    --background-hover: #f0f9ff;
-    &::part(native):active {
-        transform: scale(0.97);
-    }
+  --padding-start: 1.5rem;
+  --inner-padding-end: 1.5rem;
+  --min-height: 3.5rem;
+  --background: transparent;
+  --background-activated: #f0f9ff;
+  --background-hover: #f0f9ff;
+  &::part(native):active {
+    transform: scale(0.97);
+  }
 }
 
 .menu-icon-wrap {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-inline-end: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-inline-end: 1rem;
 }
 
 .menu-label {
-    font-weight: 600;
-    color: #334155; // slate-700
+  font-weight: 600;
+  color: #334155; // slate-700
 }
