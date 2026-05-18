@@ -23,6 +23,7 @@ import type {
   SignupCredentials,
 } from '../../../../../../core/models/auth.models';
 
+/** Union type representing the two available authentication tabs. */
 type AuthTab = 'login' | 'signup';
 
 const ACTIVE_TAB_CLASS =
@@ -30,6 +31,10 @@ const ACTIVE_TAB_CLASS =
 const INACTIVE_TAB_CLASS =
   'flex-1 py-3 text-sm font-semibold !rounded-xl text-slate-500 hover:text-slate-700 transition-all active:scale-95';
 
+/**
+ * Mobile presentation component for the login/signup page.
+ * Renders a tabbed interface with login and signup forms optimised for small screens.
+ */
 @Component({
   selector: 'app-login-mobile',
   imports: [
@@ -47,25 +52,47 @@ const INACTIVE_TAB_CLASS =
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginMobileComponent {
+  /** Whether an authentication request is currently in progress. */
   readonly isLoading = input(false);
+
+  /** Current error message key to display, or null when there is no error. */
   readonly error = input<string | null>(null);
+
+  /** Emitted with login credentials when the user submits the login form. */
   readonly loginSubmit = output<LoginCredentials>();
+
+  /** Emitted with signup credentials when the user submits the signup form. */
   readonly signupSubmit = output<SignupCredentials>();
 
+  /** Signal tracking the currently active tab ('login' or 'signup'). */
   readonly activeTab = signal<AuthTab>('login');
+
+  /** Signal controlling visibility of the login password field. */
   readonly showLoginPassword = signal(false);
+
+  /** Signal controlling visibility of the signup password field. */
   readonly showSignupPassword = signal(false);
+
+  /** Signal controlling visibility of the confirm-password field. */
   readonly showConfirmPassword = signal(false);
+
+  /** Signal holding the current value of the signup password field for strength calculation. */
   readonly signupPasswordValue = signal('');
 
+  /** Computed CSS class for the login tab button based on the active tab state. */
   readonly loginTabClass = computed(() =>
     this.activeTab() === 'login' ? ACTIVE_TAB_CLASS : INACTIVE_TAB_CLASS,
   );
 
+  /** Computed CSS class for the signup tab button based on the active tab state. */
   readonly signupTabClass = computed(() =>
     this.activeTab() === 'signup' ? ACTIVE_TAB_CLASS : INACTIVE_TAB_CLASS,
   );
 
+  /**
+   * Computed numeric strength score (0–4) of the current signup password.
+   * Each criterion met (length ≥ 8, mixed case, digit, special character) adds 1.
+   */
   readonly passwordStrength = computed(() => {
     const value = this.signupPasswordValue();
     let strength = 0;
@@ -76,10 +103,11 @@ export class LoginMobileComponent {
     return strength;
   });
 
+  /** Indices used to render the password-strength indicator bars in the template. */
   readonly strengthBars = [0, 1, 2, 3];
 
   /**
-   *
+   * Registers the Ionicons used in this component's template.
    */
   constructor() {
     addIcons({
@@ -92,12 +120,14 @@ export class LoginMobileComponent {
     });
   }
 
+  /** Reactive form group for the login tab. */
   readonly loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     rememberMe: new FormControl(false),
   });
 
+  /** Reactive form group for the signup tab. */
   readonly signupForm = new FormGroup({
     fullName: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -108,16 +138,19 @@ export class LoginMobileComponent {
   });
 
   /**
-   *
-   * @param tab
+   * Switches the active authentication tab.
+   * @param {AuthTab} tab - The tab to activate ('login' or 'signup').
+   * @returns {void}
    */
   switchTab(tab: AuthTab): void {
     this.activeTab.set(tab);
   }
 
   /**
-   *
-   * @param event
+   * Handles the Ionic `ionInput` event on the signup password field and updates
+   * the `signupPasswordValue` signal used for strength calculation.
+   * @param {Event} event - The native input event from the Ionic input component.
+   * @returns {void}
    */
   onPasswordInput(event: Event): void {
     const customEvent = event as CustomEvent<{ value: string | null | undefined }>;
@@ -125,28 +158,33 @@ export class LoginMobileComponent {
   }
 
   /**
-   *
+   * Toggles the visibility of the login password field.
+   * @returns {void}
    */
   toggleLoginPassword(): void {
     this.showLoginPassword.update((v) => !v);
   }
 
   /**
-   *
+   * Toggles the visibility of the signup password field.
+   * @returns {void}
    */
   toggleSignupPassword(): void {
     this.showSignupPassword.update((v) => !v);
   }
 
   /**
-   *
+   * Toggles the visibility of the confirm-password field.
+   * @returns {void}
    */
   toggleConfirmPassword(): void {
     this.showConfirmPassword.update((v) => !v);
   }
 
   /**
-   *
+   * Validates and submits the login form. Marks all fields as touched when invalid
+   * to trigger validation messages, or emits the credentials to the parent.
+   * @returns {void}
    */
   onLoginSubmit(): void {
     if (this.loginForm.invalid) {
@@ -158,7 +196,9 @@ export class LoginMobileComponent {
   }
 
   /**
-   *
+   * Validates and submits the signup form. Marks all fields as touched when invalid
+   * to trigger validation messages, or emits the credentials to the parent.
+   * @returns {void}
    */
   onSignupSubmit(): void {
     if (this.signupForm.invalid) {

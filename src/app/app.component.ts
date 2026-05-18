@@ -7,6 +7,10 @@ import { DeviceService } from './core/services/device.service';
 import { WebLayoutComponent } from './layouts/web-layout/web-layout.component';
 import { MobileLayoutComponent } from './layouts/mobile-layout/mobile-layout.component';
 
+/**
+ * Root component of the application.
+ * Handles platform initialization, language configuration, and native keyboard setup.
+ */
 @Component({
   selector: 'app-root',
   imports: [WebLayoutComponent, MobileLayoutComponent],
@@ -18,13 +22,24 @@ import { MobileLayoutComponent } from './layouts/mobile-layout/mobile-layout.com
 export class AppComponent implements OnInit {
   private platform = inject(Platform);
   private translate = inject(TranslateService);
+
+  /** Service used to determine whether the app is running on a mobile device. */
   protected readonly deviceService = inject(DeviceService);
 
-  ngOnInit() {
+  /**
+   * Angular lifecycle hook. Triggers application initialization.
+   * @returns {void}
+   */
+  ngOnInit(): void {
     this.initializeApp();
   }
 
-  private async initializeApp() {
+  /**
+   * Waits for the platform to be ready, then configures supported languages
+   * and applies native-specific setup when running on a Capacitor platform.
+   * @returns {Promise<void>} Resolves when initialization is complete.
+   */
+  private async initializeApp(): Promise<void> {
     await this.platform.ready();
 
     // 1. Configurar Idiomas
@@ -38,7 +53,12 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private setupNativeKeyboard() {
+  /**
+   * Configures the native keyboard plugin to allow scrolling and toggles a
+   * CSS class on the body element when the keyboard is shown or hidden.
+   * @returns {void}
+   */
+  private setupNativeKeyboard(): void {
     // Permitir scroll para que el teclado no tape inputs
     Keyboard.setScroll({ isDisabled: false });
 
