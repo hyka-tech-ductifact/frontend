@@ -1,0 +1,63 @@
+name: CD
+
+# ─── When it runs ───────────────────────────────────────────
+# After CI passes on main (PR merged → main → CI ✅ → CD)
+on:
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types: [completed]
+
+# ─── Shared environment variables ────────────────────────────
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+# ─── Jobs ────────────────────────────────────────────────────
+jobs:
+
+  # ══════════════════════════════════════════════════════════
+  # BUILD — runs when CI passes on main
+  # Builds and pushes the image. That's it.
+  # Where it gets deployed is infra's decision.
+  # ══════════════════════════════════════════════════════════
+  build:
+    name: Build & Push Image
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.event.workflow_run.head_sha }}
+
+      - name: "Notify infra: trigger staging deploy"
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.INFRA_PAT }}
+          repository: hyka-tech-ductifact/infra
+          event-type: image-published
+          client-payload: |
+            {
+              "service": "frontend",
+              "image": "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.event.workflow_run.head_sha }}",
+              "sha": "${{ github.event.workflow_run.head_sha }}",
+              "repository": "${{ github.repository }}"
+            }
