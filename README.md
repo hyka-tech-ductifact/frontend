@@ -54,6 +54,14 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
+## Contributing & CD model
+
+- All code changes go through PRs into `main`.
+- Each merge into `main` produces an immutable candidate image.
+- Production promotion is decided and executed from `infra` via manifest updates.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for branch naming, PR rules, and commit conventions.
+
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

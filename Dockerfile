@@ -22,7 +22,7 @@ COPY --from=builder /app/www /usr/share/nginx/html
 # Copy custom Nginx config for SPA routing
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
+EXPOSE 8080
 
 # Run as non-root user (security best practice — mirrors backend pattern)
 RUN adduser -D -g '' appuser && \
