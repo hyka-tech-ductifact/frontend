@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs/operators';
 import {
+  IonApp,
   IonMenu,
   IonHeader,
   IonToolbar,
@@ -12,6 +13,7 @@ import {
   IonLabel,
   IonIcon,
   IonMenuToggle,
+  IonRouterOutlet,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -32,7 +34,7 @@ import {
   selector: 'app-mobile-layout',
   standalone: true,
   imports: [
-    RouterOutlet,
+    IonApp,
     IonMenu,
     IonHeader,
     IonToolbar,
@@ -42,6 +44,7 @@ import {
     IonLabel,
     IonIcon,
     IonMenuToggle,
+    IonRouterOutlet,
   ],
   templateUrl: './mobile-layout.component.html',
   styleUrls: ['./mobile-layout.component.scss'],
