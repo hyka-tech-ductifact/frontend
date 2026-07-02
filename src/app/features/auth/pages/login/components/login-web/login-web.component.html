@@ -175,6 +175,7 @@
               </div>
               <input
                 type="email"
+                autocomplete="email"
                 formControlName="email"
                 [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"
                 class="w-full h-12 pl-11 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
@@ -195,6 +196,7 @@
               </div>
               <input
                 [type]="showLoginPassword() ? 'text' : 'password'"
+                autocomplete="current-password"
                 formControlName="password"
                 [placeholder]="'AUTH.LOGIN.PASSWORD_PLACEHOLDER' | translate"
                 class="w-full h-12 pl-11 pr-12 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
@@ -306,6 +308,7 @@
               </div>
               <input
                 type="text"
+                autocomplete="name"
                 formControlName="fullName"
                 [placeholder]="'AUTH.SIGNUP.FULL_NAME_PLACEHOLDER' | translate"
                 class="w-full h-12 pl-11 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
@@ -326,6 +329,7 @@
               </div>
               <input
                 type="email"
+                autocomplete="email"
                 formControlName="email"
                 [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"
                 class="w-full h-12 pl-11 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
@@ -346,6 +350,7 @@
               </div>
               <input
                 type="tel"
+                autocomplete="tel"
                 formControlName="phone"
                 [placeholder]="'AUTH.SIGNUP.PHONE_PLACEHOLDER' | translate"
                 class="w-full h-12 pl-11 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"
@@ -366,6 +371,7 @@
               </div>
               <input
                 [type]="showSignupPassword() ? 'text' : 'password'"
+                autocomplete="new-password"
                 formControlName="password"
                 [placeholder]="'AUTH.SIGNUP.PASSWORD_CREATE_PLACEHOLDER' | translate"
                 class="w-full h-12 pl-11 pr-12 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 focus:outline-none transition-all"

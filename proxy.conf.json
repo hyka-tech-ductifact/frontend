@@ -1,0 +1,11 @@
+{
+    "/api": {
+        "target": "https://ductifact-staging-api.jcapsule.work",
+        "secure": true,
+        "changeOrigin": true,
+        "logLevel": "debug",
+        "pathRewrite": {
+            "^/api": ""
+        }
+    }
+}

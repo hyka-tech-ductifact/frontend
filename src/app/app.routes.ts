@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 /**
  * Root-level application routes.
@@ -20,6 +21,7 @@ export const routes: Routes = [
   },
   {
     path: 'client',
+    canActivate: [authGuard],
     loadChildren:
       /**
        * Lazily loads the client feature child routes.
@@ -29,7 +31,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'client',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
 ];
