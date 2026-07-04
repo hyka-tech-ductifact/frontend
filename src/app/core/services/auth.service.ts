@@ -1,11 +1,11 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { ConfigService } from '../config/config.service';
 import type { LoginCredentials, SignupCredentials } from '../models/auth.models';
 
-const TOKEN_KEY = 'auth_token';
-const TOKEN_EXPIRES_AT_KEY = 'auth_token_expires_at';
+export const TOKEN_KEY = 'auth_token';
+export const TOKEN_EXPIRES_AT_KEY = 'auth_token_expires_at';
 
 interface AuthResponse {
   token: string;
@@ -14,7 +14,8 @@ interface AuthResponse {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = `${environment.apiUrl}/auth`;
+  private readonly config = inject(ConfigService);
+  private readonly baseUrl = `${this.config.get('BACKEND_URL')}/auth`;
 
   /**
    * True when a non-expired token exists in localStorage.
@@ -72,7 +73,7 @@ export class AuthService {
    * @returns {void}
    */
   private persistToken(token: string): void {
-    const expiresAt = Date.now() + environment.tokenExpiryMs;
+    const expiresAt = Date.now() + this.config.get('TOKEN_EXPIRY_MS');
     localStorage.setItem(TOKEN_KEY, token);
     localStorage.setItem(TOKEN_EXPIRES_AT_KEY, expiresAt.toString());
   }

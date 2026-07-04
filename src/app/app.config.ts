@@ -1,4 +1,5 @@
 import {
+  APP_INITIALIZER,
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
@@ -11,6 +12,7 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { ConfigService } from './core/config/config.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,5 +23,17 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor])),
     provideTranslateService({ fallbackLang: 'es' }),
     ...provideTranslateHttpLoader({ prefix: './assets/i18n/', suffix: '.json' }),
+    {
+      provide: APP_INITIALIZER,
+      /**
+       * Returns the initializer function that Angular DI invokes before bootstrap.
+       * Triggers {@link ConfigService.load} to fetch and validate `/config.json`.
+       * @param {ConfigService} config - The singleton {@link ConfigService} instance.
+       * @returns {() => Promise<void>} Async initializer resolved before app mounts.
+       */
+      useFactory: (config: ConfigService) => () => config.load(),
+      deps: [ConfigService],
+      multi: true,
+    },
   ],
 };
