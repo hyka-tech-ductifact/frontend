@@ -1,0 +1,5 @@
+{
+    "BACKEND_URL": "https://ductifact-staging-api.jcapsule.work",
+    "TOKEN_EXPIRY_MS": 900000,
+    "FILE_STORAGE_URL": "http://localhost:9000/ductifact"
+}
