@@ -24,6 +24,12 @@ services:
     restart: unless-stopped
     ports:
       - '4200:8080'
+    environment:
+      # Placeholder values used for local dev and CI smoke tests.
+      # In staging/production these are injected by the infra team at deploy time.
+      BACKEND_URL: ${BACKEND_URL:-http://localhost:8080}
+      TOKEN_EXPIRY_MS: ${TOKEN_EXPIRY_MS:-900000}
+      FILE_STORAGE_URL: ${FILE_STORAGE_URL:-http://localhost:9000/ductifact}
     healthcheck:
       test: ['CMD', 'wget', '--spider', '-q', 'http://localhost:8080']
       interval: 10s
