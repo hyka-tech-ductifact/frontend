@@ -18,10 +18,7 @@ import {
   mailOutline,
   personOutline,
 } from 'ionicons/icons';
-import type {
-  LoginCredentials,
-  SignupCredentials,
-} from '../../../../../../core/models/auth.models';
+import type { LoginRequest, RegisterFormData } from '../../../../../../core/models/auth.models';
 
 /** Union type representing the two available authentication tabs. */
 type AuthTab = 'login' | 'signup';
@@ -59,10 +56,10 @@ export class LoginMobileComponent {
   readonly error = input<string | null>(null);
 
   /** Emitted with login credentials when the user submits the login form. */
-  readonly loginSubmit = output<LoginCredentials>();
+  readonly loginSubmit = output<LoginRequest>();
 
   /** Emitted with signup credentials when the user submits the signup form. */
-  readonly signupSubmit = output<SignupCredentials>();
+  readonly signupSubmit = output<RegisterFormData>();
 
   /** Signal tracking the currently active tab ('login' or 'signup'). */
   readonly activeTab = signal<AuthTab>('login');

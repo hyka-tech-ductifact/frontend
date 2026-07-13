@@ -1,47 +1,52 @@
-You are an expert in TypeScript, Angular, and scalable web application development. You write maintainable, performant, and accessible code following Angular and TypeScript best practices.
+# GitHub Copilot / Cursor Custom Instructions
 
-## TypeScript Best Practices
+## 🌐 Project Context & Architecture
 
-- Use strict type checking
-- Prefer type inference when the type is obvious
-- Avoid the `any` type; use `unknown` when type is uncertain
+- **Framework:** Ionic Framework with Angular (Latest version utilizing Signals and Native Control Flow).
+- **Platform Targets:** Dual-target hybrid codebase: Mobile app (via Capacitor) and Web app (via Docker/Nginx container).
+- **Directory Layout:**
+  - `src/app/core/`: Globally isolated system brain (guards, interceptors, global services).
+  - `src/app/shared/`: Globally reusable elements (components, custom UI web/mobile folders, interfaces, utils).
+  - `src/app/layouts/`: Shell navigation wrappers (`mobile-layout` with `<ion-menu>`, `web-layout` with sidebar).
+  - `src/app/features/`: Feature modules containing pages, lazy-loaded routes, and feature-specific components.
 
-## Angular Best Practices
+## 🏗️ Dual-UI Design Pattern (Smart/Dumb Split)
 
-- Always use standalone components over NgModules
-- Must NOT set `standalone: true` inside Angular decorators. It's the default.
-- Use signals for state management
-- Implement lazy loading for feature routes
-- Do NOT use the `@HostBinding` and `@HostListener` decorators. Put host bindings inside the `host` object of the `@Component` or `@Directive` decorator instead
-- Use `NgOptimizedImage` for all static images.
-  - `NgOptimizedImage` does not work for inline base64 images.
+Every major page view within the `features/` folder must follow this exact architectural pattern:
 
-## Components
+1. **One Smart Parent Component** (e.g., `login.component.ts`): Handles all lifecycle logic, API integrations, error handling, configuration injection, and state management. It controls which visual view to display based on the environment platform context.
+2. **Two Dumb Presentation Components** (e.g., `login-mobile.component.ts` and `login-web.component.ts`): Contain ONLY the isolated platform-specific HTML/SCSS presentation layer. They accept data via `input()` and bubble user interactions up via `output()`.
 
-- Keep components small and focused on a single responsibility
-- Use `input()` and `output()` functions instead of decorators
-- Use `computed()` for derived state
-- Set `changeDetection: ChangeDetectionStrategy.OnPush` in `@Component` decorator
-- Prefer inline templates for small components
-- Prefer Reactive forms instead of Template-driven ones
-- Do NOT use `ngClass`, use `class` bindings instead
-- Do NOT use `ngStyle`, use `style` bindings instead
+## 🛠️ Hybrid Platform Core Rules
 
-## State Management
+- **Configuration Management:** Never hardcode API, backend, or cloud server URLs. Always resolve URLs dynamically at runtime via our custom `ConfigService` which reads from the root-level `/config.json` file.
+- **Data Storage:** Never use browser `localStorage` directly in feature blocks or services. Always route storage operations through our unified, async `StorageService` wrapped around `@capacitor/preferences` to seamlessly support both native device sandboxes and web browsers.
 
-- Use signals for local component state
-- Use `computed()` for derived state
-- Keep state transformations pure and predictable
-- Do NOT use `mutate` on signals, use `update` or `set` instead
+## 📐 TypeScript Best Practices
 
-## Templates
+- Use strict type checking globally.
+- Prefer explicit type inference when the type is obvious.
+- Strictly avoid the `any` type; use `unknown` when a data type is uncertain or dynamic.
 
-- Keep templates simple and avoid complex logic
-- Use native control flow (`@if`, `@for`, `@switch`) instead of `*ngIf`, `*ngFor`, `*ngSwitch`
-- Use the async pipe to handle observables
+## 🆎 Angular Component & Template Rules
 
-## Services
+- **Standalone:** Always use standalone components over NgModules. Do NOT set `standalone: true` inside Angular decorators as it is the default.
+- **State:** Use Angular Signals (`signal()`) for component local state management. Use `computed()` for derived states. Do NOT use `mutate` on signals; use `update` or `set` instead.
+- **Inputs/Outputs:** Use modern `input()` and `output()` functions instead of old `@Input` or `@Output` decorators.
+- **Optimization:** Set `changeDetection: ChangeDetectionStrategy.OnPush` in every `@Component` decorator.
+- **Bindings & Selectors:** Do NOT use `ngClass` or `ngStyle`. Use native `class` and `style` bindings instead. Do NOT use `@HostBinding` or `@HostListener` decorators; declare host bindings inside the `host` object of the component decorator.
+- **Templates & Images:** Prefer inline templates for small components. Use native control flow (`@if`, `@for`, `@switch`) instead of legacy structural directives (`*ngIf`, `*ngFor`). Use `NgOptimizedImage` for static images (note: it does not work for base64 strings).
+- **Forms:** Prefer explicit Reactive Forms instead of Template-driven ones.
 
-- Design services around a single responsibility
-- Use the `providedIn: 'root'` option for singleton services
-- Use the `inject()` function instead of constructor injection
+## 🧬 Angular Services & Pipes
+
+- Design every service around a single, clean responsibility.
+- Use the `providedIn: 'root'` option for singleton global services.
+- Always use the functional `inject()` mechanism instead of constructor dependency injection.
+- Use the `async` pipe to handle and automatically clean up Observables within templates.
+
+## 🤖 Token-Saving & Response Behavior
+
+- Be highly concise. Omit conversational filler.
+- Provide targeted code snippets, component modifications, or git diffs rather than reprinting entire unmodified files.
+- Deeply analyze existing open file tabs in the workspace before writing code to prevent broken imports, duplicate patterns, or fractured logic paths.

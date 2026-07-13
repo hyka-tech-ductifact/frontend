@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
 import { AuthService } from '../../../../core/services/auth.service';
 import { DeviceService } from '../../../../core/services/device.service';
-import type { LoginCredentials, SignupCredentials } from '../../../../core/models/auth.models';
+import type { LoginRequest, RegisterFormData } from '../../../../core/models/auth.models';
 import { LoginMobileComponent } from './components/login-mobile/login-mobile.component';
 import { LoginWebComponent } from './components/login-web/login-web.component';
 
@@ -34,10 +34,10 @@ export class LoginComponent {
   /**
    * Handles the login form submission. Calls `AuthService.login` and navigates
    * to the client area on success, or displays an error toast on failure.
-   * @param {LoginCredentials} credentials - The email and password entered by the user.
+   * @param {LoginRequest} credentials - The email and password entered by the user.
    * @returns {Promise<void>} Resolves when the login flow completes.
    */
-  async onLogin(credentials: LoginCredentials): Promise<void> {
+  async onLogin(credentials: LoginRequest): Promise<void> {
     if (this.isLoading()) return;
     this.isLoading.set(true);
     this.errorMessage.set(null);
@@ -53,17 +53,21 @@ export class LoginComponent {
   }
 
   /**
-   * Handles the signup form submission. Calls `AuthService.signup` and navigates
+   * Handles the signup form submission. Calls `AuthService.register` and navigates
    * to the client area on success, or displays an error toast on failure.
-   * @param {SignupCredentials} credentials - The registration data provided by the user.
+   * @param {RegisterFormData} credentials - The registration data provided by the user.
    * @returns {Promise<void>} Resolves when the signup flow completes.
    */
-  async onSignup(credentials: SignupCredentials): Promise<void> {
+  async onSignup(credentials: RegisterFormData): Promise<void> {
     if (this.isLoading()) return;
     this.isLoading.set(true);
     this.errorMessage.set(null);
     try {
-      await this.authService.signup(credentials);
+      await this.authService.register(
+        credentials.fullName,
+        credentials.email,
+        credentials.password,
+      );
       await this.router.navigate(['/client']);
     } catch {
       this.errorMessage.set('AUTH.LOGIN.ERROR_SIGNUP_FAILED');
