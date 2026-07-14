@@ -28,7 +28,8 @@ services:
       # Placeholder values used for local dev and CI smoke tests.
       # In staging/production these are injected by the infra team at deploy time.
       BACKEND_URL: ${BACKEND_URL:-http://localhost:8080}
-      TOKEN_EXPIRY_MS: ${TOKEN_EXPIRY_MS:-900000}
+      TOKEN_ACCESS_EXPIRY_MS: ${TOKEN_ACCESS_EXPIRY_MS:-900000}
+      TOKEN_REFRESH_EXPIRY_MS: ${TOKEN_REFRESH_EXPIRY_MS:-604800000}
       FILE_STORAGE_URL: ${FILE_STORAGE_URL:-http://localhost:9000/ductifact}
     healthcheck:
       test: ['CMD', 'wget', '--spider', '-q', 'http://localhost:8080']

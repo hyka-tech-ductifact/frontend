@@ -124,7 +124,7 @@ export class AuthService {
    * @returns {void}
    */
   private persistTokenPair(accessToken: string, refreshToken: string): void {
-    const expiresAt = Date.now() + this.config.get('TOKEN_EXPIRY_MS');
+    const expiresAt = Date.now() + this.config.get('TOKEN_ACCESS_EXPIRY_MS');
     localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
     localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
     localStorage.setItem(ACCESS_TOKEN_EXPIRES_AT_KEY, expiresAt.toString());
