@@ -46,6 +46,11 @@ const SCHEMA: ValidationSchema = {
   },
   TOKEN_REFRESH_EXPIRY_MS: {
     type: 'number',
+    /**
+     * Validates that the value is a positive integer representing milliseconds.
+     * @param {number} v - The raw numeric value from the config payload.
+     * @returns {boolean} `true` if the value is a whole number greater than zero.
+     */
     validate: (v) => Number.isInteger(v) && v > 0,
     hint: 'Must be a positive integer (ms)  →  e.g. 604800000 (= 7 days)',
   },
