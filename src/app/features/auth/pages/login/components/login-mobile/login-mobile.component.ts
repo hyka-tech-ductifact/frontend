@@ -1,5 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   IonCheckbox,
@@ -22,6 +29,19 @@ import type { LoginRequest, RegisterFormData } from '../../../../../../core/mode
 
 /** Union type representing the two available authentication tabs. */
 type AuthTab = 'login' | 'signup';
+
+/**
+ * Cross-field validator applied to the signup `FormGroup`.
+ * Returns a `passwordsMismatch` error when `password` and `confirmPassword`
+ * are both non-empty and do not match.
+ * @param {AbstractControl} group - The signup `FormGroup` instance.
+ * @returns {ValidationErrors | null} Error object or `null` when passwords match.
+ */
+function passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
+  const password = group.get('password')?.value as string;
+  const confirm = group.get('confirmPassword')?.value as string;
+  return password && confirm && password !== confirm ? { passwordsMismatch: true } : null;
+}
 
 const ACTIVE_TAB_CLASS =
   'flex-1 py-3 text-sm font-semibold !rounded-xl bg-white text-sky-600 shadow-sm transition-all ring-1 ring-black/5 active:scale-95';
@@ -125,14 +145,31 @@ export class LoginMobileComponent {
   });
 
   /** Reactive form group for the signup tab. */
-  readonly signupForm = new FormGroup({
-    fullName: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    phone: new FormControl(''),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    confirmPassword: new FormControl('', [Validators.required]),
-    terms: new FormControl(false, [Validators.requiredTrue]),
-  });
+  readonly signupForm = new FormGroup(
+    {
+      fullName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      phone: new FormControl(''),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$/),
+      ]),
+      confirmPassword: new FormControl('', [Validators.required]),
+      terms: new FormControl(false, [Validators.requiredTrue]),
+    },
+    { validators: passwordsMatchValidator },
+  );
+
+  /**
+   * True when `password` and `confirmPassword` differ and the confirm field has been touched.
+   * @returns {boolean} Whether the passwords-mismatch error should be displayed.
+   */
+  get passwordsMismatch(): boolean {
+    return (
+      this.signupForm.hasError('passwordsMismatch') &&
+      (this.signupForm.get('confirmPassword')?.touched ?? false)
+    );
+  }
 
   /**
    * Switches the active authentication tab.

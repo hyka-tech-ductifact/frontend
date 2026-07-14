@@ -23,7 +23,7 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly config = inject(ConfigService);
   private readonly translate = inject(TranslateService);
-  private readonly baseUrl = `${this.config.get('BACKEND_URL')}/v1/auth`;
+  private readonly baseUrl = `${this.config.get('BACKEND_URL')}/auth`;
 
   /**
    * True when a non-expired access token exists in localStorage.
