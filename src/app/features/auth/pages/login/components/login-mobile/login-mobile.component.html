@@ -209,7 +209,7 @@
           </ion-item>
         </div>
 
-        <!-- Phone -->
+        <!-- Phone
         <div class="space-y-2">
           <label class="text-sm font-semibold text-slate-700 ml-1">{{
             'AUTH.SIGNUP.PHONE_LABEL' | translate
@@ -223,7 +223,7 @@
               [placeholder]="'AUTH.SIGNUP.PHONE_PLACEHOLDER' | translate"
             ></ion-input>
           </ion-item>
-        </div>
+        </div> -->
 
         <!-- Password + Strength -->
         <div class="space-y-2">
@@ -282,6 +282,11 @@
               ></ion-icon>
             </button>
           </ion-item>
+          @if (passwordsMismatch) {
+            <p class="text-xs text-red-500 mt-1 ml-1">
+              {{ 'AUTH.SIGNUP.PASSWORDS_DONT_MATCH' | translate }}
+            </p>
+          }
         </div>
 
         <!-- Terms -->
@@ -305,7 +310,8 @@
         <!-- Submit -->
         <button
           type="submit"
-          class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide"
+          [disabled]="signupForm.invalid || isLoading()"
+          class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {{ 'AUTH.SIGNUP.CREATE_ACCOUNT_BTN' | translate }}
         </button>

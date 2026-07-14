@@ -34,7 +34,7 @@ const SCHEMA: ValidationSchema = {
     validate: (v) => /^https?:\/\/.+/.test(v),
     hint: 'Must be a valid http(s) URL  →  e.g. https://api.example.com',
   },
-  TOKEN_EXPIRY_MS: {
+  TOKEN_ACCESS_EXPIRY_MS: {
     type: 'number',
     /**
      * Validates that the value is a positive integer representing milliseconds.
@@ -43,6 +43,16 @@ const SCHEMA: ValidationSchema = {
      */
     validate: (v) => Number.isInteger(v) && v > 0,
     hint: 'Must be a positive integer (ms)  →  e.g. 900000 (= 15 minutes)',
+  },
+  TOKEN_REFRESH_EXPIRY_MS: {
+    type: 'number',
+    /**
+     * Validates that the value is a positive integer representing milliseconds.
+     * @param {number} v - The raw numeric value from the config payload.
+     * @returns {boolean} `true` if the value is a whole number greater than zero.
+     */
+    validate: (v) => Number.isInteger(v) && v > 0,
+    hint: 'Must be a positive integer (ms)  →  e.g. 604800000 (= 7 days)',
   },
   FILE_STORAGE_URL: {
     type: 'string',
