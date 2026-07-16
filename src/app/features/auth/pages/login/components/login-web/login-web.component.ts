@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import type { LoginRequest, RegisterFormData } from '../../../../../../core/models/auth.models';
+import type { LoginRequest, RegisterPendingData } from '../../../../../../core/models/auth.models';
 
 /** Union type representing the two available authentication tabs. */
 type AuthTab = 'login' | 'signup';
@@ -48,11 +48,17 @@ export class LoginWebComponent {
   /** Current error message key to display, or null when there is no error. */
   readonly error = input<string | null>(null);
 
+  /** Whether the signup flow is in the OTP verification step. */
+  readonly isVerificationStep = input(false);
+
   /** Emitted with login credentials when the user submits the login form. */
   readonly loginSubmit = output<LoginRequest>();
 
-  /** Emitted with signup credentials when the user submits the signup form. */
-  readonly signupSubmit = output<RegisterFormData>();
+  /** Emitted with registration data when the user submits the signup form (Step 1). */
+  readonly registerSubmitted = output<RegisterPendingData>();
+
+  /** Emitted with the OTP code when the user submits the verification form (Step 2). */
+  readonly verificationSubmitted = output<string>();
 
   /** Signal tracking the currently active tab ('login' or 'signup'). */
   readonly activeTab = signal<AuthTab>('login');
@@ -138,6 +144,15 @@ export class LoginWebComponent {
     { validators: passwordsMatchValidator },
   );
 
+  /** Reactive form group for the OTP verification step. */
+  readonly verificationForm = new FormGroup({
+    code: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(10),
+    ]),
+  });
+
   /**
    * True when `password` and `confirmPassword` differ and the confirm field has been touched.
    * @returns {boolean} Whether the passwords-mismatch error should be displayed.
@@ -215,22 +230,30 @@ export class LoginWebComponent {
   }
 
   /**
-   * Validates and submits the signup form. Marks all fields as touched when invalid
-   * to trigger validation messages, or emits the credentials to the parent.
+   * Validates and submits the signup form (Step 1 — request OTP). Marks all fields as
+   * touched when invalid to trigger validation messages, or emits the registration data.
    * @returns {void}
    */
-  onSignupSubmit(): void {
+  onRegisterSubmit(): void {
     if (this.signupForm.invalid) {
       this.signupForm.markAllAsTouched();
       return;
     }
-    const { fullName, email, phone, password, confirmPassword } = this.signupForm.value;
-    this.signupSubmit.emit({
-      fullName: fullName!,
-      email: email!,
-      phone: phone ?? undefined,
-      password: password!,
-      confirmPassword: confirmPassword!,
-    });
+    const { fullName, email, password } = this.signupForm.value;
+    this.registerSubmitted.emit({ name: fullName!, email: email!, password: password! });
+  }
+
+  /**
+   * Validates and submits the OTP verification form (Step 2 — verify & complete registration).
+   * Marks the code field as touched when invalid, or emits the code to the parent.
+   * @returns {void}
+   */
+  onVerificationSubmit(): void {
+    if (this.verificationForm.invalid) {
+      this.verificationForm.markAllAsTouched();
+      return;
+    }
+    const { code } = this.verificationForm.value;
+    this.verificationSubmitted.emit(code!);
   }
 }

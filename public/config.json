@@ -1,6 +1,6 @@
 {
     "BACKEND_URL": "https://ductifact-staging-api.jcapsule.work/v1",
-    "TOKEN_ACCESS_EXPIRY_MS": 900000,
-    "TOKEN_REFRESH_EXPIRY_MS": 604800000,
+    "JWT_ACCESS_TOKEN_TTL_SECONDS": 900000,
+    "JWT_REFRESH_TOKEN_TTL_SECONDS": 604800000,
     "FILE_STORAGE_URL": "http://localhost:9000/ductifact"
 }

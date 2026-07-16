@@ -40,7 +40,13 @@
             "ALREADY_HAVE_ACCOUNT": "Already have an account?",
             "SIGN_IN_LINK": "Sign in",
             "DIVIDER_OR_EMAIL": "OR SIGN UP WITH EMAIL",
-            "PASSWORDS_DONT_MATCH": "Passwords don't match"
+            "PASSWORDS_DONT_MATCH": "Passwords don't match",
+            "VERIFY_TITLE": "Verify your email",
+            "VERIFY_SUBTITLE": "We've sent a verification code to your email. Please enter the code below to complete your registration.",
+            "VERIFY_CODE_LABEL": "Verification Code",
+            "VERIFY_CODE_PLACEHOLDER": "Enter the verification code",
+            "VERIFY_BTN": "VERIFY",
+            "VERIFY_VERIFYING": "VERIFYING..."
         },
         "SOCIAL": {
             "GOOGLE": "Google",

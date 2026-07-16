@@ -16,6 +16,22 @@ export interface RegisterRequest {
   locale?: AppLocale;
 }
 
+/** Payload sent to POST /auth/register/verify to complete OTP-based registration. */
+export interface VerifyRegisterRequest {
+  email: string;
+  code: string;
+  name: string;
+  password: string;
+  locale?: AppLocale;
+}
+
+/** Temporary registration data held in sessionStorage during the OTP verification step. */
+export interface RegisterPendingData {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export interface LogoutRequest {
   refresh_token: string;
 }

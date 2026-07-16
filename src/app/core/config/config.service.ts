@@ -34,7 +34,7 @@ const SCHEMA: ValidationSchema = {
     validate: (v) => /^https?:\/\/.+/.test(v),
     hint: 'Must be a valid http(s) URL  →  e.g. https://api.example.com',
   },
-  TOKEN_ACCESS_EXPIRY_MS: {
+  JWT_ACCESS_TOKEN_TTL_SECONDS: {
     type: 'number',
     /**
      * Validates that the value is a positive integer representing milliseconds.
@@ -44,7 +44,7 @@ const SCHEMA: ValidationSchema = {
     validate: (v) => Number.isInteger(v) && v > 0,
     hint: 'Must be a positive integer (ms)  →  e.g. 900000 (= 15 minutes)',
   },
-  TOKEN_REFRESH_EXPIRY_MS: {
+  JWT_REFRESH_TOKEN_TTL_SECONDS: {
     type: 'number',
     /**
      * Validates that the value is a positive integer representing milliseconds.

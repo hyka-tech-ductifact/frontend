@@ -5,12 +5,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '../config/config.service';
 import type {
   LoginRequest,
-  RegisterRequest,
   AuthResponse,
   TokenResponse,
   LogoutRequest,
   UserResponse,
   AppLocale,
+  VerifyRegisterRequest,
+  MessageResponse,
 } from '../models/auth.models';
 
 export const ACCESS_TOKEN_KEY = 'auth_access_token';
@@ -53,18 +54,26 @@ export class AuthService {
   }
 
   /**
-   * Registers a new user account. Passes the user's current UI locale to the backend.
-   * Persists the returned token pair and user profile, then sets `isAuthenticated` to `true`.
-   * @param {string} name - The new user's full name.
-   * @param {string} email - The new user's email address.
-   * @param {string} password - The new user's password (minimum 8 characters).
-   * @returns {Promise<void>} Resolves when the registration request completes successfully.
+   * Initiates the OTP-based registration flow by sending the user's email to the backend.
+   * The backend responds with a one-time code sent to that address.
+   * @param {string} email - The email address to register.
+   * @returns {Promise<void>} Resolves when the OTP request is accepted.
    */
-  async register(name: string, email: string, password: string): Promise<void> {
+  async register(email: string): Promise<void> {
+    await firstValueFrom(this.http.post<MessageResponse>(`${this.baseUrl}/register`, { email }));
+  }
+
+  /**
+   * Completes the OTP registration flow. Verifies the code and creates the account.
+   * Persists the returned token pair and user profile, then sets `isAuthenticated` to `true`.
+   * @param {VerifyRegisterRequest} payload - The email, OTP code, name, and password.
+   * @returns {Promise<void>} Resolves when the account is created and session is persisted.
+   */
+  async verifyRegister(payload: VerifyRegisterRequest): Promise<void> {
     const locale = (this.translate.currentLang ?? 'es') as AppLocale;
-    const body: RegisterRequest = { name, email, password, locale };
+    const body: VerifyRegisterRequest = { ...payload, locale };
     const response = await firstValueFrom(
-      this.http.post<AuthResponse>(`${this.baseUrl}/register`, body),
+      this.http.post<AuthResponse>(`${this.baseUrl}/register/verify`, body),
     );
     this.persistSession(response);
   }
@@ -124,7 +133,7 @@ export class AuthService {
    * @returns {void}
    */
   private persistTokenPair(accessToken: string, refreshToken: string): void {
-    const expiresAt = Date.now() + this.config.get('TOKEN_ACCESS_EXPIRY_MS');
+    const expiresAt = Date.now() + this.config.get('JWT_ACCESS_TOKEN_TTL_SECONDS');
     localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
     localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
     localStorage.setItem(ACCESS_TOKEN_EXPIRES_AT_KEY, expiresAt.toString());

@@ -40,7 +40,13 @@
             "ALREADY_HAVE_ACCOUNT": "¿Ya tienes una cuenta?",
             "SIGN_IN_LINK": "Iniciar sesión",
             "DIVIDER_OR_EMAIL": "O REGÍSTRATE CON EMAIL",
-            "PASSWORDS_DONT_MATCH": "Las contraseñas no coinciden"
+            "PASSWORDS_DONT_MATCH": "Las contraseñas no coinciden",
+            "VERIFY_TITLE": "Verifica tu correo electrónico",
+            "VERIFY_SUBTITLE": "Hemos enviado un código de verificación a tu correo electrónico. Por favor, introduce el código a continuación para completar tu registro.",
+            "VERIFY_CODE_LABEL": "Código de verificación",
+            "VERIFY_CODE_PLACEHOLDER": "Introduce el código de verificación",
+            "VERIFY_BTN": "VERIFICAR",
+            "VERIFY_VERIFYING": "VERIFICANDO..."
         },
         "SOCIAL": {
             "GOOGLE": "Google",
