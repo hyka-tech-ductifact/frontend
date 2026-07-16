@@ -1,3 +1,19 @@
 @if (deviceService.isMobile()) {
-<app-login-mobile [isLoading]="isLoading()" [error]="errorMessage()" [isVerificationStep]="isVerificationStep()" (loginSubmit)="onLogin($event)" (registerSubmitted)="onRegister($event)" (verificationSubmitted)="onVerification($event)" /> } @else {
-<app-login-web [isLoading]="isLoading()" [error]="errorMessage()" [isVerificationStep]="isVerificationStep()" (loginSubmit)="onLogin($event)" (registerSubmitted)="onRegister($event)" (verificationSubmitted)="onVerification($event)" /> }
+  <app-login-mobile
+    [isLoading]="isLoading()"
+    [error]="errorMessage()"
+    [isVerificationStep]="isVerificationStep()"
+    (loginSubmit)="onLogin($event)"
+    (registerSubmitted)="onRegister($event)"
+    (verificationSubmitted)="onVerification($event)"
+  />
+} @else {
+  <app-login-web
+    [isLoading]="isLoading()"
+    [error]="errorMessage()"
+    [isVerificationStep]="isVerificationStep()"
+    (loginSubmit)="onLogin($event)"
+    (registerSubmitted)="onRegister($event)"
+    (verificationSubmitted)="onVerification($event)"
+  />
+}
