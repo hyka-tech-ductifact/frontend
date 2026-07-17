@@ -21,18 +21,18 @@ export interface AppConfig {
   /**
    * Access token validity window in milliseconds.
    * Must mirror the backend `JWT_TOKEN_DURATION` setting.
-   * Maps to the container env var `TOKEN_ACCESS_EXPIRY_MS`.
+   * Maps to the container env var `JWT_ACCESS_TOKEN_TTL_SECONDS`.
    * @example 900000 (= 15 minutes)
    */
-  TOKEN_ACCESS_EXPIRY_MS: number;
+  JWT_ACCESS_TOKEN_TTL_SECONDS: number;
 
   /**
    * Refresh token validity window in milliseconds.
    * Must mirror the backend `JWT_REFRESH_TOKEN_DURATION` setting.
-   * Maps to the container env var `TOKEN_REFRESH_EXPIRY_MS`.
+   * Maps to the container env var `JWT_REFRESH_TOKEN_TTL_SECONDS`.
    * @example 604800000 (= 7 days)
    */
-  TOKEN_REFRESH_EXPIRY_MS: number;
+  JWT_REFRESH_TOKEN_TTL_SECONDS: number;
 
   /**
    * Base URL for MinIO S3 object-storage assets (bucket endpoint).

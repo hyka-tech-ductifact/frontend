@@ -2,14 +2,18 @@
   <app-login-mobile
     [isLoading]="isLoading()"
     [error]="errorMessage()"
+    [isVerificationStep]="isVerificationStep()"
     (loginSubmit)="onLogin($event)"
-    (signupSubmit)="onSignup($event)"
+    (registerSubmitted)="onRegister($event)"
+    (verificationSubmitted)="onVerification($event)"
   />
 } @else {
   <app-login-web
     [isLoading]="isLoading()"
     [error]="errorMessage()"
+    [isVerificationStep]="isVerificationStep()"
     (loginSubmit)="onLogin($event)"
-    (signupSubmit)="onSignup($event)"
+    (registerSubmitted)="onRegister($event)"
+    (verificationSubmitted)="onVerification($event)"
   />
 }

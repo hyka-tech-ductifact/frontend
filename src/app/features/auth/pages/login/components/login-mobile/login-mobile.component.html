@@ -145,177 +145,213 @@
 
     <!-- ── SIGNUP FORM ───────────────────────────────────────────── -->
     @if (activeTab() === 'signup') {
-      <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()" class="space-y-5">
-        <!-- Social Buttons -->
-        <div class="space-y-3 mb-6">
-          <button
-            type="button"
-            class="w-full h-12 bg-white border border-slate-200 !rounded-xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm"
-          >
-            <i class="fa-brands fa-google text-xl text-red-500"></i>
-            <span class="text-sm font-semibold text-slate-700">{{
-              'AUTH.SOCIAL.SIGNUP_GOOGLE' | translate
-            }}</span>
-          </button>
-          <button
-            type="button"
-            class="w-full h-12 bg-white border border-slate-200 !rounded-xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm"
-          >
-            <i class="fa-brands fa-apple text-xl text-slate-900"></i>
-            <span class="text-sm font-semibold text-slate-700">{{
-              'AUTH.SOCIAL.SIGNUP_APPLE' | translate
-            }}</span>
-          </button>
-        </div>
-
-        <!-- Divider -->
-        <div class="flex items-center my-6">
-          <div class="flex-1 h-px bg-slate-200"></div>
-          <span class="px-4 text-xs text-slate-400 font-medium tracking-wider">{{
-            'AUTH.SIGNUP.DIVIDER_OR_EMAIL' | translate
-          }}</span>
-          <div class="flex-1 h-px bg-slate-200"></div>
-        </div>
-
-        <!-- Full Name -->
-        <div class="space-y-2">
-          <label class="text-sm font-semibold text-slate-700 ml-1">{{
-            'AUTH.SIGNUP.FULL_NAME_LABEL' | translate
-          }}</label>
-          <ion-item lines="none" class="custom-input">
-            <ion-icon slot="start" name="person-outline"></ion-icon>
-            <ion-input
-              type="text"
-              formControlName="fullName"
-              [placeholder]="'AUTH.SIGNUP.FULL_NAME_PLACEHOLDER' | translate"
-            ></ion-input>
-          </ion-item>
-        </div>
-
-        <!-- Email -->
-        <div class="space-y-2">
-          <label class="text-sm font-semibold text-slate-700 ml-1">{{
-            'AUTH.LOGIN.EMAIL_LABEL' | translate
-          }}</label>
-          <ion-item lines="none" class="custom-input">
-            <ion-icon slot="start" name="mail-outline"></ion-icon>
-            <ion-input
-              type="email"
-              inputmode="email"
-              autocomplete="email"
-              formControlName="email"
-              [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"
-            ></ion-input>
-          </ion-item>
-        </div>
-
-        <!-- Phone
-        <div class="space-y-2">
-          <label class="text-sm font-semibold text-slate-700 ml-1">{{
-            'AUTH.SIGNUP.PHONE_LABEL' | translate
-          }}</label>
-          <ion-item lines="none" class="custom-input">
-            <ion-icon slot="start" name="call-outline"></ion-icon>
-            <ion-input
-              type="tel"
-              autocomplete="tel"
-              formControlName="phone"
-              [placeholder]="'AUTH.SIGNUP.PHONE_PLACEHOLDER' | translate"
-            ></ion-input>
-          </ion-item>
-        </div> -->
-
-        <!-- Password + Strength -->
-        <div class="space-y-2">
-          <label class="text-sm font-semibold text-slate-700 ml-1">{{
-            'AUTH.LOGIN.PASSWORD_LABEL' | translate
-          }}</label>
-          <ion-item lines="none" class="custom-input">
-            <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-            <ion-input
-              [type]="showSignupPassword() ? 'text' : 'password'"
-              autocomplete="new-password"
-              formControlName="password"
-              [placeholder]="'AUTH.SIGNUP.PASSWORD_CREATE_PLACEHOLDER' | translate"
-              (ionInput)="onPasswordInput($event)"
-            ></ion-input>
-            <button type="button" slot="end" class="toggle-btn" (click)="toggleSignupPassword()">
-              <ion-icon
-                [name]="showSignupPassword() ? 'eye-off-outline' : 'eye-outline'"
-              ></ion-icon>
+      @if (!isVerificationStep()) {
+        <form [formGroup]="signupForm" (ngSubmit)="onRegisterSubmit()" class="space-y-5">
+          <!-- Social Buttons -->
+          <div class="space-y-3 mb-6">
+            <button
+              type="button"
+              class="w-full h-12 bg-white border border-slate-200 !rounded-xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm"
+            >
+              <i class="fa-brands fa-google text-xl text-red-500"></i>
+              <span class="text-sm font-semibold text-slate-700">{{
+                'AUTH.SOCIAL.SIGNUP_GOOGLE' | translate
+              }}</span>
             </button>
-          </ion-item>
-          <!-- Strength Bars -->
-          <div class="flex space-x-1 mt-2 px-1">
-            @for (bar of strengthBars; track bar) {
-              <div
-                class="flex-1 h-1 rounded-full transition-colors duration-300"
-                [class.bg-slate-200]="bar >= passwordStrength()"
-                [class.bg-red-500]="bar < passwordStrength() && passwordStrength() <= 1"
-                [class.bg-yellow-500]="bar < passwordStrength() && passwordStrength() === 2"
-                [class.bg-blue-400]="bar < passwordStrength() && passwordStrength() === 3"
-                [class.bg-green-500]="bar < passwordStrength() && passwordStrength() >= 4"
-              ></div>
+            <button
+              type="button"
+              class="w-full h-12 bg-white border border-slate-200 !rounded-xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm"
+            >
+              <i class="fa-brands fa-apple text-xl text-slate-900"></i>
+              <span class="text-sm font-semibold text-slate-700">{{
+                'AUTH.SOCIAL.SIGNUP_APPLE' | translate
+              }}</span>
+            </button>
+          </div>
+
+          <!-- Divider -->
+          <div class="flex items-center my-6">
+            <div class="flex-1 h-px bg-slate-200"></div>
+            <span class="px-4 text-xs text-slate-400 font-medium tracking-wider">{{
+              'AUTH.SIGNUP.DIVIDER_OR_EMAIL' | translate
+            }}</span>
+            <div class="flex-1 h-px bg-slate-200"></div>
+          </div>
+
+          <!-- Full Name -->
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-slate-700 ml-1">{{
+              'AUTH.SIGNUP.FULL_NAME_LABEL' | translate
+            }}</label>
+            <ion-item lines="none" class="custom-input">
+              <ion-icon slot="start" name="person-outline"></ion-icon>
+              <ion-input
+                type="text"
+                formControlName="fullName"
+                [placeholder]="'AUTH.SIGNUP.FULL_NAME_PLACEHOLDER' | translate"
+              ></ion-input>
+            </ion-item>
+          </div>
+
+          <!-- Email -->
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-slate-700 ml-1">{{
+              'AUTH.LOGIN.EMAIL_LABEL' | translate
+            }}</label>
+            <ion-item lines="none" class="custom-input">
+              <ion-icon slot="start" name="mail-outline"></ion-icon>
+              <ion-input
+                type="email"
+                inputmode="email"
+                autocomplete="email"
+                formControlName="email"
+                [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"
+              ></ion-input>
+            </ion-item>
+          </div>
+          <!-- Password + Strength -->
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-slate-700 ml-1">{{
+              'AUTH.LOGIN.PASSWORD_LABEL' | translate
+            }}</label>
+            <ion-item lines="none" class="custom-input">
+              <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              <ion-input
+                [type]="showSignupPassword() ? 'text' : 'password'"
+                autocomplete="new-password"
+                formControlName="password"
+                [placeholder]="'AUTH.SIGNUP.PASSWORD_CREATE_PLACEHOLDER' | translate"
+                (ionInput)="onPasswordInput($event)"
+              ></ion-input>
+              <button type="button" slot="end" class="toggle-btn" (click)="toggleSignupPassword()">
+                <ion-icon
+                  [name]="showSignupPassword() ? 'eye-off-outline' : 'eye-outline'"
+                ></ion-icon>
+              </button>
+            </ion-item>
+            <!-- Strength Bars -->
+            <div class="flex space-x-1 mt-2 px-1">
+              @for (bar of strengthBars; track bar) {
+                <div
+                  class="flex-1 h-1 rounded-full transition-colors duration-300"
+                  [class.bg-slate-200]="bar >= passwordStrength()"
+                  [class.bg-red-500]="bar < passwordStrength() && passwordStrength() <= 1"
+                  [class.bg-yellow-500]="bar < passwordStrength() && passwordStrength() === 2"
+                  [class.bg-blue-400]="bar < passwordStrength() && passwordStrength() === 3"
+                  [class.bg-green-500]="bar < passwordStrength() && passwordStrength() >= 4"
+                ></div>
+              }
+            </div>
+            <p class="text-xs text-slate-500 mt-1 ml-1">
+              {{ 'AUTH.SIGNUP.PASSWORD_HINT' | translate }}
+            </p>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-slate-700 ml-1">{{
+              'AUTH.SIGNUP.CONFIRM_PASSWORD_LABEL' | translate
+            }}</label>
+            <ion-item lines="none" class="custom-input">
+              <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              <ion-input
+                [type]="showConfirmPassword() ? 'text' : 'password'"
+                autocomplete="new-password"
+                formControlName="confirmPassword"
+                [placeholder]="'AUTH.SIGNUP.CONFIRM_PASSWORD_PLACEHOLDER' | translate"
+              ></ion-input>
+              <button type="button" slot="end" class="toggle-btn" (click)="toggleConfirmPassword()">
+                <ion-icon
+                  [name]="showConfirmPassword() ? 'eye-off-outline' : 'eye-outline'"
+                ></ion-icon>
+              </button>
+            </ion-item>
+            @if (passwordsMismatch) {
+              <p class="text-xs text-red-500 mt-1 ml-1">
+                {{ 'AUTH.SIGNUP.PASSWORDS_DONT_MATCH' | translate }}
+              </p>
             }
           </div>
-          <p class="text-xs text-slate-500 mt-1 ml-1">
-            {{ 'AUTH.SIGNUP.PASSWORD_HINT' | translate }}
-          </p>
-        </div>
 
-        <!-- Confirm Password -->
-        <div class="space-y-2">
-          <label class="text-sm font-semibold text-slate-700 ml-1">{{
-            'AUTH.SIGNUP.CONFIRM_PASSWORD_LABEL' | translate
-          }}</label>
-          <ion-item lines="none" class="custom-input">
-            <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-            <ion-input
-              [type]="showConfirmPassword() ? 'text' : 'password'"
-              autocomplete="new-password"
-              formControlName="confirmPassword"
-              [placeholder]="'AUTH.SIGNUP.CONFIRM_PASSWORD_PLACEHOLDER' | translate"
-            ></ion-input>
-            <button type="button" slot="end" class="toggle-btn" (click)="toggleConfirmPassword()">
-              <ion-icon
-                [name]="showConfirmPassword() ? 'eye-off-outline' : 'eye-outline'"
-              ></ion-icon>
-            </button>
-          </ion-item>
-          @if (passwordsMismatch) {
-            <p class="text-xs text-red-500 mt-1 ml-1">
-              {{ 'AUTH.SIGNUP.PASSWORDS_DONT_MATCH' | translate }}
+          <!-- Terms -->
+          <div class="flex items-center gap-3 pt-2">
+            <ion-checkbox
+              formControlName="terms"
+              class="custom-checkbox flex-shrink-0"
+            ></ion-checkbox>
+            <label class="text-xs text-slate-600 leading-relaxed">
+              {{ 'AUTH.SIGNUP.TERMS_AGREE' | translate }}
+              <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
+                'AUTH.FOOTER.TERMS_OF_SERVICE' | translate
+              }}</a>
+              {{ 'COMMON.AND' | translate }}
+              <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
+                'AUTH.FOOTER.PRIVACY_POLICY' | translate
+              }}</a>
+            </label>
+          </div>
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            [disabled]="signupForm.invalid || isLoading()"
+            class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {{ 'AUTH.SIGNUP.CREATE_ACCOUNT_BTN' | translate }}
+          </button>
+        </form>
+      } @else {
+        <!-- ── OTP VERIFICATION STEP ─────────────────────────────── -->
+        <form [formGroup]="verificationForm" (ngSubmit)="onVerificationSubmit()" class="space-y-6">
+          <div class="text-center pb-4">
+            <div
+              class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="fa-solid fa-envelope-open-text text-sky-600 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">
+              {{ 'AUTH.SIGNUP.VERIFY_TITLE' | translate }}
+            </h3>
+            <p class="text-sm text-slate-500 leading-relaxed">
+              {{ 'AUTH.SIGNUP.VERIFY_SUBTITLE' | translate }}
             </p>
-          }
-        </div>
+          </div>
 
-        <!-- Terms -->
-        <div class="flex items-center gap-3 pt-2">
-          <ion-checkbox
-            formControlName="terms"
-            class="custom-checkbox flex-shrink-0"
-          ></ion-checkbox>
-          <label class="text-xs text-slate-600 leading-relaxed">
-            {{ 'AUTH.SIGNUP.TERMS_AGREE' | translate }}
-            <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
-              'AUTH.FOOTER.TERMS_OF_SERVICE' | translate
-            }}</a>
-            {{ 'COMMON.AND' | translate }}
-            <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
-              'AUTH.FOOTER.PRIVACY_POLICY' | translate
-            }}</a>
-          </label>
-        </div>
+          <!-- OTP Code Input -->
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-slate-700 ml-1">
+              {{ 'AUTH.SIGNUP.VERIFY_CODE_LABEL' | translate }}
+            </label>
+            <ion-item lines="none" class="custom-input">
+              <ion-icon slot="start" name="shield-checkmark-outline"></ion-icon>
+              <ion-input
+                type="text"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                formControlName="code"
+                [placeholder]="'AUTH.SIGNUP.VERIFY_CODE_PLACEHOLDER' | translate"
+              ></ion-input>
+            </ion-item>
+          </div>
 
-        <!-- Submit -->
-        <button
-          type="submit"
-          [disabled]="signupForm.invalid || isLoading()"
-          class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-70 disabled:cursor-not-allowed"
-        >
-          {{ 'AUTH.SIGNUP.CREATE_ACCOUNT_BTN' | translate }}
-        </button>
-      </form>
+          <!-- Submit -->
+          <button
+            type="submit"
+            [disabled]="isLoading()"
+            class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            @if (isLoading()) {
+              <ion-spinner
+                name="crescent"
+                style="--color: #ffffff; width: 1rem; height: 1rem"
+              ></ion-spinner>
+              {{ 'AUTH.SIGNUP.VERIFY_VERIFYING' | translate }}
+            } @else {
+              {{ 'AUTH.SIGNUP.VERIFY_BTN' | translate }}
+            }
+          </button>
+        </form>
+      }
     }
 
     <!-- Features Section -->

@@ -5,8 +5,8 @@
 #
 # Required environment variables:
 #   BACKEND_URL            Full http(s) origin of the backend API.
-#   TOKEN_ACCESS_EXPIRY_MS Access token validity window in milliseconds (positive integer).
-#   TOKEN_REFRESH_EXPIRY_MS Refresh token validity window in milliseconds (positive integer).
+#   JWT_ACCESS_TOKEN_TTL_SECONDS Access token validity window in milliseconds (positive integer).
+#   JWT_REFRESH_TOKEN_TTL_SECONDS Refresh token validity window in milliseconds (positive integer).
 #   FILE_STORAGE_URL       Base URL for MinIO S3 object-storage assets.
 #
 # The generated config.json is fetched by ConfigService via APP_INITIALIZER
@@ -20,19 +20,19 @@ set -e
 #    message if the variable is unset or empty.
 # ---------------------------------------------------------------------------
 : "${BACKEND_URL:?[entrypoint] BACKEND_URL is required but not set}"
-: "${TOKEN_ACCESS_EXPIRY_MS:?[entrypoint] TOKEN_ACCESS_EXPIRY_MS is required but not set}"
-: "${TOKEN_REFRESH_EXPIRY_MS:?[entrypoint] TOKEN_REFRESH_EXPIRY_MS is required but not set}"
+: "${JWT_ACCESS_TOKEN_TTL_SECONDS:?[entrypoint] JWT_ACCESS_TOKEN_TTL_SECONDS is required but not set}"
+: "${JWT_REFRESH_TOKEN_TTL_SECONDS:?[entrypoint] JWT_REFRESH_TOKEN_TTL_SECONDS is required but not set}"
 : "${FILE_STORAGE_URL:?[entrypoint] FILE_STORAGE_URL is required but not set}"
 
 # ---------------------------------------------------------------------------
 # 2. Write config.json to the nginx HTML root.
-#    TOKEN_ACCESS_EXPIRY_MS and TOKEN_REFRESH_EXPIRY_MS are intentionally unquoted — they are JSON numbers.
+#    JWT_ACCESS_TOKEN_TTL_SECONDS and JWT_REFRESH_TOKEN_TTL_SECONDS are intentionally unquoted — they are JSON numbers.
 # ---------------------------------------------------------------------------
 cat > /usr/share/nginx/html/config.json <<EOF
 {
   "BACKEND_URL": "${BACKEND_URL}",
-  "TOKEN_ACCESS_EXPIRY_MS": ${TOKEN_ACCESS_EXPIRY_MS},
-  "TOKEN_REFRESH_EXPIRY_MS": ${TOKEN_REFRESH_EXPIRY_MS},
+  "JWT_ACCESS_TOKEN_TTL_SECONDS": ${JWT_ACCESS_TOKEN_TTL_SECONDS},
+  "JWT_REFRESH_TOKEN_TTL_SECONDS": ${JWT_REFRESH_TOKEN_TTL_SECONDS},
   "FILE_STORAGE_URL": "${FILE_STORAGE_URL}"
 }
 EOF

@@ -3,9 +3,12 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
 import { AuthService } from '../../../../core/services/auth.service';
 import { DeviceService } from '../../../../core/services/device.service';
-import type { LoginRequest, RegisterFormData } from '../../../../core/models/auth.models';
+import type { LoginRequest, RegisterPendingData } from '../../../../core/models/auth.models';
 import { LoginMobileComponent } from './components/login-mobile/login-mobile.component';
 import { LoginWebComponent } from './components/login-web/login-web.component';
+
+/** sessionStorage key for pending registration data during the OTP verification step. */
+const PENDING_REGISTER_KEY = 'auth_pending_register';
 
 /**
  * Smart (container) component for the login/signup page.
@@ -31,6 +34,9 @@ export class LoginComponent {
   /** Signal holding the current error message key, or null when there is no error. */
   readonly errorMessage = signal<string | null>(null);
 
+  /** Signal indicating whether the signup flow is in the OTP verification step. */
+  readonly isVerificationStep = signal(false);
+
   /**
    * Handles the login form submission. Calls `AuthService.login` and navigates
    * to the client area on success, or displays an error toast on failure.
@@ -53,25 +59,55 @@ export class LoginComponent {
   }
 
   /**
-   * Handles the signup form submission. Calls `AuthService.register` and navigates
-   * to the client area on success, or displays an error toast on failure.
-   * @param {RegisterFormData} credentials - The registration data provided by the user.
-   * @returns {Promise<void>} Resolves when the signup flow completes.
+   * Handles the signup form submission (Step 1 of OTP registration).
+   * Persists the registration data to sessionStorage, sends an OTP to the provided
+   * email, then advances the child components to the verification step.
+   * @param {RegisterPendingData} data - The name, email, and password collected by the form.
+   * @returns {Promise<void>} Resolves when the OTP request completes.
    */
-  async onSignup(credentials: RegisterFormData): Promise<void> {
+  async onRegister(data: RegisterPendingData): Promise<void> {
     if (this.isLoading()) return;
     this.isLoading.set(true);
     this.errorMessage.set(null);
     try {
-      await this.authService.register(
-        credentials.fullName,
-        credentials.email,
-        credentials.password,
-      );
+      sessionStorage.setItem(PENDING_REGISTER_KEY, JSON.stringify(data));
+      await this.authService.register(data.email);
+      this.isVerificationStep.set(true);
+    } catch {
+      this.errorMessage.set('AUTH.REGISTER.ERROR_REQUEST_FAILED');
+      await this.showErrorToast('AUTH.REGISTER.ERROR_REQUEST_FAILED');
+      sessionStorage.removeItem(PENDING_REGISTER_KEY);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  /**
+   * Handles the OTP submission (Step 2 of OTP registration).
+   * Reads the pending registration data from sessionStorage, verifies the code, and
+   * navigates to the client area on success.
+   * @param {string} code - The one-time code entered by the user.
+   * @returns {Promise<void>} Resolves when the verification and navigation complete.
+   */
+  async onVerification(code: string): Promise<void> {
+    if (this.isLoading()) return;
+    this.isLoading.set(true);
+    this.errorMessage.set(null);
+    try {
+      const raw = sessionStorage.getItem(PENDING_REGISTER_KEY);
+      const pending = raw ? (JSON.parse(raw) as RegisterPendingData) : null;
+      if (!pending) throw new Error('No pending registration data found');
+      await this.authService.verifyRegister({
+        email: pending.email,
+        code,
+        name: pending.name,
+        password: pending.password,
+      });
+      sessionStorage.removeItem(PENDING_REGISTER_KEY);
       await this.router.navigate(['/client']);
     } catch {
-      this.errorMessage.set('AUTH.LOGIN.ERROR_SIGNUP_FAILED');
-      await this.showErrorToast('AUTH.LOGIN.ERROR_SIGNUP_FAILED');
+      this.errorMessage.set('AUTH.REGISTER.ERROR_VERIFY_FAILED');
+      await this.showErrorToast('AUTH.REGISTER.ERROR_VERIFY_FAILED');
     } finally {
       this.isLoading.set(false);
     }
