@@ -12,6 +12,7 @@ import type {
   AppLocale,
   VerifyRegisterRequest,
   MessageResponse,
+  ResetPasswordPayload,
 } from '../models/auth.models';
 
 export const ACCESS_TOKEN_KEY = 'auth_access_token';
@@ -176,5 +177,30 @@ export class AuthService {
     } catch {
       return null;
     }
+  }
+
+  /**
+   * Initiates the OTP-based reset flow by sending the user's email to the backend.
+   * The backend responds with a one-time code sent to that address.
+   * @param {string} email - The email address to reset the password for.
+   * @returns {Promise<void>} Resolves when the OTP request is accepted.
+   */
+  async requestPasswordResetCode(email: string): Promise<void> {
+    await firstValueFrom(
+      this.http.post<MessageResponse>(`${this.baseUrl}/password/reset`, { email }),
+    );
+  }
+
+  /**
+   * Completes the OTP reset password flow. Verifies the code and resets the password.
+   * Persists the returned token pair and user profile, then sets `isAuthenticated` to `true`.
+   * @param {ResetPasswordPayload} payload - The email, OTP code, and new password.
+   * @returns {Promise<void>} Resolves when the password is reset and session is persisted.
+   */
+  async confirmPasswordReset(payload: ResetPasswordPayload): Promise<void> {
+    const body: ResetPasswordPayload = { ...payload };
+    await firstValueFrom(
+      this.http.post<AuthResponse>(`${this.baseUrl}/password/reset/verify`, body),
+    );
   }
 }

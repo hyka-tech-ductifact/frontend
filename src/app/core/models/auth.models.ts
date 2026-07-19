@@ -99,3 +99,9 @@ export interface MessageResponse {
 export interface ErrorResponse {
   error: string;
 }
+
+export interface ResetPasswordPayload {
+  email: string;
+  code: string;
+  new_password: string; // Optional if you strip it out, or required if sending full form
+}

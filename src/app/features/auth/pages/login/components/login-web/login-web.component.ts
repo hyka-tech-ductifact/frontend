@@ -8,16 +8,20 @@ import {
   Validators,
 } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import type { LoginRequest, RegisterPendingData } from '../../../../../../core/models/auth.models';
+import type {
+  LoginRequest,
+  RegisterPendingData,
+  ResetPasswordPayload,
+} from '../../../../../../core/models/auth.models';
 
 /** Union type representing the two available authentication tabs. */
 type AuthTab = 'login' | 'signup';
 
 /**
- * Cross-field validator applied to the signup `FormGroup`.
+ * Cross-field validator applied to both signup and password reset FormGroups.
  * Returns a `passwordsMismatch` error when `password` and `confirmPassword`
  * are both non-empty and do not match.
- * @param {AbstractControl} group - The signup `FormGroup` instance.
+ * @param {AbstractControl} group - The FormGroup instance.
  * @returns {ValidationErrors | null} Error object or `null` when passwords match.
  */
 function passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
@@ -51,6 +55,12 @@ export class LoginWebComponent {
   /** Whether the signup flow is in the OTP verification step. */
   readonly isVerificationStep = input(false);
 
+  /** Signal controlling whether the UI shows the password recovery view. */
+  readonly isPasswordResetStep = signal<boolean>(false);
+
+  /** Signal tracking if the reset code has been fired to the email input target. */
+  readonly isEmailSent = signal<boolean>(false);
+
   /** Emitted with login credentials when the user submits the login form. */
   readonly loginSubmit = output<LoginRequest>();
 
@@ -59,6 +69,12 @@ export class LoginWebComponent {
 
   /** Emitted with the OTP code when the user submits the verification form (Step 2). */
   readonly verificationSubmitted = output<string>();
+
+  /** INTEGRATED: Emitted when requesting the password reset OTP code. */
+  readonly emailSubmitted = output<string>();
+
+  /** INTEGRATED: Emitted with the complete code and password payload to execute the reset. */
+  readonly resetPasswordSubmitted = output<ResetPasswordPayload>();
 
   /** Signal tracking the currently active tab ('login' or 'signup'). */
   readonly activeTab = signal<AuthTab>('login');
@@ -98,14 +114,8 @@ export class LoginWebComponent {
     this.activeTab() === 'login' ? 'AUTH.LOGIN.SUBTITLE_WELCOME' : 'AUTH.LOGIN.SUBTITLE_CREATE',
   );
 
-  // readonly rightPanelClass = computed(() =>
-  //   this.isLeftPanelCollapsed()
-  //     ? 'relative w-full flex items-center justify-center p-8 lg:p-12 xl:p-16'
-  //     : 'relative w-full lg:w-[45%] xl:w-[42%] flex items-center justify-center p-8 lg:p-12 xl:p-16'
-  // );
-
   /**
-   * Computed numeric strength score (0–4) of the current signup password.
+   * Computed numeric strength score (0–4) of the current signup or reset password.
    * Each criterion met (length ≥ 8, mixed case, digit, special character) adds 1.
    */
   readonly passwordStrength = computed(() => {
@@ -153,11 +163,32 @@ export class LoginWebComponent {
     ]),
   });
 
+  /** INTEGRATED: Reactive form group for the password recovery workflow (Steps 1 & 2). */
+  readonly resetPasswordForm = new FormGroup(
+    {
+      email: new FormControl('', [Validators.required, Validators.email]),
+      code: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$/),
+      ]),
+      confirmPassword: new FormControl('', [Validators.required]),
+    },
+    { validators: passwordsMatchValidator },
+  );
+
   /**
    * True when `password` and `confirmPassword` differ and the confirm field has been touched.
+   * Dynamically evaluates based on whether user is registering or resetting password.
    * @returns {boolean} Whether the passwords-mismatch error should be displayed.
    */
   get passwordsMismatch(): boolean {
+    if (this.isPasswordResetStep()) {
+      return (
+        this.resetPasswordForm.hasError('passwordsMismatch') &&
+        (this.resetPasswordForm.get('confirmPassword')?.touched ?? false)
+      );
+    }
     return (
       this.signupForm.hasError('passwordsMismatch') &&
       (this.signupForm.get('confirmPassword')?.touched ?? false)
@@ -171,6 +202,9 @@ export class LoginWebComponent {
    */
   switchTab(tab: AuthTab): void {
     this.activeTab.set(tab);
+    this.isPasswordResetStep.set(false);
+    this.isEmailSent.set(false);
+    this.resetPasswordForm.reset();
   }
 
   /**
@@ -182,7 +216,7 @@ export class LoginWebComponent {
   }
 
   /**
-   * Handles the native `input` event on the signup password field and updates
+   * Handles the native `input` event on the signup or reset password fields and updates
    * the `signupPasswordValue` signal used for strength calculation.
    * @param {Event} event - The native input event from the HTML input element.
    * @returns {void}
@@ -255,5 +289,41 @@ export class LoginWebComponent {
     }
     const { code } = this.verificationForm.value;
     this.verificationSubmitted.emit(code!);
+  }
+
+  /**
+   * Activates the custom multi-step recovery flow state wrapper.
+   * @returns {void}
+   */
+  onNavigateToForgot(): void {
+    this.isPasswordResetStep.set(true);
+  }
+
+  /**
+   * INTEGRATED STEP 1: Dispatches user email choice up to service layer orchestrator
+   * and blocks input modifications upon a valid local state layout evaluation.
+   * @returns {void}
+   */
+  onSendCode(): void {
+    const emailControl = this.resetPasswordForm.get('email');
+    if (emailControl?.valid && emailControl.value) {
+      this.emailSubmitted.emit(emailControl.value);
+      this.isEmailSent.set(true);
+    } else {
+      emailControl?.markAsTouched();
+    }
+  }
+
+  /**
+   * INTEGRATED STEP 2: Submits the unified collection payload back up to parent smart engine.
+   * @returns {void}
+   */
+  onResetPasswordSubmit(): void {
+    if (this.resetPasswordForm.valid && !this.passwordsMismatch) {
+      const { email, password, code } = this.resetPasswordForm.value;
+      this.resetPasswordSubmitted.emit({ email: email!, new_password: password!, code: code! });
+    } else {
+      this.resetPasswordForm.markAllAsTouched();
+    }
   }
 }
