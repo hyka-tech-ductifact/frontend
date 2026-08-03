@@ -5,9 +5,9 @@
 
 ## Workflow overview
 
-- Short-lived topic branches → PR into `main` → deploy to **staging**
-- Tag a release on `main` → deploy to **production**
-- Hotfixes go to `release` branch → tag → deploy to production → merge back into `main`
+- Short-lived topic branches → PR into `main`
+- Every merge into `main` produces an immutable candidate image
+- Promotion to production is decided and executed from `infra` (GitOps)
 
 ---
 
@@ -26,12 +26,10 @@ make dev         # starts Angular dev server at http://localhost:4200
 
 | Branch | Purpose | Example |
 |--------|---------|---------|
-| `main` | Integration branch, always deployable. Deploys to staging on merge | — |
-| `release` | Tracks production. Hotfixes go here. Reset on each new release | — |
+| `main` | Single integration branch, always deployable | — |
 | `feat/` | New features | `feat/add-login-page` |
 | `fix/` | Bug fixes | `fix/broken-navigation` |
 | `chore/` | Everything else (docs, tests, refactor, deps, CI) | `chore/update-angular` |
-| `hotfix/` | Urgent production fixes (targets `release`, not `main`) | `hotfix/fix-blank-screen` |
 
 ---
 
@@ -66,30 +64,19 @@ make build       # Production build (catches AOT errors)
 
 ---
 
-## 4) Releases
+## 4) CD model (main-only)
 
-Use **SemVer**: `vMAJOR.MINOR.PATCH`
+- We do **not** run a frontend release process (no release branch, no hotfix branch, no release tags).
+- Every merge into `main` publishes an immutable image (candidate artifact).
+- Production is promoted from the `infra` repository by updating production manifests to a tested image.
+- Frontend contributors focus on shipping validated changes to `main`; promotion timing is owned by infra.
 
-```bash
-# 1. Create release branch
-git checkout main && git pull
-git checkout -b chore/release-v0.1.0
+### Summary
 
-# 2. Update version, commit
-git add -A && git commit -m "chore(release): v0.1.0"
-git push -u origin chore/release-v0.1.0
-
-# 3. Open PR "chore(release): v0.1.0" → squash merge into main
-
-# 4. Tag the merged commit
-git checkout main && git pull
-git tag -a v0.1.0 -m "Release v0.1.0"
-git push origin v0.1.0
-
-# 5. Reset release branch
-git checkout -B release v0.1.0
-git push origin release --force-with-lease
-```
+| Situation | Branch from | PR target | Artifact outcome | Production decision |
+|-----------|-------------|-----------|------------------|---------------------|
+| Feature / fix | `main` | `main` | New immutable candidate image | `infra` promotion PR |
+| Urgent fix | `main` | `main` | New immutable candidate image | `infra` promotion PR |
 
 ---
 
@@ -145,36 +132,7 @@ feat(api)!: change API service response format
 
 ---
 
-## 7) Hotfixes
-
-For urgent production bugs — branch from `release`, not `main`:
-
-```bash
-git checkout -b hotfix/fix-blank-screen origin/release
-
-# fix, commit, push, PR into release
-
-git checkout release && git pull
-git tag -a v0.1.1 -m "Hotfix v0.1.1"
-git push origin v0.1.1
-
-# merge back into main
-git checkout main && git pull
-git merge release && git push origin main
-```
-
-### Summary
-
-| Situation | Branch from | PR target | Tag on | Deploys to |
-|-----------|-------------|-----------|--------|------------|
-| Feature / fix | `main` | `main` | — | staging |
-| Release | — | — | `main` | production |
-| Hotfix | `release` | `release` | `release` | production |
-| Hotfix backport | — | `main` | — | staging |
-
----
-
-## 8) Useful commands
+## 7) Useful commands
 
 | Command | Purpose |
 |---------|---------|

@@ -1,5 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   IonCheckbox,
@@ -11,25 +18,47 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
+  arrowBackOutline,
   callOutline,
   eyeOffOutline,
   eyeOutline,
+  keypadOutline,
   lockClosedOutline,
   mailOutline,
   personOutline,
+  shieldCheckmarkOutline,
 } from 'ionicons/icons';
 import type {
-  LoginCredentials,
-  SignupCredentials,
+  LoginRequest,
+  RegisterPendingData,
+  ResetPasswordPayload,
 } from '../../../../../../core/models/auth.models';
 
+/** Union type representing the two available authentication tabs. */
 type AuthTab = 'login' | 'signup';
+
+/**
+ * Cross-field validator applied to both signup and password reset FormGroups.
+ * Returns a `passwordsMismatch` error when `password` and `confirmPassword`
+ * are both non-empty and do not match.
+ * @param {AbstractControl} group - The FormGroup instance.
+ * @returns {ValidationErrors | null} Error object or `null` when passwords match.
+ */
+function passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
+  const password = group.get('password')?.value as string;
+  const confirm = group.get('confirmPassword')?.value as string;
+  return password && confirm && password !== confirm ? { passwordsMismatch: true } : null;
+}
 
 const ACTIVE_TAB_CLASS =
   'flex-1 py-3 text-sm font-semibold !rounded-xl bg-white text-sky-600 shadow-sm transition-all ring-1 ring-black/5 active:scale-95';
 const INACTIVE_TAB_CLASS =
   'flex-1 py-3 text-sm font-semibold !rounded-xl text-slate-500 hover:text-slate-700 transition-all active:scale-95';
 
+/**
+ * Mobile presentation component for the login/signup page.
+ * Renders a tabbed interface with login and signup forms optimised for small screens.
+ */
 @Component({
   selector: 'app-login-mobile',
   imports: [
@@ -47,25 +76,74 @@ const INACTIVE_TAB_CLASS =
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginMobileComponent {
-  readonly isLoading = input(false);
-  readonly error = input<string | null>(null);
-  readonly loginSubmit = output<LoginCredentials>();
-  readonly signupSubmit = output<SignupCredentials>();
+  // ─── INPUTS ─────────────────────────────────────────────────────────────
 
+  /** Whether an authentication request is currently in progress. */
+  readonly isLoading = input(false);
+
+  /** Current error message key to display, or null when there is no error. */
+  readonly error = input<string | null>(null);
+
+  /** Whether the signup flow is in the OTP verification step. */
+  readonly isVerificationStep = input(false);
+
+  // ─── OUTPUTS ────────────────────────────────────────────────────────────
+
+  /** Emitted with login credentials when the user submits the login form. */
+  readonly loginSubmit = output<LoginRequest>();
+
+  /** Emitted with registration data when the user submits the signup form (Step 1). */
+  readonly registerSubmitted = output<RegisterPendingData>();
+
+  /** Emitted with the OTP code when the user submits the verification form (Step 2). */
+  readonly verificationSubmitted = output<string>();
+
+  /** Emitted when requesting the password reset OTP code. */
+  readonly emailSubmitted = output<string>();
+
+  /** Emitted with the complete code and password payload to execute the reset. */
+  readonly resetPasswordSubmitted = output<ResetPasswordPayload>();
+
+  // ─── SIGNALS (UI STATE) ─────────────────────────────────────────────────
+
+  /** Signal tracking the currently active tab ('login' or 'signup'). */
   readonly activeTab = signal<AuthTab>('login');
+
+  /** Signal controlling whether the UI shows the password recovery view. */
+  readonly isPasswordResetStep = signal<boolean>(false);
+
+  /** Signal tracking if the reset code has been fired to the email input target. */
+  readonly isEmailSent = signal<boolean>(false);
+
+  /** Signal controlling visibility of the login password field. */
   readonly showLoginPassword = signal(false);
+
+  /** Signal controlling visibility of the signup password field. */
   readonly showSignupPassword = signal(false);
+
+  /** Signal controlling visibility of the confirm-password field. */
   readonly showConfirmPassword = signal(false);
+
+  /** Signal holding the current value of the signup password field for strength calculation. */
   readonly signupPasswordValue = signal('');
 
+  /** Signal controlling visibility of the reset password field. */
+  readonly showResetPassword = signal(false);
+
+  /** Computed CSS class for the login tab button based on the active tab state. */
   readonly loginTabClass = computed(() =>
     this.activeTab() === 'login' ? ACTIVE_TAB_CLASS : INACTIVE_TAB_CLASS,
   );
 
+  /** Computed CSS class for the signup tab button based on the active tab state. */
   readonly signupTabClass = computed(() =>
     this.activeTab() === 'signup' ? ACTIVE_TAB_CLASS : INACTIVE_TAB_CLASS,
   );
 
+  /**
+   * Computed numeric strength score (0–4) of the current signup password.
+   * Each criterion met (length ≥ 8, mixed case, digit, special character) adds 1.
+   */
   readonly passwordStrength = computed(() => {
     const value = this.signupPasswordValue();
     let strength = 0;
@@ -76,10 +154,11 @@ export class LoginMobileComponent {
     return strength;
   });
 
+  /** Indices used to render the password-strength indicator bars in the template. */
   readonly strengthBars = [0, 1, 2, 3];
 
   /**
-   *
+   * Registers the Ionicons used in this component's template.
    */
   constructor() {
     addIcons({
@@ -89,35 +168,103 @@ export class LoginMobileComponent {
       callOutline,
       eyeOutline,
       eyeOffOutline,
+      shieldCheckmarkOutline,
+      arrowBackOutline,
+      keypadOutline,
     });
   }
 
+  // ─── FORM GROUPS ────────────────────────────────────────────────────────
+
+  /** Reactive form group for the login tab. */
   readonly loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     rememberMe: new FormControl(false),
   });
 
-  readonly signupForm = new FormGroup({
-    fullName: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    phone: new FormControl(''),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    confirmPassword: new FormControl('', [Validators.required]),
-    terms: new FormControl(false, [Validators.requiredTrue]),
+  /** Reactive form group for the signup tab. */
+  readonly signupForm = new FormGroup(
+    {
+      fullName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      phone: new FormControl(''),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$/),
+      ]),
+      confirmPassword: new FormControl('', [Validators.required]),
+      terms: new FormControl(false, [Validators.requiredTrue]),
+    },
+    { validators: passwordsMatchValidator },
+  );
+
+  /** Reactive form group for the OTP verification step. */
+  readonly verificationForm = new FormGroup({
+    code: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(10),
+    ]),
   });
 
+  /** Reactive form group for the password recovery workflow (Steps 1 & 2). */
+  readonly resetPasswordForm = new FormGroup(
+    {
+      email: new FormControl('', [Validators.required, Validators.email]),
+      code: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$/),
+      ]),
+      confirmPassword: new FormControl('', [Validators.required]),
+    },
+    { validators: passwordsMatchValidator },
+  );
+
+  // ─── GETTERS ────────────────────────────────────────────────────────────
+
   /**
-   *
-   * @param tab
+   * True when `password` and `confirmPassword` differ and the confirm field has been touched.
+   * Dynamically evaluates based on whether user is registering or resetting password.
+   * @returns {boolean} Whether the passwords-mismatch error should be displayed.
+   */
+  get passwordsMismatch(): boolean {
+    if (this.isPasswordResetStep()) {
+      return (
+        this.resetPasswordForm.hasError('passwordsMismatch') &&
+        (this.resetPasswordForm.get('confirmPassword')?.touched ?? false)
+      );
+    }
+    return (
+      this.signupForm.hasError('passwordsMismatch') &&
+      (this.signupForm.get('confirmPassword')?.touched ?? false)
+    );
+  }
+
+  // ─── METHODS ────────────────────────────────────────────────────────────
+
+  /**
+   * Switches the active authentication tab.
+   * @param {AuthTab} tab - The tab to activate ('login' or 'signup').
+   * @returns {void}
    */
   switchTab(tab: AuthTab): void {
     this.activeTab.set(tab);
+    this.isPasswordResetStep.set(false);
+    this.isEmailSent.set(false);
+    this.loginForm.reset();
+    this.signupForm.reset();
+    this.verificationForm.reset();
+    this.resetPasswordForm.reset();
+    this.signupPasswordValue.set('');
   }
 
   /**
-   *
-   * @param event
+   * Handles the Ionic `ionInput` event on the signup password field and updates
+   * the `signupPasswordValue` signal used for strength calculation.
+   * @param {Event} event - The native input event from the Ionic input component.
+   * @returns {void}
    */
   onPasswordInput(event: Event): void {
     const customEvent = event as CustomEvent<{ value: string | null | undefined }>;
@@ -125,28 +272,41 @@ export class LoginMobileComponent {
   }
 
   /**
-   *
+   * Toggles the visibility of the login password field.
+   * @returns {void}
    */
   toggleLoginPassword(): void {
     this.showLoginPassword.update((v) => !v);
   }
 
   /**
-   *
+   * Toggles the visibility of the signup password field.
+   * @returns {void}
    */
   toggleSignupPassword(): void {
     this.showSignupPassword.update((v) => !v);
   }
 
   /**
-   *
+   * Toggles the visibility of the confirm-password field.
+   * @returns {void}
    */
   toggleConfirmPassword(): void {
     this.showConfirmPassword.update((v) => !v);
   }
 
   /**
-   *
+   * Toggles the visibility of the reset password field.
+   * @returns {void}
+   */
+  toggleResetPassword(): void {
+    this.showResetPassword.update((v) => !v);
+  }
+
+  /**
+   * Validates and submits the login form. Marks all fields as touched when invalid
+   * to trigger validation messages, or emits the credentials to the parent.
+   * @returns {void}
    */
   onLoginSubmit(): void {
     if (this.loginForm.invalid) {
@@ -158,20 +318,82 @@ export class LoginMobileComponent {
   }
 
   /**
-   *
+   * Validates and submits the signup form (Step 1 — request OTP). Marks all fields as
+   * touched when invalid to trigger validation messages, or emits the registration data.
+   * @returns {void}
    */
-  onSignupSubmit(): void {
+  onRegisterSubmit(): void {
     if (this.signupForm.invalid) {
       this.signupForm.markAllAsTouched();
       return;
     }
-    const { fullName, email, phone, password, confirmPassword } = this.signupForm.value;
-    this.signupSubmit.emit({
-      fullName: fullName!,
-      email: email!,
-      phone: phone ?? undefined,
-      password: password!,
-      confirmPassword: confirmPassword!,
-    });
+    const { fullName, email, password } = this.signupForm.value;
+    this.registerSubmitted.emit({ name: fullName!, email: email!, password: password! });
+  }
+
+  /**
+   * Validates and submits the OTP verification form (Step 2 — verify & complete registration).
+   * Marks the code field as touched when invalid, or emits the code to the parent.
+   * @returns {void}
+   */
+  onVerificationSubmit(): void {
+    if (this.verificationForm.invalid) {
+      this.verificationForm.markAllAsTouched();
+      return;
+    }
+    const { code } = this.verificationForm.value;
+    this.verificationSubmitted.emit(code!);
+  }
+
+  // ─── PASSWORD RESET FLOW HANDLERS ───────────────────────────────────────
+
+  /**
+   * Activates the custom multi-step recovery flow state wrapper.
+   * @returns {void}
+   */
+  onNavigateToForgot(): void {
+    this.isPasswordResetStep.set(true);
+  }
+
+  /**
+   * Resets the password recovery workflow state back to default login parameters.
+   * @returns {void}
+   */
+  onCancelReset(): void {
+    this.isPasswordResetStep.set(false);
+    this.isEmailSent.set(false);
+    this.loginForm.reset();
+    this.signupForm.reset();
+    this.verificationForm.reset();
+    this.resetPasswordForm.reset();
+    this.signupPasswordValue.set('');
+  }
+
+  /**
+   * Dispatches user email choice up to service layer orchestrator
+   * and blocks input modifications upon a valid local state layout evaluation.
+   * @returns {void}
+   */
+  onSendCode(): void {
+    const emailControl = this.resetPasswordForm.get('email');
+    if (emailControl?.valid && emailControl.value) {
+      this.emailSubmitted.emit(emailControl.value);
+      this.isEmailSent.set(true);
+    } else {
+      emailControl?.markAsTouched();
+    }
+  }
+
+  /**
+   * Submits the unified collection payload back up to parent smart engine.
+   * @returns {void}
+   */
+  onResetPasswordSubmit(): void {
+    if (this.resetPasswordForm.valid && !this.passwordsMismatch) {
+      const { email, password, code } = this.resetPasswordForm.value;
+      this.resetPasswordSubmitted.emit({ email: email!, new_password: password!, code: code! });
+    } else {
+      this.resetPasswordForm.markAllAsTouched();
+    }
   }
 }

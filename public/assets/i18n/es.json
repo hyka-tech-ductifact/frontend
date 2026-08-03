@@ -22,6 +22,16 @@
             "SHOW_PANEL": "Mostrar panel",
             "HIDE_PANEL": "Ocultar panel"
         },
+        "PASSWORD_RESET": {
+            "NEW_PASSWORD_LABEL": "Contraseña nueva",
+            "RESET_PASSWORD": "Restablecer contraseña",
+            "SEND_RESET_PASSWORD_CODE": "Enviar código de restablecimiento",
+            "SUCCESS_COMPLETE": "¡Contraseña restablecida con éxito!",
+            "ERROR_VERIFY_FAILED": "El código de verificación es inválido o ha expirado",
+            "CODE_SENT_SUCCESS": "¡Código de verificación enviado con éxito! Por favor, revisa tu correo electrónico.",
+            "ERROR_REQUEST_FAILED": "Error al solicitar el restablecimiento de contraseña. Por favor, inténtalo de nuevo más tarde.",
+            "VERIFY_SUBTITLE_RESET_CODE": "Hemos enviado un código de verificación a tu correo electrónico. Por favor, introduce el código a continuación para completar el restablecimiento."
+        },
         "SIGNUP": {
             "FIRST_NAME_LABEL": "Nombre",
             "FIRST_NAME_PLACEHOLDER": "Juan",
@@ -32,14 +42,21 @@
             "PHONE_LABEL": "Número de teléfono",
             "PHONE_PLACEHOLDER": "+34 600 000 000",
             "PASSWORD_CREATE_PLACEHOLDER": "Crea una contraseña segura",
-            "PASSWORD_HINT": "Usa 8+ caracteres con letras, números y símbolos",
+            "PASSWORD_HINT": "Usa 9+ caracteres con letras, números y símbolos",
             "CONFIRM_PASSWORD_LABEL": "Confirmar contraseña",
             "CONFIRM_PASSWORD_PLACEHOLDER": "Vuelve a introducir tu contraseña",
             "TERMS_AGREE": "Acepto los",
             "CREATE_ACCOUNT_BTN": "CREAR CUENTA",
             "ALREADY_HAVE_ACCOUNT": "¿Ya tienes una cuenta?",
             "SIGN_IN_LINK": "Iniciar sesión",
-            "DIVIDER_OR_EMAIL": "O REGÍSTRATE CON EMAIL"
+            "DIVIDER_OR_EMAIL": "O REGÍSTRATE CON EMAIL",
+            "PASSWORDS_DONT_MATCH": "Las contraseñas no coinciden",
+            "VERIFY_TITLE": "Verifica tu correo electrónico",
+            "VERIFY_SUBTITLE": "Hemos enviado un código de verificación a tu correo electrónico. Por favor, introduce el código a continuación para completar tu registro.",
+            "VERIFY_CODE_LABEL": "Código de verificación",
+            "VERIFY_CODE_PLACEHOLDER": "Introduce el código de verificación",
+            "VERIFY_BTN": "VERIFICAR",
+            "VERIFY_VERIFYING": "VERIFICANDO..."
         },
         "SOCIAL": {
             "GOOGLE": "Google",

@@ -1,0 +1,4 @@
+{
+    "BACKEND_URL": "https://ductifact-staging-api.jcapsule.work/v1",
+    "FILE_STORAGE_URL": "http://localhost:9000/ductifact"
+}

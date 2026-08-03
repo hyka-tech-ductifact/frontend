@@ -22,6 +22,16 @@
             "SHOW_PANEL": "Show panel",
             "HIDE_PANEL": "Hide panel"
         },
+        "PASSWORD_RESET": {
+            "NEW_PASSWORD_LABEL": "New Password",
+            "RESET_PASSWORD": "Reset Password",
+            "SEND_RESET_PASSWORD_CODE": "Send Reset Password Code",
+            "SUCCESS_COMPLETE": "Password reset successfully!",
+            "ERROR_VERIFY_FAILED": "Verification code is invalid or has expired",
+            "CODE_SENT_SUCCESS": "Verification code sent successfully! Please check your email.",
+            "ERROR_REQUEST_FAILED": "Failed to request password reset. Please try again later.",
+            "VERIFY_SUBTITLE_RESET_CODE": "We've sent a verification code to your email. Please enter the code below to complete the reset."
+        },
         "SIGNUP": {
             "FIRST_NAME_LABEL": "First Name",
             "FIRST_NAME_PLACEHOLDER": "John",
@@ -32,14 +42,21 @@
             "PHONE_LABEL": "Phone Number",
             "PHONE_PLACEHOLDER": "+1 (555) 000-0000",
             "PASSWORD_CREATE_PLACEHOLDER": "Create a strong password",
-            "PASSWORD_HINT": "Use 8+ characters with letters, numbers & symbols",
+            "PASSWORD_HINT": "Use 9+ characters with letters, numbers & symbols",
             "CONFIRM_PASSWORD_LABEL": "Confirm Password",
             "CONFIRM_PASSWORD_PLACEHOLDER": "Re-enter your password",
             "TERMS_AGREE": "I agree to the",
             "CREATE_ACCOUNT_BTN": "CREATE ACCOUNT",
             "ALREADY_HAVE_ACCOUNT": "Already have an account?",
             "SIGN_IN_LINK": "Sign in",
-            "DIVIDER_OR_EMAIL": "OR SIGN UP WITH EMAIL"
+            "DIVIDER_OR_EMAIL": "OR SIGN UP WITH EMAIL",
+            "PASSWORDS_DONT_MATCH": "Passwords don't match",
+            "VERIFY_TITLE": "Verify your email",
+            "VERIFY_SUBTITLE": "We've sent a verification code to your email. Please enter the code below to complete your registration.",
+            "VERIFY_CODE_LABEL": "Verification Code",
+            "VERIFY_CODE_PLACEHOLDER": "Enter the verification code",
+            "VERIFY_BTN": "VERIFY",
+            "VERIFY_VERIFYING": "VERIFYING..."
         },
         "SOCIAL": {
             "GOOGLE": "Google",
