@@ -139,10 +139,11 @@ export class AuthService {
    * Writes the token pair and their absolute expiry timestamps to localStorage.
    * Expirations are computed from the dynamic `expires_in` / `refresh_expires_in`
    * fields (seconds) returned by the backend. Sets `isAuthenticated` to `true`.
+   * Public so `authInterceptor` can persist tokens obtained from its own refresh call.
    * @param {TokenPayload} payload - The token fields from the login/register/refresh response.
    * @returns {void}
    */
-  private persistTokenPair(payload: TokenPayload): void {
+  persistTokenPair(payload: TokenPayload): void {
     const accessTokenExpiresAt = Date.now() + payload.expires_in * 1000;
     const refreshTokenExpiresAt = Date.now() + payload.refresh_expires_in * 1000;
     localStorage.setItem(ACCESS_TOKEN_KEY, payload.access_token);
@@ -154,10 +155,11 @@ export class AuthService {
 
   /**
    * Removes all session data from localStorage and resets both signals to their
-   * logged-out state.
+   * logged-out state. Public so `authInterceptor` can force a session timeout
+   * when the refresh token is expired or the refresh request itself fails.
    * @returns {void}
    */
-  private clearSession(): void {
+  clearSession(): void {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     localStorage.removeItem(REFRESH_TOKEN_KEY);
     localStorage.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY);
