@@ -84,12 +84,22 @@ export interface AuthResponse {
   user: UserResponse;
   access_token: string;
   refresh_token: string;
+  token_type: string;
+  /** Access token validity window in seconds. */
+  expires_in: number;
+  /** Refresh token validity window in seconds. */
+  refresh_expires_in: number;
 }
 
 /** Returned by POST /auth/refresh. */
 export interface TokenResponse {
   access_token: string;
   refresh_token: string;
+  token_type: string;
+  /** Access token validity window in seconds. */
+  expires_in: number;
+  /** Refresh token validity window in seconds. */
+  refresh_expires_in: number;
 }
 
 export interface MessageResponse {
@@ -98,4 +108,10 @@ export interface MessageResponse {
 
 export interface ErrorResponse {
   error: string;
+}
+
+export interface ResetPasswordPayload {
+  email: string;
+  code: string;
+  new_password: string; // Optional if you strip it out, or required if sending full form
 }

@@ -3,9 +3,14 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
 import { AuthService } from '../../../../core/services/auth.service';
 import { DeviceService } from '../../../../core/services/device.service';
-import type { LoginRequest, RegisterPendingData } from '../../../../core/models/auth.models';
+import type {
+  LoginRequest,
+  RegisterPendingData,
+  ResetPasswordPayload,
+} from '../../../../core/models/auth.models';
 import { LoginMobileComponent } from './components/login-mobile/login-mobile.component';
 import { LoginWebComponent } from './components/login-web/login-web.component';
+import { TranslateService } from '@ngx-translate/core';
 
 /** sessionStorage key for pending registration data during the OTP verification step. */
 const PENDING_REGISTER_KEY = 'auth_pending_register';
@@ -27,6 +32,7 @@ export class LoginComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly toastController = inject(ToastController);
+  private readonly translateService = inject(TranslateService);
 
   /** Signal indicating whether an authentication request is in progress. */
   readonly isLoading = signal(false);
@@ -36,6 +42,12 @@ export class LoginComponent {
 
   /** Signal indicating whether the signup flow is in the OTP verification step. */
   readonly isVerificationStep = signal(false);
+
+  /** Signal indicating whether the login flow is in the password reset steps. */
+  readonly isPasswordResetStep = signal(false);
+
+  /** Signal tracking if the reset code has been fired to the email input target. */
+  readonly isEmailSent = signal<boolean>(false);
 
   /**
    * Handles the login form submission. Calls `AuthService.login` and navigates
@@ -52,7 +64,7 @@ export class LoginComponent {
       await this.router.navigate(['/client']);
     } catch {
       this.errorMessage.set('AUTH.LOGIN.ERROR_INVALID_CREDENTIALS');
-      await this.showErrorToast('AUTH.LOGIN.ERROR_INVALID_CREDENTIALS');
+      await this.showToast('AUTH.LOGIN.ERROR_INVALID_CREDENTIALS', 'danger');
     } finally {
       this.isLoading.set(false);
     }
@@ -75,7 +87,7 @@ export class LoginComponent {
       this.isVerificationStep.set(true);
     } catch {
       this.errorMessage.set('AUTH.REGISTER.ERROR_REQUEST_FAILED');
-      await this.showErrorToast('AUTH.REGISTER.ERROR_REQUEST_FAILED');
+      await this.showToast('AUTH.REGISTER.ERROR_REQUEST_FAILED', 'danger');
       sessionStorage.removeItem(PENDING_REGISTER_KEY);
     } finally {
       this.isLoading.set(false);
@@ -107,23 +119,70 @@ export class LoginComponent {
       await this.router.navigate(['/client']);
     } catch {
       this.errorMessage.set('AUTH.REGISTER.ERROR_VERIFY_FAILED');
-      await this.showErrorToast('AUTH.REGISTER.ERROR_VERIFY_FAILED');
+      await this.showToast('AUTH.REGISTER.ERROR_VERIFY_FAILED', 'danger');
     } finally {
       this.isLoading.set(false);
     }
   }
 
   /**
-   * Creates and presents an Ionic toast with a danger color to inform the user
-   * of an authentication error.
-   * @param {string} messageKey - The i18n key for the error message to display.
-   * @returns {Promise<void>} Resolves when the toast has been presented.
+   * INTEGRATED — STEP 1: Handles the request for a password reset recovery token.
+   * Dispatches the user email to the AuthService data engine layers.
+   * @param {string} email - The target email address for code dispatching.
+   * @returns {Promise<void>} Resolves when the API token dispatch transaction completes.
    */
-  private async showErrorToast(messageKey: string): Promise<void> {
+  async onResetPasswordCodeRequest(email: string): Promise<void> {
+    if (this.isLoading()) return;
+    this.isLoading.set(true);
+    this.errorMessage.set(null);
+    try {
+      // Adjust this method call to match your actual backend AuthService API signature
+      await this.authService.requestPasswordResetCode(email);
+      await this.showToast('AUTH.PASSWORD_RESET.CODE_SENT_SUCCESS', 'success');
+    } catch {
+      this.errorMessage.set('AUTH.PASSWORD_RESET.ERROR_REQUEST_FAILED');
+      await this.showToast('AUTH.PASSWORD_RESET.ERROR_REQUEST_FAILED', 'danger');
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  /**
+   * INTEGRATED — STEP 2: Submits the unified security verification code alongside
+   * the brand-new password credentials to conclude the recovery process.
+   * @param {ResetPasswordPayload} payload - Strict structural form field collection framework.
+   * @returns {Promise<void>} Resolves when the profile credentials overwrite finishes.
+   */
+  async onResetPasswordConfirm(payload: ResetPasswordPayload): Promise<void> {
+    if (this.isLoading()) return;
+    this.isLoading.set(true);
+    this.errorMessage.set(null);
+    try {
+      await this.authService.confirmPasswordReset(payload);
+      await this.showToast('AUTH.PASSWORD_RESET.SUCCESS_COMPLETE', 'success');
+    } catch {
+      this.errorMessage.set('AUTH.PASSWORD_RESET.ERROR_VERIFY_FAILED');
+      await this.showToast('AUTH.PASSWORD_RESET.ERROR_VERIFY_FAILED', 'danger');
+    } finally {
+      this.isPasswordResetStep.set(false);
+      this.isLoading.set(false);
+      this.isEmailSent.set(false);
+    }
+  }
+
+  /**
+   * Creates and presents an Ionic toast to inform the user of an authentication status event.
+   * Refactored to cleanly support both warning alerts and success confirmations.
+   * @param {string} messageKey - The i18n key for the content payload string.
+   * @param {'danger' | 'success'} color - Visual contextual highlight variation configuration.
+   * @returns {Promise<void>} Resolves when presentation rendering routines finish execution.
+   */
+  private async showToast(messageKey: string, color: 'danger' | 'success'): Promise<void> {
+    const translatedMessage = this.translateService.instant(messageKey);
     const toast = await this.toastController.create({
-      message: messageKey,
+      message: translatedMessage,
       duration: 3000,
-      color: 'danger',
+      color: color,
       position: 'top',
     });
     await toast.present();

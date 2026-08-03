@@ -7,6 +7,8 @@
     (registerSubmitted)="onRegister($event)"
     (verificationSubmitted)="onVerification($event)"
   />
+  <!-- (emailSubmitted)="onResetPasswordCodeRequest($event)" -->
+  <!-- (resetPasswordSubmitted)="onResetPasswordConfirm($event)"  -->
 } @else {
   <app-login-web
     [isLoading]="isLoading()"
@@ -15,5 +17,7 @@
     (loginSubmit)="onLogin($event)"
     (registerSubmitted)="onRegister($event)"
     (verificationSubmitted)="onVerification($event)"
+    (emailSubmitted)="onResetPasswordCodeRequest($event)"
+    (resetPasswordSubmitted)="onResetPasswordConfirm($event)"
   />
 }

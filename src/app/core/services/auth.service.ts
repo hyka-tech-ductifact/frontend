@@ -12,12 +12,22 @@ import type {
   AppLocale,
   VerifyRegisterRequest,
   MessageResponse,
+  ResetPasswordPayload,
 } from '../models/auth.models';
 
 export const ACCESS_TOKEN_KEY = 'auth_access_token';
 export const REFRESH_TOKEN_KEY = 'auth_refresh_token';
 export const ACCESS_TOKEN_EXPIRES_AT_KEY = 'auth_access_token_expires_at';
+export const REFRESH_TOKEN_EXPIRES_AT_KEY = 'auth_refresh_token_expires_at';
 const USER_KEY = 'auth_user';
+
+/** Shared shape of the login/register and refresh endpoint token fields. */
+interface TokenPayload {
+  access_token: string;
+  refresh_token: string;
+  expires_in: number;
+  refresh_expires_in: number;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -91,7 +101,7 @@ export class AuthService {
         refresh_token: refreshToken,
       }),
     );
-    this.persistTokenPair(response.access_token, response.refresh_token);
+    this.persistTokenPair(response);
   }
 
   /**
@@ -120,35 +130,40 @@ export class AuthService {
    * @returns {void}
    */
   private persistSession(response: AuthResponse): void {
-    this.persistTokenPair(response.access_token, response.refresh_token);
+    this.persistTokenPair(response);
     localStorage.setItem(USER_KEY, JSON.stringify(response.user));
     this.currentUser.set(response.user);
   }
 
   /**
-   * Writes the token pair and access token expiry timestamp to localStorage.
-   * Sets `isAuthenticated` to `true`.
-   * @param {string} accessToken - The short-lived JWT.
-   * @param {string} refreshToken - The long-lived refresh JWT.
+   * Writes the token pair and their absolute expiry timestamps to localStorage.
+   * Expirations are computed from the dynamic `expires_in` / `refresh_expires_in`
+   * fields (seconds) returned by the backend. Sets `isAuthenticated` to `true`.
+   * Public so `authInterceptor` can persist tokens obtained from its own refresh call.
+   * @param {TokenPayload} payload - The token fields from the login/register/refresh response.
    * @returns {void}
    */
-  private persistTokenPair(accessToken: string, refreshToken: string): void {
-    const expiresAt = Date.now() + this.config.get('JWT_ACCESS_TOKEN_TTL_SECONDS');
-    localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-    localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
-    localStorage.setItem(ACCESS_TOKEN_EXPIRES_AT_KEY, expiresAt.toString());
+  persistTokenPair(payload: TokenPayload): void {
+    const accessTokenExpiresAt = Date.now() + payload.expires_in * 1000;
+    const refreshTokenExpiresAt = Date.now() + payload.refresh_expires_in * 1000;
+    localStorage.setItem(ACCESS_TOKEN_KEY, payload.access_token);
+    localStorage.setItem(REFRESH_TOKEN_KEY, payload.refresh_token);
+    localStorage.setItem(ACCESS_TOKEN_EXPIRES_AT_KEY, accessTokenExpiresAt.toString());
+    localStorage.setItem(REFRESH_TOKEN_EXPIRES_AT_KEY, refreshTokenExpiresAt.toString());
     this.isAuthenticated.set(true);
   }
 
   /**
    * Removes all session data from localStorage and resets both signals to their
-   * logged-out state.
+   * logged-out state. Public so `authInterceptor` can force a session timeout
+   * when the refresh token is expired or the refresh request itself fails.
    * @returns {void}
    */
-  private clearSession(): void {
+  clearSession(): void {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     localStorage.removeItem(REFRESH_TOKEN_KEY);
     localStorage.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_EXPIRES_AT_KEY);
     localStorage.removeItem(USER_KEY);
     this.isAuthenticated.set(false);
     this.currentUser.set(null);
@@ -176,5 +191,30 @@ export class AuthService {
     } catch {
       return null;
     }
+  }
+
+  /**
+   * Initiates the OTP-based reset flow by sending the user's email to the backend.
+   * The backend responds with a one-time code sent to that address.
+   * @param {string} email - The email address to reset the password for.
+   * @returns {Promise<void>} Resolves when the OTP request is accepted.
+   */
+  async requestPasswordResetCode(email: string): Promise<void> {
+    await firstValueFrom(
+      this.http.post<MessageResponse>(`${this.baseUrl}/password/reset`, { email }),
+    );
+  }
+
+  /**
+   * Completes the OTP reset password flow. Verifies the code and resets the password.
+   * Persists the returned token pair and user profile, then sets `isAuthenticated` to `true`.
+   * @param {ResetPasswordPayload} payload - The email, OTP code, and new password.
+   * @returns {Promise<void>} Resolves when the password is reset and session is persisted.
+   */
+  async confirmPasswordReset(payload: ResetPasswordPayload): Promise<void> {
+    const body: ResetPasswordPayload = { ...payload };
+    await firstValueFrom(
+      this.http.post<AuthResponse>(`${this.baseUrl}/password/reset/verify`, body),
+    );
   }
 }
