@@ -204,7 +204,25 @@ export class LoginWebComponent {
     this.activeTab.set(tab);
     this.isPasswordResetStep.set(false);
     this.isEmailSent.set(false);
+    this.loginForm.reset();
+    this.signupForm.reset();
+    this.verificationForm.reset();
     this.resetPasswordForm.reset();
+    this.signupPasswordValue.set('');
+  }
+
+  /**
+   * Resets the password recovery workflow state back to default login parameters.
+   * @returns {void}
+   */
+  onCancelReset(): void {
+    this.isPasswordResetStep.set(false);
+    this.isEmailSent.set(false);
+    this.loginForm.reset();
+    this.signupForm.reset();
+    this.verificationForm.reset();
+    this.resetPasswordForm.reset();
+    this.signupPasswordValue.set('');
   }
 
   /**
