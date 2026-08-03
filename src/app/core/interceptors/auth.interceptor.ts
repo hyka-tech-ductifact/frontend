@@ -7,6 +7,7 @@ import {
   ACCESS_TOKEN_KEY,
   REFRESH_TOKEN_KEY,
   ACCESS_TOKEN_EXPIRES_AT_KEY,
+  REFRESH_TOKEN_EXPIRES_AT_KEY,
 } from '../services/auth.service';
 
 /**
@@ -42,6 +43,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         localStorage.removeItem(ACCESS_TOKEN_KEY);
         localStorage.removeItem(REFRESH_TOKEN_KEY);
         localStorage.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY);
+        localStorage.removeItem(REFRESH_TOKEN_EXPIRES_AT_KEY);
         router.navigate(['/login']);
       }
       return throwError(() => err);

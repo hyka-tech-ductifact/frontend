@@ -18,7 +18,16 @@ import type {
 export const ACCESS_TOKEN_KEY = 'auth_access_token';
 export const REFRESH_TOKEN_KEY = 'auth_refresh_token';
 export const ACCESS_TOKEN_EXPIRES_AT_KEY = 'auth_access_token_expires_at';
+export const REFRESH_TOKEN_EXPIRES_AT_KEY = 'auth_refresh_token_expires_at';
 const USER_KEY = 'auth_user';
+
+/** Shared shape of the login/register and refresh endpoint token fields. */
+interface TokenPayload {
+  access_token: string;
+  refresh_token: string;
+  expires_in: number;
+  refresh_expires_in: number;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -92,7 +101,7 @@ export class AuthService {
         refresh_token: refreshToken,
       }),
     );
-    this.persistTokenPair(response.access_token, response.refresh_token);
+    this.persistTokenPair(response);
   }
 
   /**
@@ -121,23 +130,25 @@ export class AuthService {
    * @returns {void}
    */
   private persistSession(response: AuthResponse): void {
-    this.persistTokenPair(response.access_token, response.refresh_token);
+    this.persistTokenPair(response);
     localStorage.setItem(USER_KEY, JSON.stringify(response.user));
     this.currentUser.set(response.user);
   }
 
   /**
-   * Writes the token pair and access token expiry timestamp to localStorage.
-   * Sets `isAuthenticated` to `true`.
-   * @param {string} accessToken - The short-lived JWT.
-   * @param {string} refreshToken - The long-lived refresh JWT.
+   * Writes the token pair and their absolute expiry timestamps to localStorage.
+   * Expirations are computed from the dynamic `expires_in` / `refresh_expires_in`
+   * fields (seconds) returned by the backend. Sets `isAuthenticated` to `true`.
+   * @param {TokenPayload} payload - The token fields from the login/register/refresh response.
    * @returns {void}
    */
-  private persistTokenPair(accessToken: string, refreshToken: string): void {
-    const expiresAt = Date.now() + this.config.get('JWT_ACCESS_TOKEN_TTL_SECONDS');
-    localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-    localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
-    localStorage.setItem(ACCESS_TOKEN_EXPIRES_AT_KEY, expiresAt.toString());
+  private persistTokenPair(payload: TokenPayload): void {
+    const accessTokenExpiresAt = Date.now() + payload.expires_in * 1000;
+    const refreshTokenExpiresAt = Date.now() + payload.refresh_expires_in * 1000;
+    localStorage.setItem(ACCESS_TOKEN_KEY, payload.access_token);
+    localStorage.setItem(REFRESH_TOKEN_KEY, payload.refresh_token);
+    localStorage.setItem(ACCESS_TOKEN_EXPIRES_AT_KEY, accessTokenExpiresAt.toString());
+    localStorage.setItem(REFRESH_TOKEN_EXPIRES_AT_KEY, refreshTokenExpiresAt.toString());
     this.isAuthenticated.set(true);
   }
 
@@ -150,6 +161,7 @@ export class AuthService {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     localStorage.removeItem(REFRESH_TOKEN_KEY);
     localStorage.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_EXPIRES_AT_KEY);
     localStorage.removeItem(USER_KEY);
     this.isAuthenticated.set(false);
     this.currentUser.set(null);

@@ -19,22 +19,6 @@ export interface AppConfig {
   BACKEND_URL: string;
 
   /**
-   * Access token validity window in milliseconds.
-   * Must mirror the backend `JWT_TOKEN_DURATION` setting.
-   * Maps to the container env var `JWT_ACCESS_TOKEN_TTL_SECONDS`.
-   * @example 900000 (= 15 minutes)
-   */
-  JWT_ACCESS_TOKEN_TTL_SECONDS: number;
-
-  /**
-   * Refresh token validity window in milliseconds.
-   * Must mirror the backend `JWT_REFRESH_TOKEN_DURATION` setting.
-   * Maps to the container env var `JWT_REFRESH_TOKEN_TTL_SECONDS`.
-   * @example 604800000 (= 7 days)
-   */
-  JWT_REFRESH_TOKEN_TTL_SECONDS: number;
-
-  /**
    * Base URL for MinIO S3 object-storage assets (bucket endpoint).
    * Maps to the container env var `FILE_STORAGE_URL`.
    * @example 'https://ductifact-staging-api.jcapsule.work/storage/ductifact'
