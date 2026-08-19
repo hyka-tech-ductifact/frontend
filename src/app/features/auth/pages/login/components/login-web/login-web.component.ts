@@ -167,7 +167,11 @@ export class LoginWebComponent {
   readonly resetPasswordForm = new FormGroup(
     {
       email: new FormControl('', [Validators.required, Validators.email]),
-      code: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      code: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.pattern(/^\d+$/),
+      ]),
       password: new FormControl('', [
         Validators.required,
         Validators.pattern(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$/),
@@ -178,21 +182,40 @@ export class LoginWebComponent {
   );
 
   /**
-   * True when `password` and `confirmPassword` differ and the confirm field has been touched.
-   * Dynamically evaluates based on whether user is registering or resetting password.
+   * True when `password` and `confirmPassword` differ and the confirm field has been
+   * touched and modified. Dynamically evaluates based on whether user is registering
+   * or resetting password.
    * @returns {boolean} Whether the passwords-mismatch error should be displayed.
    */
   get passwordsMismatch(): boolean {
     if (this.isPasswordResetStep()) {
+      const confirmCtrl = this.resetPasswordForm.get('confirmPassword');
       return (
         this.resetPasswordForm.hasError('passwordsMismatch') &&
-        (this.resetPasswordForm.get('confirmPassword')?.touched ?? false)
+        !!confirmCtrl?.touched &&
+        !!confirmCtrl?.dirty
       );
     }
+    const confirmCtrl = this.signupForm.get('confirmPassword');
     return (
       this.signupForm.hasError('passwordsMismatch') &&
-      (this.signupForm.get('confirmPassword')?.touched ?? false)
+      !!confirmCtrl?.touched &&
+      !!confirmCtrl?.dirty
     );
+  }
+
+  /**
+   * Reusable validation-state check for template error messages: a field is only
+   * reported invalid once the user has interacted with it (touched).
+   * @param {FormGroup} form - The form group containing the field.
+   * @param {string} fieldName - The name of the control to check.
+   * @param {string} [errorType] - Optional specific error key to check for.
+   * @returns {boolean} Whether the field should display an error.
+   */
+  isFieldInvalid(form: FormGroup, fieldName: string, errorType?: string): boolean {
+    const control = form.get(fieldName);
+    if (!control || !control.touched) return false;
+    return errorType ? control.hasError(errorType) : control.invalid;
   }
 
   /**
@@ -216,8 +239,11 @@ export class LoginWebComponent {
    * @returns {void}
    */
   onCancelReset(): void {
+    this.activeTab.set('login');
     this.isPasswordResetStep.set(false);
     this.isEmailSent.set(false);
+    this.showSignupPassword.set(false);
+    this.showConfirmPassword.set(false);
     this.loginForm.reset();
     this.signupForm.reset();
     this.verificationForm.reset();
@@ -323,12 +349,11 @@ export class LoginWebComponent {
    * @returns {void}
    */
   onSendCode(): void {
+    this.resetPasswordForm.markAllAsTouched();
     const emailControl = this.resetPasswordForm.get('email');
     if (emailControl?.valid && emailControl.value) {
       this.emailSubmitted.emit(emailControl.value);
       this.isEmailSent.set(true);
-    } else {
-      emailControl?.markAsTouched();
     }
   }
 
@@ -337,11 +362,11 @@ export class LoginWebComponent {
    * @returns {void}
    */
   onResetPasswordSubmit(): void {
+    this.resetPasswordForm.markAllAsTouched();
     if (this.resetPasswordForm.valid && !this.passwordsMismatch) {
       const { email, password, code } = this.resetPasswordForm.value;
       this.resetPasswordSubmitted.emit({ email: email!, new_password: password!, code: code! });
-    } else {
-      this.resetPasswordForm.markAllAsTouched();
+      this.onCancelReset();
     }
   }
 }
