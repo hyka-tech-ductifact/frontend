@@ -251,6 +251,8 @@ export class LoginMobileComponent {
     );
   }
 
+  // ─── METHODS ────────────────────────────────────────────────────────────
+
   /**
    * Reusable validation-state check for template error messages: a field is only
    * reported invalid once the user has interacted with it (touched).
