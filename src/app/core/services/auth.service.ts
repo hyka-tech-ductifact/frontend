@@ -1,19 +1,20 @@
-import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { inject, Injectable, signal } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { firstValueFrom } from 'rxjs';
 import { ConfigService } from '../config/config.service';
 import type {
-  LoginRequest,
-  AuthResponse,
-  TokenResponse,
-  LogoutRequest,
-  UserResponse,
   AppLocale,
-  VerifyRegisterRequest,
+  AuthResponse,
+  LoginRequest,
+  LogoutRequest,
   MessageResponse,
   ResetPasswordPayload,
+  TokenResponse,
+  UserResponse,
+  VerifyRegisterRequest,
 } from '../models/auth.models';
+import { StorageService } from './storage.service';
 
 export const ACCESS_TOKEN_KEY = 'auth_access_token';
 export const REFRESH_TOKEN_KEY = 'auth_refresh_token';
@@ -33,20 +34,50 @@ interface TokenPayload {
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly config = inject(ConfigService);
+  private readonly storage = inject(StorageService);
   private readonly translate = inject(TranslateService);
-  private readonly baseUrl = `${this.config.get('BACKEND_URL')}/auth`;
+
+  private get baseUrl(): string {
+    return `${this.config.get('BACKEND_URL')}/auth`;
+  }
 
   /**
-   * True when a non-expired access token exists in localStorage.
-   * Updated synchronously on login, register, refresh, and logout.
+   * True when a non-expired access token exists in persisted storage.
+   * Updated during bootstrap, login, register, refresh, and logout.
    */
-  readonly isAuthenticated = signal(this.hasValidToken());
+  readonly isAuthenticated = signal(false);
 
   /**
    * The currently authenticated user's profile, or `null` when logged out.
-   * Rehydrated from localStorage on service construction so it survives page reloads.
+   * Rehydrated from persisted storage during `initSession()`.
    */
-  readonly currentUser = signal<UserResponse | null>(this.loadStoredUser());
+  readonly currentUser = signal<UserResponse | null>(null);
+
+  /**
+   * Rehydrates session state from persisted storage during app startup.
+   * If the access token has expired but the refresh token is still valid,
+   * silently refreshes the session before protected routes activate.
+   * @returns {Promise<void>} Resolves once auth state is restored or cleared.
+   */
+  async initSession(): Promise<void> {
+    this.currentUser.set(await this.loadStoredUser());
+
+    if (await this.hasValidAccessToken()) {
+      this.isAuthenticated.set(true);
+      return;
+    }
+
+    if (await this.hasValidRefreshToken()) {
+      try {
+        const refreshed = await this.refreshToken();
+        if (refreshed) return;
+      } catch {
+        // Fall through to a hard session clear below.
+      }
+    }
+
+    await this.clearSession();
+  }
 
   /**
    * Authenticates the user with email and password.
@@ -60,7 +91,7 @@ export class AuthService {
     const response = await firstValueFrom(
       this.http.post<AuthResponse>(`${this.baseUrl}/login`, body),
     );
-    this.persistSession(response);
+    await this.persistSession(response);
   }
 
   /**
@@ -85,23 +116,37 @@ export class AuthService {
     const response = await firstValueFrom(
       this.http.post<AuthResponse>(`${this.baseUrl}/register/verify`, body),
     );
-    this.persistSession(response);
+    await this.persistSession(response);
   }
 
   /**
    * Exchanges the stored refresh token for a new access/refresh token pair.
-   * Updates localStorage in place. No-ops if no refresh token is stored.
-   * @returns {Promise<void>} Resolves when the refresh request completes successfully.
+   * Returns `null` when the refresh token is missing or already expired.
+   * @returns {Promise<TokenResponse | null>} The new token response, or `null` if refresh cannot proceed.
    */
-  async refresh(): Promise<void> {
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
-    if (!refreshToken) return;
+  async refreshToken(): Promise<TokenResponse | null> {
+    const refreshToken = await this.storage.get(REFRESH_TOKEN_KEY);
+    const refreshExpiresAt = Number((await this.storage.get(REFRESH_TOKEN_EXPIRES_AT_KEY)) ?? 0);
+    if (!refreshToken || Date.now() >= refreshExpiresAt) {
+      await this.clearSession();
+      return null;
+    }
+
     const response = await firstValueFrom(
       this.http.post<TokenResponse>(`${this.baseUrl}/refresh`, {
         refresh_token: refreshToken,
       }),
     );
-    this.persistTokenPair(response);
+    await this.persistTokenPair(response);
+    return response;
+  }
+
+  /**
+   * Backward-compatible alias for code still calling `refresh()`.
+   * @returns {Promise<void>} Resolves after any attempted refresh completes.
+   */
+  async refresh(): Promise<void> {
+    await this.refreshToken();
   }
 
   /**
@@ -111,7 +156,7 @@ export class AuthService {
    * @returns {Promise<void>} Resolves after the logout attempt completes (success or failure).
    */
   async logout(): Promise<void> {
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
+    const refreshToken = await this.storage.get(REFRESH_TOKEN_KEY);
     if (refreshToken) {
       const body: LogoutRequest = { refresh_token: refreshToken };
       // Best-effort: clear session regardless of server response
@@ -119,7 +164,37 @@ export class AuthService {
         () => undefined,
       );
     }
-    this.clearSession();
+    await this.clearSession();
+  }
+
+  /**
+   * Returns the persisted access token, or `null` when absent.
+   * @returns {Promise<string | null>} The stored access token.
+   */
+  async getAccessToken(): Promise<string | null> {
+    return this.storage.get(ACCESS_TOKEN_KEY);
+  }
+
+  /**
+   * Returns `true` when the persisted access token exists and is not expired.
+   * @returns {Promise<boolean>} Whether the access token is still valid.
+   */
+  async hasValidAccessToken(): Promise<boolean> {
+    const token = await this.storage.get(ACCESS_TOKEN_KEY);
+    if (!token) return false;
+    const expiresAt = Number((await this.storage.get(ACCESS_TOKEN_EXPIRES_AT_KEY)) ?? 0);
+    return Date.now() < expiresAt;
+  }
+
+  /**
+   * Returns `true` when the persisted refresh token exists and is not expired.
+   * @returns {Promise<boolean>} Whether the refresh token is still usable.
+   */
+  async hasValidRefreshToken(): Promise<boolean> {
+    const refreshToken = await this.storage.get(REFRESH_TOKEN_KEY);
+    if (!refreshToken) return false;
+    const refreshExpiresAt = Number((await this.storage.get(REFRESH_TOKEN_EXPIRES_AT_KEY)) ?? 0);
+    return Date.now() < refreshExpiresAt;
   }
 
   // ─── Private helpers ─────────────────────────────────────────────────────
@@ -129,64 +204,57 @@ export class AuthService {
    * @param {AuthResponse} response - The response from login or register.
    * @returns {void}
    */
-  private persistSession(response: AuthResponse): void {
-    this.persistTokenPair(response);
-    localStorage.setItem(USER_KEY, JSON.stringify(response.user));
+  private async persistSession(response: AuthResponse): Promise<void> {
+    await this.persistTokenPair(response);
+    await this.storage.set(USER_KEY, JSON.stringify(response.user));
     this.currentUser.set(response.user);
   }
 
   /**
-   * Writes the token pair and their absolute expiry timestamps to localStorage.
+   * Writes the token pair and their absolute expiry timestamps to persisted storage.
    * Expirations are computed from the dynamic `expires_in` / `refresh_expires_in`
    * fields (seconds) returned by the backend. Sets `isAuthenticated` to `true`.
    * Public so `authInterceptor` can persist tokens obtained from its own refresh call.
    * @param {TokenPayload} payload - The token fields from the login/register/refresh response.
-   * @returns {void}
+   * @returns {Promise<void>}
    */
-  persistTokenPair(payload: TokenPayload): void {
+  async persistTokenPair(payload: TokenPayload): Promise<void> {
     const accessTokenExpiresAt = Date.now() + payload.expires_in * 1000;
     const refreshTokenExpiresAt = Date.now() + payload.refresh_expires_in * 1000;
-    localStorage.setItem(ACCESS_TOKEN_KEY, payload.access_token);
-    localStorage.setItem(REFRESH_TOKEN_KEY, payload.refresh_token);
-    localStorage.setItem(ACCESS_TOKEN_EXPIRES_AT_KEY, accessTokenExpiresAt.toString());
-    localStorage.setItem(REFRESH_TOKEN_EXPIRES_AT_KEY, refreshTokenExpiresAt.toString());
+    await Promise.all([
+      this.storage.set(ACCESS_TOKEN_KEY, payload.access_token),
+      this.storage.set(REFRESH_TOKEN_KEY, payload.refresh_token),
+      this.storage.set(ACCESS_TOKEN_EXPIRES_AT_KEY, accessTokenExpiresAt.toString()),
+      this.storage.set(REFRESH_TOKEN_EXPIRES_AT_KEY, refreshTokenExpiresAt.toString()),
+    ]);
     this.isAuthenticated.set(true);
   }
 
   /**
-   * Removes all session data from localStorage and resets both signals to their
+   * Removes all session data from persisted storage and resets both signals to their
    * logged-out state. Public so `authInterceptor` can force a session timeout
    * when the refresh token is expired or the refresh request itself fails.
-   * @returns {void}
+   * @returns {Promise<void>}
    */
-  clearSession(): void {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
-    localStorage.removeItem(REFRESH_TOKEN_KEY);
-    localStorage.removeItem(ACCESS_TOKEN_EXPIRES_AT_KEY);
-    localStorage.removeItem(REFRESH_TOKEN_EXPIRES_AT_KEY);
-    localStorage.removeItem(USER_KEY);
+  async clearSession(): Promise<void> {
+    await Promise.all([
+      this.storage.remove(ACCESS_TOKEN_KEY),
+      this.storage.remove(REFRESH_TOKEN_KEY),
+      this.storage.remove(ACCESS_TOKEN_EXPIRES_AT_KEY),
+      this.storage.remove(REFRESH_TOKEN_EXPIRES_AT_KEY),
+      this.storage.remove(USER_KEY),
+    ]);
     this.isAuthenticated.set(false);
     this.currentUser.set(null);
   }
 
   /**
-   * Returns `true` if a non-expired access token exists in localStorage.
-   * @returns {boolean} Whether the stored access token is present and not yet expired.
+   * Parses the stored user JSON from persisted storage, or returns `null` if absent or malformed.
+   * @returns {Promise<UserResponse | null>} The stored user profile, or `null`.
    */
-  private hasValidToken(): boolean {
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    if (!token) return false;
-    const expiresAt = Number(localStorage.getItem(ACCESS_TOKEN_EXPIRES_AT_KEY) ?? 0);
-    return Date.now() < expiresAt;
-  }
-
-  /**
-   * Parses the stored user JSON from localStorage, or returns `null` if absent or malformed.
-   * @returns {UserResponse | null} The stored user profile, or `null`.
-   */
-  private loadStoredUser(): UserResponse | null {
+  private async loadStoredUser(): Promise<UserResponse | null> {
     try {
-      const raw = localStorage.getItem(USER_KEY);
+      const raw = await this.storage.get(USER_KEY);
       return raw ? (JSON.parse(raw) as UserResponse) : null;
     } catch {
       return null;
