@@ -1,8 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: [
-        "./src/**/*.{html,ts}",
-    ],
+    content: ['./src/**/*.{html,ts}'],
     theme: {
         extend: {
             colors: {
@@ -15,13 +13,13 @@ module.exports = {
                     light: '#e0f2fe',
                     DEFAULT: '#0284c7',
                     dark: '#0c4a6e',
-                }
+                },
             },
             boxShadow: {
-                'soft': '0 10px 40px -10px rgba(14, 165, 233, 0.08)',
-                'float': '0 20px 25px -5px rgba(14, 165, 233, 0.15), 0 10px 10px -5px rgba(14, 165, 233, 0.04)',
-            }
+                soft: '0 10px 40px -10px rgba(14, 165, 233, 0.08)',
+                float: '0 20px 25px -5px rgba(14, 165, 233, 0.15), 0 10px 10px -5px rgba(14, 165, 233, 0.04)',
+            },
         },
     },
-    plugins: [],
-}
+    plugins: [require('@tailwindcss/typography')],
+};

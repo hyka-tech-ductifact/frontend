@@ -63,7 +63,8 @@
             "VERIFY_CODE_LABEL": "Verification Code",
             "VERIFY_CODE_PLACEHOLDER": "Enter the verification code",
             "VERIFY_BTN": "VERIFY",
-            "VERIFY_VERIFYING": "VERIFYING..."
+            "VERIFY_VERIFYING": "VERIFYING...",
+            "CLOSE_MODAL": "Close"
         },
         "SOCIAL": {
             "GOOGLE": "Google",

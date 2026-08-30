@@ -1,106 +1,90 @@
 <!-- <div class="min-h-screen w-full flex"> -->
 <div class="h-screen w-full flex overflow-hidden bg-white">
-  <!-- ── LEFT PANEL (features, hidden on mobile; togglable on desktop) ── -->
-  @if (!isLeftPanelCollapsed()) {
-    <div
-      class="hidden lg:flex lg:w-[55%] xl:w-[58%] bg-gradient-to-br from-sky-600 via-blue-600 to-blue-700 relative overflow-hidden"
-    >
-      <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-20 left-20 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-        <div class="absolute bottom-20 right-20 w-80 h-80 bg-cyan-300 rounded-full blur-3xl"></div>
-      </div>
-
-      <div class="relative z-10 flex flex-col justify-between p-16 w-full">
-        <!-- Logo -->
-        <div class="flex items-center space-x-4">
-          <div class="w-16 h-16 bg-white/95 rounded-2xl shadow-lg p-2.5 backdrop-blur-sm">
-            <!-- TODO: Replace with local asset and NgOptimizedImage -->
-            <img
-              src="assets/icons/ductifact-logo.png"
-              alt="Ductifact logo"
-              class="w-full h-full object-contain drop-shadow-sm"
-            />
-          </div>
-          <h1 class="!text-4xl !font-extrabold !text-white !tracking-tight">DUCTIFACT</h1>
+    <!-- ── LEFT PANEL (features, hidden on mobile; togglable on desktop) ── -->
+    @if (!isLeftPanelCollapsed()) {
+    <div class="hidden lg:flex lg:w-[55%] xl:w-[58%] bg-gradient-to-br from-sky-600 via-blue-600 to-blue-700 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-20 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-20 w-80 h-80 bg-cyan-300 rounded-full blur-3xl"></div>
         </div>
 
-        <!-- Hero text -->
-        <div class="space-y-12 py-5">
-          <div>
-            <h2 class="!text-5xl !font-extrabold !text-white !leading-tight !mb-6">
-              {{ 'AUTH.FEATURES.HERO_TITLE' | translate }}
-            </h2>
-            <p class="!text-2xl !text-sky-100 !leading-relaxed !max-w-3xl">
-              {{ 'AUTH.FEATURES.HERO_SUBTITLE' | translate }}
-            </p>
-          </div>
+        <div class="relative z-10 flex flex-col justify-between p-16 w-full">
+            <!-- Logo -->
+            <div class="flex items-center space-x-4">
+                <div class="w-16 h-16 bg-white/95 rounded-2xl shadow-lg p-2.5 backdrop-blur-sm">
+                    <!-- TODO: Replace with local asset and NgOptimizedImage -->
+                    <img src="assets/icons/ductifact-logo.png" alt="Ductifact logo" class="w-full h-full object-contain drop-shadow-sm" />
+                </div>
+                <h1 class="!text-4xl !font-extrabold !text-white !tracking-tight">DUCTIFACT</h1>
+            </div>
 
-          <!-- Features -->
-          <div class="space-y-6 max-w-3xl">
-            <div
-              class="flex items-start !space-x-5 !p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 hover:bg-white/15 transition-all"
-            >
-              <div
-                class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0"
-              >
-                <i class="fa-solid fa-wind text-white text-2xl"></i>
-              </div>
-              <div>
-                <h3 class="text-lg !font-bold !text-white !mb-2 !mt-0">
-                  {{ 'AUTH.FEATURES.ANALYSIS_TITLE' | translate }}
-                </h3>
-                <p class="!text-sky-100 !text-base !leading-relaxed">
-                  {{ 'AUTH.FEATURES.ANALYSIS_DESC' | translate }}
-                </p>
-              </div>
-            </div>
-            <div
-              class="flex items-start space-x-5 p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 hover:bg-white/15 transition-all"
-            >
-              <div
-                class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0"
-              >
-                <i class="fa-solid fa-chart-line text-white text-2xl"></i>
-              </div>
-              <div>
-                <h3 class="text-lg !font-bold !text-white !mb-2 !mt-0">
-                  {{ 'AUTH.FEATURES.MONITORING_TITLE' | translate }}
-                </h3>
-                <p class="text-sky-100 text-base leading-relaxed">
-                  {{ 'AUTH.FEATURES.MONITORING_DESC' | translate }}
-                </p>
-              </div>
-            </div>
-            <div
-              class="flex items-start space-x-5 p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 hover:bg-white/15 transition-all"
-            >
-              <div
-                class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0"
-              >
-                <i class="fa-solid fa-users text-white text-2xl"></i>
-              </div>
-              <div>
-                <h3 class="text-lg !font-bold !text-white !mb-2 !mt-0">
-                  {{ 'AUTH.FEATURES.COLLABORATION_TITLE' | translate }}
-                </h3>
-                <p class="text-sky-100 !text-base leading-relaxed">
-                  {{ 'AUTH.FEATURES.COLLABORATION_DESC' | translate }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+            <!-- Hero text -->
+            <div class="space-y-12 py-5">
+                <div>
+                    <h2 class="!text-5xl !font-extrabold !text-white !leading-tight !mb-6">
+                        {{ 'AUTH.FEATURES.HERO_TITLE' | translate }}
+                    </h2>
+                    <p class="!text-2xl !text-sky-100 !leading-relaxed !max-w-3xl">
+                        {{ 'AUTH.FEATURES.HERO_SUBTITLE' | translate }}
+                    </p>
+                </div>
 
-        <!-- Left footer -->
-        <div class="flex items-center justify-between text-sky-100 text-sm">
-          <p>{{ 'AUTH.FOOTER.COPYRIGHT' | translate }}</p>
-          <div class="flex space-x-6">
-            <a href="#" class="hover:text-white transition-colors">{{
-              'AUTH.FOOTER.PRIVACY_POLICY' | translate
-            }}</a>
-            <a href="#" class="hover:text-white transition-colors">{{
-              'AUTH.FOOTER.TERMS_OF_SERVICE' | translate
-            }}</a>
+                <!-- Features -->
+                <div class="space-y-6 max-w-3xl">
+                    <div class="flex items-start !space-x-5 !p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 hover:bg-white/15 transition-all">
+                        <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-wind text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg !font-bold !text-white !mb-2 !mt-0">
+                                {{ 'AUTH.FEATURES.ANALYSIS_TITLE' | translate }}
+                            </h3>
+                            <p class="!text-sky-100 !text-base !leading-relaxed">
+                                {{ 'AUTH.FEATURES.ANALYSIS_DESC' | translate }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-5 p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 hover:bg-white/15 transition-all">
+                        <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-chart-line text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg !font-bold !text-white !mb-2 !mt-0">
+                                {{ 'AUTH.FEATURES.MONITORING_TITLE' | translate }}
+                            </h3>
+                            <p class="text-sky-100 text-base leading-relaxed">
+                                {{ 'AUTH.FEATURES.MONITORING_DESC' | translate }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-5 p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 hover:bg-white/15 transition-all">
+                        <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-users text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg !font-bold !text-white !mb-2 !mt-0">
+                                {{ 'AUTH.FEATURES.COLLABORATION_TITLE' | translate }}
+                            </h3>
+                            <p class="text-sky-100 !text-base leading-relaxed">
+                                {{ 'AUTH.FEATURES.COLLABORATION_DESC' | translate }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Left footer -->
+            <div class="flex items-center justify-between text-sky-100 text-sm">
+                <p>{{ 'AUTH.FOOTER.COPYRIGHT' | translate }}</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-white transition-colors" (click)="openLegalModal('privacy'); $event.preventDefault()">{{ 'AUTH.FOOTER.PRIVACY_POLICY' | translate }}</a
+            >
+            <a
+              href="#"
+              class="hover:text-white transition-colors"
+              (click)="openLegalModal('terms'); $event.preventDefault()"
+              >{{ 'AUTH.FOOTER.TERMS_OF_SERVICE' | translate }}</a
+            >
           </div>
         </div>
       </div>
@@ -645,13 +629,19 @@
               <div class="w-0"></div>
               <label class="text-xs text-slate-600 leading-relaxed">
                 {{ 'AUTH.SIGNUP.TERMS_AGREE' | translate }}
-                <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
-                  'AUTH.FOOTER.TERMS_OF_SERVICE' | translate
-                }}</a>
+                <a
+                  href="#"
+                  class="text-sky-600 font-semibold hover:text-sky-700"
+                  (click)="openLegalModal('terms'); $event.preventDefault()"
+                  >{{ 'AUTH.FOOTER.TERMS_OF_SERVICE' | translate }}</a
+                >
                 {{ 'COMMON.AND' | translate }}
-                <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
-                  'AUTH.FOOTER.PRIVACY_POLICY' | translate
-                }}</a>
+                <a
+                  href="#"
+                  class="text-sky-600 font-semibold hover:text-sky-700"
+                  (click)="openLegalModal('privacy'); $event.preventDefault()"
+                  >{{ 'AUTH.FOOTER.PRIVACY_POLICY' | translate }}</a
+                >
               </label>
             </div>
             @if (isFieldInvalid(signupForm, 'terms')) {
@@ -741,3 +731,29 @@
     </div>
   </div>
 </div>
+
+@if (isLegalModalOpen()) {
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div
+      class="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[80vh] flex flex-col overflow-hidden"
+    >
+      <div class="px-6 py-5 border-b border-gray-100 flex justify-between items-center">
+        <h2 class="text-xl font-bold text-gray-900">{{ legalModalTitle() }}</h2>
+      </div>
+
+      <div
+        class="p-6 overflow-y-auto flex-1 prose prose-sm max-w-none text-gray-600 leading-relaxed space-y-3"
+        [innerHTML]="legalContent()"
+      ></div>
+
+      <div class="p-5 border-t border-gray-100 bg-gray-50/50">
+        <button
+          (click)="closeLegalModal()"
+          class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all uppercase tracking-wider text-sm"
+        >
+          {{ 'AUTH.SIGNUP.CLOSE_MODAL' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
