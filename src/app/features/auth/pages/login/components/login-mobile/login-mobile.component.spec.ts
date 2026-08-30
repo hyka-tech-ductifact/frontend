@@ -1,5 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+jest.mock('marked', () => ({
+  marked: {
+    parse: jest.fn().mockImplementation((content: string) => Promise.resolve(`<p>${content}</p>`)),
+  },
+}));
+
+import { provideHttpClient } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -12,7 +19,11 @@ describe('LoginMobileComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LoginMobileComponent],
-      providers: [provideIonicAngular(), importProvidersFrom(TranslateModule.forRoot())],
+      providers: [
+        provideHttpClient(),
+        provideIonicAngular(),
+        importProvidersFrom(TranslateModule.forRoot()),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginMobileComponent);

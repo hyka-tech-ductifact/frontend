@@ -95,12 +95,18 @@
         <div class="flex items-center justify-between text-sky-100 text-sm">
           <p>{{ 'AUTH.FOOTER.COPYRIGHT' | translate }}</p>
           <div class="flex space-x-6">
-            <a href="#" class="hover:text-white transition-colors">{{
-              'AUTH.FOOTER.PRIVACY_POLICY' | translate
-            }}</a>
-            <a href="#" class="hover:text-white transition-colors">{{
-              'AUTH.FOOTER.TERMS_OF_SERVICE' | translate
-            }}</a>
+            <a
+              href="#"
+              class="hover:text-white transition-colors"
+              (click)="openLegalModal('privacy'); $event.preventDefault()"
+              >{{ 'AUTH.FOOTER.PRIVACY_POLICY' | translate }}</a
+            >
+            <a
+              href="#"
+              class="hover:text-white transition-colors"
+              (click)="openLegalModal('terms'); $event.preventDefault()"
+              >{{ 'AUTH.FOOTER.TERMS_OF_SERVICE' | translate }}</a
+            >
           </div>
         </div>
       </div>
@@ -645,13 +651,19 @@
               <div class="w-0"></div>
               <label class="text-xs text-slate-600 leading-relaxed">
                 {{ 'AUTH.SIGNUP.TERMS_AGREE' | translate }}
-                <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
-                  'AUTH.FOOTER.TERMS_OF_SERVICE' | translate
-                }}</a>
+                <a
+                  href="#"
+                  class="text-sky-600 font-semibold hover:text-sky-700"
+                  (click)="openLegalModal('terms'); $event.preventDefault()"
+                  >{{ 'AUTH.FOOTER.TERMS_OF_SERVICE' | translate }}</a
+                >
                 {{ 'COMMON.AND' | translate }}
-                <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
-                  'AUTH.FOOTER.PRIVACY_POLICY' | translate
-                }}</a>
+                <a
+                  href="#"
+                  class="text-sky-600 font-semibold hover:text-sky-700"
+                  (click)="openLegalModal('privacy'); $event.preventDefault()"
+                  >{{ 'AUTH.FOOTER.PRIVACY_POLICY' | translate }}</a
+                >
               </label>
             </div>
             @if (isFieldInvalid(signupForm, 'terms')) {
@@ -741,3 +753,29 @@
     </div>
   </div>
 </div>
+
+@if (isLegalModalOpen()) {
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div
+      class="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[80vh] flex flex-col overflow-hidden"
+    >
+      <div class="px-6 py-5 border-b border-gray-100 flex justify-between items-center">
+        <h2 class="text-xl font-bold text-gray-900">{{ legalModalTitle() }}</h2>
+      </div>
+
+      <div
+        class="p-6 overflow-y-auto flex-1 prose prose-sm max-w-none text-gray-600 leading-relaxed space-y-3"
+        [innerHTML]="legalContent()"
+      ></div>
+
+      <div class="p-5 border-t border-gray-100 bg-gray-50/50">
+        <button
+          (click)="closeLegalModal()"
+          class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all uppercase tracking-wider text-sm"
+        >
+          {{ 'AUTH.SIGNUP.CLOSE_MODAL' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

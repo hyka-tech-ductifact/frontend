@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -7,7 +16,10 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { marked } from 'marked';
+import { firstValueFrom } from 'rxjs';
 import type {
   LoginRequest,
   RegisterPendingData,
@@ -46,6 +58,10 @@ const INACTIVE_TAB_CLASS =
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginWebComponent {
+  private readonly http = inject(HttpClient);
+  private readonly sanitizer = inject(DomSanitizer);
+  private readonly translate = inject(TranslateService);
+
   /** Whether an authentication request is currently in progress. */
   readonly isLoading = input(false);
 
@@ -90,6 +106,15 @@ export class LoginWebComponent {
 
   /** Signal controlling visibility of the confirm-password field. */
   readonly showConfirmPassword = signal(false);
+
+  /** Signal controlling legal modal visibility. */
+  readonly isLegalModalOpen = signal(false);
+
+  /** Signal storing current legal modal title. */
+  readonly legalModalTitle = signal('');
+
+  /** Signal storing loaded legal markdown content. */
+  readonly legalContent = signal<SafeHtml>(this.sanitizer.bypassSecurityTrustHtml(''));
 
   /** Signal holding the current value of the signup password field for strength calculation. */
   readonly signupPasswordValue = signal('');
@@ -368,5 +393,38 @@ export class LoginWebComponent {
       this.resetPasswordSubmitted.emit({ email: email!, new_password: password!, code: code! });
       this.onCancelReset();
     }
+  }
+
+  /** Loads and opens terms/privacy markdown content in the web legal modal. */
+  async openLegalModal(type: 'terms' | 'privacy'): Promise<void> {
+    const currentLang = this.translate.currentLang || 'en';
+    const lang = currentLang.startsWith('es') ? 'es' : 'en';
+
+    this.legalModalTitle.set(
+      type === 'terms'
+        ? this.translate.instant('AUTH.FOOTER.TERMS_OF_SERVICE')
+        : this.translate.instant('AUTH.FOOTER.PRIVACY_POLICY'),
+    );
+
+    try {
+      const responseText = await firstValueFrom(
+        this.http.get(`assets/docs/${type}-${lang}.md`, { responseType: 'text' }),
+      );
+      const parsedHtml = await marked.parse(responseText);
+      this.legalContent.set(this.sanitizer.bypassSecurityTrustHtml(parsedHtml));
+      this.isLegalModalOpen.set(true);
+    } catch {
+      this.legalContent.set(
+        this.sanitizer.bypassSecurityTrustHtml('<p>Unable to load document.</p>'),
+      );
+      this.isLegalModalOpen.set(true);
+    }
+  }
+
+  /** Closes legal modal and clears title/content state. */
+  closeLegalModal(): void {
+    this.isLegalModalOpen.set(false);
+    this.legalModalTitle.set('');
+    this.legalContent.set(this.sanitizer.bypassSecurityTrustHtml(''));
   }
 }

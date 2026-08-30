@@ -1,5 +1,12 @@
+jest.mock('marked', () => ({
+  marked: {
+    parse: jest.fn().mockImplementation((content: string) => Promise.resolve(`<p>${content}</p>`)),
+  },
+}));
+
+import { provideHttpClient } from '@angular/common/http';
+import { importProvidersFrom, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { signal, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { ToastController, provideIonicAngular } from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
@@ -25,6 +32,7 @@ describe('LoginComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LoginComponent],
       providers: [
+        provideHttpClient(),
         provideRouter([]),
         provideIonicAngular(),
         importProvidersFrom(TranslateModule.forRoot()),

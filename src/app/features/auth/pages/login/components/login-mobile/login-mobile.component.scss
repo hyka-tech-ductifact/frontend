@@ -23,7 +23,6 @@ ion-item.custom-input {
   --highlight-color-focused: transparent;
   margin-bottom: 0;
   overflow: hidden;
-
   ion-icon[slot='start'] {
     color: #94a3b8; // slate-400
     font-size: 1rem;
@@ -36,7 +35,6 @@ ion-item.custom-input.item-has-focus {
   --background: #ffffff;
   --border-color: #0ea5e9; // sky-500
   box-shadow: 0 0 0 4px rgb(14 165 233 / 0.1);
-
   ion-icon[slot='start'] {
     color: #0ea5e9; // sky-500
   }
@@ -60,12 +58,10 @@ ion-input {
   align-items: center;
   cursor: pointer;
   height: 100%;
-
   ion-icon {
     font-size: 1.125rem;
     color: #94a3b8; // slate-400
     transition: color 150ms;
-
     &:hover {
       color: #475569; // slate-600
     }

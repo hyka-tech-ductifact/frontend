@@ -481,13 +481,19 @@
             ></ion-checkbox>
             <label class="text-xs text-slate-600 leading-relaxed">
               {{ 'AUTH.SIGNUP.TERMS_AGREE' | translate }}
-              <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
-                'AUTH.FOOTER.TERMS_OF_SERVICE' | translate
-              }}</a>
+              <a
+                href="#"
+                class="text-sky-600 font-semibold hover:text-sky-700"
+                (click)="openLegalModal('terms'); $event.preventDefault()"
+                >{{ 'AUTH.FOOTER.TERMS_OF_SERVICE' | translate }}</a
+              >
               {{ 'COMMON.AND' | translate }}
-              <a href="#" class="text-sky-600 font-semibold hover:text-sky-700">{{
-                'AUTH.FOOTER.PRIVACY_POLICY' | translate
-              }}</a>
+              <a
+                href="#"
+                class="text-sky-600 font-semibold hover:text-sky-700"
+                (click)="openLegalModal('privacy'); $event.preventDefault()"
+                >{{ 'AUTH.FOOTER.PRIVACY_POLICY' | translate }}</a
+              >
             </label>
           </div>
           @if (isFieldInvalid(signupForm, 'terms')) {
@@ -614,3 +620,32 @@
     </div>
   </div>
 </ion-content>
+
+<!-- Sibling of ion-content, not nested: nesting ion-modal in ion-content breaks its overlay -->
+<!-- ng-template defers stamping so Ionic only renders content once the modal is presented -->
+<ion-modal
+  [isOpen]="isLegalModalOpen()"
+  (didDismiss)="closeLegalModal()"
+  [initialBreakpoint]="0.85"
+  [breakpoints]="[0, 0.85, 1]"
+>
+  <ng-template>
+    <ion-content class="ion-padding">
+      <div class="flex flex-col h-full justify-between pb-4">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900 mb-4">{{ legalModalTitle() }}</h2>
+          <div
+            class="prose prose-sm max-w-none text-gray-600 overflow-y-auto max-h-[60vh] space-y-3"
+            [innerHTML]="legalContent()"
+          ></div>
+        </div>
+        <button
+          (click)="closeLegalModal()"
+          class="w-full bg-[#0066FF] hover:bg-blue-700 active:scale-[0.98] text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition-all uppercase tracking-wider text-sm mt-6"
+        >
+          Close
+        </button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
