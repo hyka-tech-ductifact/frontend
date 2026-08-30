@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { AuthService } from '../../../../core/services/auth.service';
 import { DeviceService } from '../../../../core/services/device.service';
 import { ClientService } from '../../services/client.service';
 import { ClientMobileComponent } from './components/client-mobile/client-mobile.component';
@@ -16,6 +17,8 @@ import { ClientWebComponent } from './components/client-web/client-web.component
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientMainComponent {
+  protected readonly authService = inject(AuthService);
+
   /** Service used to determine whether the app is running on a mobile device. */
   protected readonly deviceService = inject(DeviceService);
 

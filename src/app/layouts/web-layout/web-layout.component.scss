@@ -1,7 +1,26 @@
 :host {
-  display: contents;
+    display: contents;
 }
 
 aside {
-  transition: width 0.3s ease;
+    transition: width 0.3s ease;
+}
+
+.sidebar-toggle-btn {
+    inline-size: 2rem;
+    block-size: 2rem;
+    min-inline-size: 2rem;
+    min-block-size: 2rem;
+    border-radius: 9999px;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    border-width: 1px;
+    overflow: hidden;
+    appearance: none;
+    -webkit-appearance: none;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }

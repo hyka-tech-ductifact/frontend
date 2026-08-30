@@ -95,6 +95,38 @@
             "TERMS_OF_SERVICE": "Terms of Service"
         }
     },
+    "CLIENTS": {
+        "DASHBOARD": {
+            "TITLE": "My Clients",
+            "REGISTERED_COUNT": "{{count}} registered clients",
+            "NEW_CLIENT": "New Client",
+            "ROLE_ADMIN": "Administrator",
+            "STATS": {
+                "TOTAL": "Total",
+                "ACTIVE": "Active",
+                "PREMIUM": "Premium"
+            },
+            "EMPTY": {
+                "TITLE": "No clients registered",
+                "WEB_HINT": "Click \"New Client\" to add one",
+                "MOBILE_HINT": "Tap \"New Client\" to add one"
+            }
+        }
+    },
+    "LAYOUT": {
+        "SIDEBAR": {
+            "PROFILE": "Profile",
+            "ROLE_ADMIN": "Administrator",
+            "DASHBOARD": "Dashboard",
+            "MY_CLIENTS": "My Clients",
+            "EDIT_PROFILE": "Edit Profile",
+            "GO_PREMIUM": "Go Premium",
+            "UNLOCK_FEATURES": "Unlock all features",
+            "SETTINGS": "Settings",
+            "SUPPORT": "Support",
+            "LOGOUT": "Log Out"
+        }
+    },
     "COMMON": {
         "AND": "and"
     }

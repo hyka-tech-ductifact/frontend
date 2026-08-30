@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { filter, map } from 'rxjs/operators';
+import { AuthService } from '../../core/services/auth.service';
 
 /**
  * Web/desktop layout component that wraps routed views with a collapsible sidebar
@@ -10,13 +12,15 @@ import { filter, map } from 'rxjs/operators';
 @Component({
   selector: 'app-web-layout',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, TranslateModule],
   templateUrl: './web-layout.component.html',
   styleUrls: ['./web-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WebLayoutComponent {
   private readonly router = inject(Router);
+
+  protected readonly authService = inject(AuthService);
 
   /** Signal controlling whether the sidebar is in a collapsed (narrow) state. */
   readonly isSidebarCollapsed = signal(false);
@@ -45,5 +49,12 @@ export class WebLayoutComponent {
    */
   toggleSidebar(): void {
     this.isSidebarCollapsed.update((v) => !v);
+  }
+
+  /**
+   *
+   */
+  async logout(): Promise<void> {
+    await this.authService.logout();
   }
 }

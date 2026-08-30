@@ -1,30 +1,32 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { filter, map } from 'rxjs/operators';
+import { NavigationEnd, Router } from '@angular/router';
 import {
   IonApp,
-  IonMenu,
-  IonHeader,
-  IonToolbar,
   IonContent,
-  IonList,
+  IonHeader,
+  IonIcon,
   IonItem,
   IonLabel,
-  IonIcon,
+  IonList,
+  IonMenu,
   IonMenuToggle,
   IonRouterOutlet,
+  IonToolbar,
 } from '@ionic/angular/standalone';
+import { TranslateModule } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import {
-  personCircleOutline,
-  starOutline,
-  settingsOutline,
+  createOutline,
   headsetOutline,
   logOutOutline,
-  createOutline,
   peopleOutline,
+  personCircleOutline,
+  settingsOutline,
+  starOutline,
 } from 'ionicons/icons';
+import { filter, map } from 'rxjs/operators';
+import { AuthService } from '../../core/services/auth.service';
 
 /**
  * Mobile layout component that wraps routed views with an Ionic side menu.
@@ -45,6 +47,7 @@ import {
     IonIcon,
     IonMenuToggle,
     IonRouterOutlet,
+    TranslateModule,
   ],
   templateUrl: './mobile-layout.component.html',
   styleUrls: ['./mobile-layout.component.scss'],
@@ -52,6 +55,8 @@ import {
 })
 export class MobileLayoutComponent {
   private readonly router = inject(Router);
+
+  protected readonly authService = inject(AuthService);
 
   /**
    * Signal that reflects the current URL after every successful navigation,
@@ -81,5 +86,9 @@ export class MobileLayoutComponent {
       createOutline,
       peopleOutline,
     });
+  }
+
+  async logout(): Promise<void> {
+    await this.authService.logout();
   }
 }

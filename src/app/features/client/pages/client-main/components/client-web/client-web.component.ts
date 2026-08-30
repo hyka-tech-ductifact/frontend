@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import type { Client } from '../../../../models/client.models';
 
 /**
@@ -7,7 +8,7 @@ import type { Client } from '../../../../models/client.models';
  */
 @Component({
   selector: 'app-client-web',
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './client-web.component.html',
   styleUrls: ['./client-web.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

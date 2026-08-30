@@ -1,15 +1,9 @@
 <div class="flex h-screen overflow-hidden bg-[#f0f9ff] text-slate-800 font-sans">
-  <!-- Sidebar -->
-  @if (showNav()) {
-    <aside
-      [class]="isSidebarCollapsed() ? 'w-20' : 'w-80'"
-      class="bg-white shadow-xl flex flex-col transition-all duration-300 relative flex-shrink-0"
-    >
-      <!-- Toggle Button -->
-      <button
-        (click)="toggleSidebar()"
-        class="absolute -right-4 top-8 w-8 h-8 bg-white shadow-lg rounded-full flex items-center justify-center text-sky-600 hover:bg-sky-50 transition-all z-50 border border-slate-100 active:scale-95"
-      >
+    <!-- Sidebar -->
+    @if (showNav()) {
+    <aside [class]="isSidebarCollapsed() ? 'w-20' : 'w-80'" class="bg-white shadow-xl flex flex-col transition-all duration-300 relative flex-shrink-0">
+        <!-- Toggle Button -->
+        <button type="button" (click)="toggleSidebar()" class="sidebar-toggle-btn absolute -right-4 top-8 bg-white text-sky-600 hover:bg-sky-50 shadow-lg border border-slate-100 transition-all z-50 active:scale-95 cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
@@ -25,39 +19,24 @@
         </svg>
       </button>
 
-      <!-- Sidebar Header -->
-      <div
-        class="p-6 pb-8"
-        style="background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #38bdf8 100%)"
-      >
-        <div class="flex items-center gap-4 mb-6">
-          <div
-            class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg flex-shrink-0"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-8 h-8 text-sky-600"
-            >
+        <!-- Sidebar Header -->
+        <div class="p-6 pb-8" style="background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #38bdf8 100%)">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-sky-600">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
               />
             </svg>
-          </div>
-          @if (!isSidebarCollapsed()) {
-            <div class="flex flex-col overflow-hidden">
-              <h3 class="text-white font-bold text-lg truncate">Carlos Rodríguez</h3>
-              <p class="text-sky-100 text-sm opacity-90 truncate">
-                carlos.rodriguez&#64;ductifact.es
-              </p>
-              <span
-                class="text-xs font-medium bg-white/20 px-2 py-1 rounded-full w-max backdrop-blur-sm mt-1 text-sky-50"
-                >Administrador</span
+                </div>
+                @if (!isSidebarCollapsed()) {
+                <div class="flex flex-col overflow-hidden">
+                    <h3 class="text-white font-bold text-lg truncate">
+                        {{ authService.currentUser()?.name ?? 'Usuario' }}
+                    </h3>
+                    <span class="text-xs font-medium bg-white/20 px-2 py-1 rounded-full w-max backdrop-blur-sm mt-1 text-sky-50">{{ 'LAYOUT.SIDEBAR.ROLE_ADMIN' | translate }}</span
               >
             </div>
           }
@@ -90,8 +69,9 @@
               </svg>
             </div>
             @if (!isSidebarCollapsed()) {
-              <span class="font-semibold text-slate-700 group-hover:text-sky-700 whitespace-nowrap"
-                >Dashboard</span
+              <span
+                class="font-semibold text-slate-700 group-hover:text-sky-700 whitespace-nowrap"
+                >{{ 'LAYOUT.SIDEBAR.DASHBOARD' | translate }}</span
               >
             }
           </button>
@@ -127,7 +107,7 @@
                   isClientsActive() ? 'text-sky-700 font-bold' : 'text-slate-700 font-semibold'
                 "
                 class="whitespace-nowrap"
-                >Mis Clientes</span
+                >{{ 'LAYOUT.SIDEBAR.MY_CLIENTS' | translate }}</span
               >
             }
           </button>
@@ -155,8 +135,9 @@
               </svg>
             </div>
             @if (!isSidebarCollapsed()) {
-              <span class="font-semibold text-slate-700 group-hover:text-sky-700 whitespace-nowrap"
-                >Editar Perfil</span
+              <span
+                class="font-semibold text-slate-700 group-hover:text-sky-700 whitespace-nowrap"
+                >{{ 'LAYOUT.SIDEBAR.EDIT_PROFILE' | translate }}</span
               >
             }
           </button>
@@ -185,19 +166,17 @@
               <div class="flex flex-col">
                 <span
                   class="font-semibold text-slate-700 group-hover:text-sky-700 whitespace-nowrap"
-                  >Hazte Premium</span
+                  >{{ 'LAYOUT.SIDEBAR.GO_PREMIUM' | translate }}</span
                 >
-                <span class="text-xs text-slate-500 whitespace-nowrap"
-                  >Desbloquea todas las funciones</span
-                >
-              </div>
-            }
-          </button>
+                <span class="text-xs text-slate-500 whitespace-nowrap">{{
+                  'LAYOUT.SIDEBAR.UNLOCK_FEATURES' | translate
+                }}</span>
+                </div>
+                }
+                </button>
 
-          <!-- Settings -->
-          <button
-            class="w-full px-4 py-3 flex items-center gap-3 hover:bg-sky-50 rounded-xl transition-colors text-left group active:scale-95"
-          >
+                <!-- Settings -->
+                <button class="w-full px-4 py-3 flex items-center gap-3 hover:bg-sky-50 rounded-xl transition-colors text-left group active:scale-95">
             <div
               class="w-10 h-10 bg-sky-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-sky-200 transition-colors"
             >
@@ -222,16 +201,15 @@
               </svg>
             </div>
             @if (!isSidebarCollapsed()) {
-              <span class="font-semibold text-slate-700 group-hover:text-sky-700 whitespace-nowrap"
-                >Ajustes</span
+              <span
+                class="font-semibold text-slate-700 group-hover:text-sky-700 whitespace-nowrap"
+                >{{ 'LAYOUT.SIDEBAR.SETTINGS' | translate }}</span
               >
             }
           </button>
 
-          <!-- Support -->
-          <button
-            class="w-full px-4 py-3 flex items-center gap-3 hover:bg-sky-50 rounded-xl transition-colors text-left group active:scale-95"
-          >
+                <!-- Support -->
+                <button class="w-full px-4 py-3 flex items-center gap-3 hover:bg-sky-50 rounded-xl transition-colors text-left group active:scale-95">
             <div
               class="w-10 h-10 bg-sky-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-sky-200 transition-colors"
             >
@@ -251,21 +229,20 @@
               </svg>
             </div>
             @if (!isSidebarCollapsed()) {
-              <span class="font-semibold text-slate-700 group-hover:text-sky-700 whitespace-nowrap"
-                >Soporte</span
+              <span
+                class="font-semibold text-slate-700 group-hover:text-sky-700 whitespace-nowrap"
+                >{{ 'LAYOUT.SIDEBAR.SUPPORT' | translate }}</span
               >
             }
           </button>
-        </div>
+            </div>
 
-        <!-- Divider -->
-        <div class="my-6 mx-8 border-t border-slate-100"></div>
+            <!-- Divider -->
+            <div class="my-6 mx-8 border-t border-slate-100"></div>
 
-        <!-- Logout -->
-        <div class="px-4">
-          <button
-            class="w-full px-4 py-3 flex items-center gap-3 hover:bg-red-50 rounded-xl transition-colors text-left group active:scale-95"
-          >
+            <!-- Logout -->
+            <div class="px-4">
+                <button type="button" (click)="logout()" class="w-full px-4 py-3 flex items-center gap-3 hover:bg-red-50 rounded-xl transition-colors text-left group active:scale-95">
             <div
               class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-red-200 transition-colors"
             >
@@ -285,16 +262,18 @@
               </svg>
             </div>
             @if (!isSidebarCollapsed()) {
-              <span class="font-semibold text-red-500 whitespace-nowrap">Cerrar Sesión</span>
+              <span class="font-semibold text-red-500 whitespace-nowrap">{{
+                'LAYOUT.SIDEBAR.LOGOUT' | translate
+              }}</span>
             }
           </button>
-        </div>
-      </nav>
+            </div>
+            </nav>
     </aside>
-  }
+    }
 
-  <!-- Main Content Area -->
-  <main class="flex-1 flex flex-col overflow-hidden">
-    <router-outlet />
-  </main>
-</div>
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col overflow-hidden">
+        <router-outlet />
+    </main>
+    </div>

@@ -2,6 +2,7 @@
   <app-client-mobile
     [clients]="clientService.clients()"
     [isLoading]="clientService.isLoading()"
+    [userName]="authService.currentUser()?.name ?? 'Usuario'"
     (addClient)="onAddClient()"
     (deleteClient)="onDeleteClient($event)"
   />

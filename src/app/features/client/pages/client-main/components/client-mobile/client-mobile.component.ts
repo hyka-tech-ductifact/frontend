@@ -1,14 +1,15 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import {
+  IonButtons,
   IonContent,
   IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonMenuButton,
   IonIcon,
+  IonMenuButton,
+  IonToolbar,
 } from '@ionic/angular/standalone';
+import { TranslatePipe } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { trashOutline, addOutline, callOutline } from 'ionicons/icons';
+import { addOutline, callOutline, trashOutline } from 'ionicons/icons';
 import type { Client } from '../../../../models/client.models';
 
 /**
@@ -17,7 +18,7 @@ import type { Client } from '../../../../models/client.models';
  */
 @Component({
   selector: 'app-client-mobile',
-  imports: [IonContent, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonIcon],
+  imports: [IonContent, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonIcon, TranslatePipe],
   templateUrl: './client-mobile.component.html',
   styleUrls: ['./client-mobile.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,6 +26,9 @@ import type { Client } from '../../../../models/client.models';
 export class ClientMobileComponent {
   /** The list of clients to display. Defaults to an empty array. */
   readonly clients = input<Client[]>([]);
+
+  /** The signed-in user's display name for the mobile header. */
+  readonly userName = input('Usuario');
 
   /** Whether a loading operation is in progress. */
   readonly isLoading = input(false);

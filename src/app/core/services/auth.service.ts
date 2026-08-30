@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
 import { ConfigService } from '../config/config.service';
@@ -34,6 +35,7 @@ interface TokenPayload {
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly config = inject(ConfigService);
+  private readonly router = inject(Router);
   private readonly storage = inject(StorageService);
   private readonly translate = inject(TranslateService);
 
@@ -165,6 +167,7 @@ export class AuthService {
       );
     }
     await this.clearSession();
+    await this.router.navigate(['/login']);
   }
 
   /**
