@@ -20,7 +20,8 @@
             "DIVIDER_OR": "O",
             "DIVIDER_OR_EMAIL": "O CONTINÚA CON EMAIL",
             "SHOW_PANEL": "Mostrar panel",
-            "HIDE_PANEL": "Ocultar panel"
+            "HIDE_PANEL": "Ocultar panel",
+            "INVALID_CREDENTIALS": "Correo electrónico o contraseña inválidos. Por favor, inténtalo de nuevo."
         },
         "PASSWORD_RESET": {
             "NEW_PASSWORD_LABEL": "Contraseña nueva",

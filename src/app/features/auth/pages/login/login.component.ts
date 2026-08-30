@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
-import { AuthService } from '../../../../core/services/auth.service';
-import { DeviceService } from '../../../../core/services/device.service';
+import { TranslateService } from '@ngx-translate/core';
 import type {
   LoginRequest,
   RegisterPendingData,
   ResetPasswordPayload,
 } from '../../../../core/models/auth.models';
+import { AuthService } from '../../../../core/services/auth.service';
+import { DeviceService } from '../../../../core/services/device.service';
 import { LoginMobileComponent } from './components/login-mobile/login-mobile.component';
 import { LoginWebComponent } from './components/login-web/login-web.component';
-import { TranslateService } from '@ngx-translate/core';
 
 /** sessionStorage key for pending registration data during the OTP verification step. */
 const PENDING_REGISTER_KEY = 'auth_pending_register';
@@ -61,8 +61,13 @@ export class LoginComponent {
     this.errorMessage.set(null);
     try {
       await this.authService.login(credentials.email, credentials.password);
-      await this.router.navigate(['/client']);
-    } catch {
+
+      const navigationSuccess = await this.router.navigate(['/client']);
+      if (!navigationSuccess) {
+        console.warn('Navigation to /client was blocked (check your Route Guards).');
+      }
+    } catch (error) {
+      console.error('Login process error details:', error);
       this.errorMessage.set('AUTH.LOGIN.ERROR_INVALID_CREDENTIALS');
       await this.showToast('AUTH.LOGIN.ERROR_INVALID_CREDENTIALS', 'danger');
     } finally {
