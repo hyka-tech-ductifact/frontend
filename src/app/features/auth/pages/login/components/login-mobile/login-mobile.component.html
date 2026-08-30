@@ -1,69 +1,87 @@
 <ion-content>
-    <div class="w-full bg-gradient-to-br from-sky-50 via-white to-blue-50 px-6 py-8 flex flex-col max-w-md mx-auto font-sans min-h-full">
-        <!-- Logo Section -->
-        <div class="text-center mb-10">
-            <div class="mb-4 flex flex-col items-center justify-center">
-                <div class="w-20 h-20 mb-2">
-                    <!-- TODO: Replace with local asset and NgOptimizedImage -->
-                    <img src="assets/icons/ductifact-logo.png" alt="Ductifact logo" class="w-full h-full object-contain" />
-                </div>
-                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">DUCTIFACT</h1>
-            </div>
-            @if (activeTab() === 'login') {
-            <h2 class="text-xl font-bold text-slate-800 mt-2">
-                {{ 'AUTH.LOGIN.TITLE_WELCOME' | translate }}
-            </h2>
-            <p class="text-sm text-slate-500 mt-1 leading-snug">
-                {{ 'AUTH.LOGIN.SUBTITLE_WELCOME' | translate }}
-            </p>
-            } @else {
-            <h2 class="text-xl font-bold text-slate-800 mt-2">
-                {{ 'AUTH.LOGIN.TITLE_CREATE' | translate }}
-            </h2>
-            <p class="text-sm text-slate-500 mt-1 leading-snug">
-                {{ 'AUTH.LOGIN.SUBTITLE_CREATE' | translate }}
-            </p>
-            }
+  <div
+    class="w-full bg-gradient-to-br from-sky-50 via-white to-blue-50 px-6 py-8 flex flex-col max-w-md mx-auto font-sans min-h-full"
+  >
+    <!-- Logo Section -->
+    <div class="text-center mb-10">
+      <div class="mb-4 flex flex-col items-center justify-center">
+        <div class="w-20 h-20 mb-2">
+          <!-- TODO: Replace with local asset and NgOptimizedImage -->
+          <img
+            src="assets/icons/ductifact-logo.png"
+            alt="Ductifact logo"
+            class="w-full h-full object-contain"
+          />
         </div>
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">DUCTIFACT</h1>
+      </div>
+      @if (activeTab() === 'login') {
+        <h2 class="text-xl font-bold text-slate-800 mt-2">
+          {{ 'AUTH.LOGIN.TITLE_WELCOME' | translate }}
+        </h2>
+        <p class="text-sm text-slate-500 mt-1 leading-snug">
+          {{ 'AUTH.LOGIN.SUBTITLE_WELCOME' | translate }}
+        </p>
+      } @else {
+        <h2 class="text-xl font-bold text-slate-800 mt-2">
+          {{ 'AUTH.LOGIN.TITLE_CREATE' | translate }}
+        </h2>
+        <p class="text-sm text-slate-500 mt-1 leading-snug">
+          {{ 'AUTH.LOGIN.SUBTITLE_CREATE' | translate }}
+        </p>
+      }
+    </div>
 
-        <!-- Auth Tabs -->
-        <div class="h-12 flex bg-slate-100 !rounded-xl p-1.5 shadow-inner mb-8 select-none">
-            <button type="button" [class]="loginTabClass()" (click)="switchTab('login')">
+    <!-- Auth Tabs -->
+    <div class="h-12 flex bg-slate-100 !rounded-xl p-1.5 shadow-inner mb-8 select-none">
+      <button type="button" [class]="loginTabClass()" (click)="switchTab('login')">
         {{ 'AUTH.LOGIN.SIGN_IN_TAB' | translate }}
       </button>
-            <button type="button" [class]="signupTabClass()" (click)="switchTab('signup')">
+      <button type="button" [class]="signupTabClass()" (click)="switchTab('signup')">
         {{ 'AUTH.LOGIN.SIGN_UP_TAB' | translate }}
       </button>
-        </div>
+    </div>
 
-        <!-- ── LOGIN & PASSWORD RESET TAB ────────────────────────────────────────────── -->
-        @if (activeTab() === 'login') { @if (isPasswordResetStep()) {
+    <!-- ── LOGIN & PASSWORD RESET TAB ────────────────────────────────────────────── -->
+    @if (activeTab() === 'login') {
+      @if (isPasswordResetStep()) {
         <!-- ── FORGOT PASSWORD FLOW ────────────────────────────────────────────── -->
         <form [formGroup]="resetPasswordForm" class="space-y-5">
-            @if (!isEmailSent()) {
+          @if (!isEmailSent()) {
             <!-- Email Input -->
             <div class="space-y-2">
-                <label class="text-sm font-semibold text-slate-700 ml-1">{{
+              <label class="text-sm font-semibold text-slate-700 ml-1">{{
                 'AUTH.LOGIN.EMAIL_LABEL' | translate
               }}</label>
-                <ion-item lines="none" class="custom-input">
-                    <ion-icon slot="start" name="mail-outline"></ion-icon>
-                    <ion-input type="email" inputmode="email" autocomplete="email" formControlName="email" [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"></ion-input>
-                </ion-item>
-                @if (isFieldInvalid(resetPasswordForm, 'email', 'required')) {
+              <ion-item lines="none" class="custom-input">
+                <ion-icon slot="start" name="mail-outline"></ion-icon>
+                <ion-input
+                  type="email"
+                  inputmode="email"
+                  autocomplete="email"
+                  formControlName="email"
+                  [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"
+                ></ion-input>
+              </ion-item>
+              @if (isFieldInvalid(resetPasswordForm, 'email', 'required')) {
                 <p class="text-xs text-red-500 mt-1 ml-1">
-                    {{ 'AUTH.PASSWORD_RESET.EMAIL_REQUIRED' | translate }}
+                  {{ 'AUTH.PASSWORD_RESET.EMAIL_REQUIRED' | translate }}
                 </p>
-                } @else if (isFieldInvalid(resetPasswordForm, 'email', 'email')) {
+              } @else if (isFieldInvalid(resetPasswordForm, 'email', 'email')) {
                 <p class="text-xs text-red-500 mt-1 ml-1">
-                    {{ 'AUTH.SIGNUP.EMAIL_INVALID' | translate }}
+                  {{ 'AUTH.SIGNUP.EMAIL_INVALID' | translate }}
                 </p>
-                }
+              }
             </div>
 
             <!-- Send Code Button (WITH FIXES: overflow-hidden & !rounded-xl) -->
             <div class="pt-2">
-                <button type="button" (click)="onSendCode()" [disabled]="isLoading()" class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl overflow-hidden shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none flex items-center justify-center gap-2">
+              <button
+                type="button"
+                (click)="onSendCode()"
+                [disabled]="isLoading()"
+                class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl overflow-hidden shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none flex items-center justify-center gap-2"
+              >
                 @if (isLoading()) {
                   <ion-spinner
                     name="crescent"
@@ -74,94 +92,133 @@
                 }
               </button>
             </div>
-            } @else {
+          } @else {
             <div class="text-center pb-2">
-                <div class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-envelope-open-text text-sky-600 text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-slate-900 mb-2">
-                    {{ 'AUTH.SIGNUP.VERIFY_TITLE' | translate }}
-                </h3>
-                <p class="text-sm text-slate-500 leading-relaxed">
-                    {{ 'AUTH.PASSWORD_RESET.VERIFY_SUBTITLE_RESET_CODE' | translate }}
-                </p>
+              <div
+                class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4"
+              >
+                <i class="fa-solid fa-envelope-open-text text-sky-600 text-2xl"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-2">
+                {{ 'AUTH.SIGNUP.VERIFY_TITLE' | translate }}
+              </h3>
+              <p class="text-sm text-slate-500 leading-relaxed">
+                {{ 'AUTH.PASSWORD_RESET.VERIFY_SUBTITLE_RESET_CODE' | translate }}
+              </p>
             </div>
 
             <!-- Code Input -->
             <div class="space-y-2">
-                <label class="text-sm font-semibold text-slate-700 ml-1">
+              <label class="text-sm font-semibold text-slate-700 ml-1">
                 {{ 'AUTH.SIGNUP.VERIFY_CODE_LABEL' | translate }}
               </label>
-                <ion-item lines="none" class="custom-input">
-                    <ion-icon slot="start" name="keypad-outline"></ion-icon>
-                    <ion-input type="text" inputmode="numeric" formControlName="code" [placeholder]="'AUTH.SIGNUP.VERIFY_CODE_PLACEHOLDER' | translate"></ion-input>
-                </ion-item>
-                @if (isFieldInvalid(resetPasswordForm, 'code', 'required')) {
+              <ion-item lines="none" class="custom-input">
+                <ion-icon slot="start" name="keypad-outline"></ion-icon>
+                <ion-input
+                  type="text"
+                  inputmode="numeric"
+                  formControlName="code"
+                  [placeholder]="'AUTH.SIGNUP.VERIFY_CODE_PLACEHOLDER' | translate"
+                ></ion-input>
+              </ion-item>
+              @if (isFieldInvalid(resetPasswordForm, 'code', 'required')) {
                 <p class="text-xs text-red-500 mt-1 ml-1">
-                    {{ 'AUTH.PASSWORD_RESET.CODE_REQUIRED' | translate }}
+                  {{ 'AUTH.PASSWORD_RESET.CODE_REQUIRED' | translate }}
                 </p>
-                } @else if (isFieldInvalid(resetPasswordForm, 'code')) {
+              } @else if (isFieldInvalid(resetPasswordForm, 'code')) {
                 <p class="text-xs text-red-500 mt-1 ml-1">
-                    {{ 'AUTH.PASSWORD_RESET.CODE_INVALID' | translate }}
+                  {{ 'AUTH.PASSWORD_RESET.CODE_INVALID' | translate }}
                 </p>
-                }
+              }
             </div>
 
             <!-- New Password Input -->
             <div class="space-y-2">
-                <label class="text-sm font-semibold text-slate-700 ml-1">{{
+              <label class="text-sm font-semibold text-slate-700 ml-1">{{
                 'AUTH.PASSWORD_RESET.NEW_PASSWORD_LABEL' | translate
               }}</label>
-                <ion-item lines="none" class="custom-input">
-                    <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-                    <ion-input [type]="showSignupPassword() ? 'text' : 'password'" autocomplete="new-password" formControlName="password" [placeholder]="'AUTH.SIGNUP.PASSWORD_CREATE_PLACEHOLDER' | translate" (ionInput)="onPasswordInput($event)"></ion-input>
-                    <button type="button" slot="end" class="toggle-btn" (click)="toggleSignupPassword()">
+              <ion-item lines="none" class="custom-input">
+                <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+                <ion-input
+                  [type]="showSignupPassword() ? 'text' : 'password'"
+                  autocomplete="new-password"
+                  formControlName="password"
+                  [placeholder]="'AUTH.SIGNUP.PASSWORD_CREATE_PLACEHOLDER' | translate"
+                  (ionInput)="onPasswordInput($event)"
+                ></ion-input>
+                <button
+                  type="button"
+                  slot="end"
+                  class="toggle-btn"
+                  (click)="toggleSignupPassword()"
+                >
                   <ion-icon
                     [name]="showSignupPassword() ? 'eye-off-outline' : 'eye-outline'"
                   ></ion-icon>
                 </button>
-                </ion-item>
-                <!-- Strength Bars -->
-                <div class="flex space-x-1 mt-2 px-1">
-                    @for (bar of strengthBars; track bar) {
-                    <div class="flex-1 h-1 rounded-full transition-colors duration-300" [class.bg-slate-200]="bar >= passwordStrength()" [class.bg-red-500]="bar < passwordStrength() && passwordStrength() <= 1" [class.bg-yellow-500]="bar < passwordStrength() && passwordStrength() === 2"
-                        [class.bg-blue-400]="bar < passwordStrength() && passwordStrength() === 3" [class.bg-green-500]="bar < passwordStrength() && passwordStrength() >= 4"></div>
-                    }
-                </div>
-                @if (isFieldInvalid(resetPasswordForm, 'password', 'pattern')) {
-                <p class="text-xs text-red-500 mt-1 ml-1">
-                    {{ 'AUTH.SIGNUP.PASSWORD_REQUIREMENTS' | translate }}
-                </p>
-                } @else {
-                <p class="text-xs text-slate-500 mt-1 ml-1">
-                    {{ 'AUTH.SIGNUP.PASSWORD_REQUIREMENTS' | translate }}
-                </p>
+              </ion-item>
+              <!-- Strength Bars -->
+              <div class="flex space-x-1 mt-2 px-1">
+                @for (bar of strengthBars; track bar) {
+                  <div
+                    class="flex-1 h-1 rounded-full transition-colors duration-300"
+                    [class.bg-slate-200]="bar >= passwordStrength()"
+                    [class.bg-red-500]="bar < passwordStrength() && passwordStrength() <= 1"
+                    [class.bg-yellow-500]="bar < passwordStrength() && passwordStrength() === 2"
+                    [class.bg-blue-400]="bar < passwordStrength() && passwordStrength() === 3"
+                    [class.bg-green-500]="bar < passwordStrength() && passwordStrength() >= 4"
+                  ></div>
                 }
+              </div>
+              @if (isFieldInvalid(resetPasswordForm, 'password', 'pattern')) {
+                <p class="text-xs text-red-500 mt-1 ml-1">
+                  {{ 'AUTH.SIGNUP.PASSWORD_REQUIREMENTS' | translate }}
+                </p>
+              } @else {
+                <p class="text-xs text-slate-500 mt-1 ml-1">
+                  {{ 'AUTH.SIGNUP.PASSWORD_REQUIREMENTS' | translate }}
+                </p>
+              }
             </div>
 
             <!-- Confirm Password -->
             <div class="space-y-2">
-                <label class="text-sm font-semibold text-slate-700 ml-1">{{
+              <label class="text-sm font-semibold text-slate-700 ml-1">{{
                 'AUTH.SIGNUP.CONFIRM_PASSWORD_LABEL' | translate
               }}</label>
-                <ion-item lines="none" class="custom-input">
-                    <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-                    <ion-input [type]="showConfirmPassword() ? 'text' : 'password'" autocomplete="new-password" formControlName="confirmPassword" [placeholder]="'AUTH.SIGNUP.CONFIRM_PASSWORD_PLACEHOLDER' | translate"></ion-input>
-                    <button type="button" slot="end" class="toggle-btn" (click)="toggleConfirmPassword()">
+              <ion-item lines="none" class="custom-input">
+                <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+                <ion-input
+                  [type]="showConfirmPassword() ? 'text' : 'password'"
+                  autocomplete="new-password"
+                  formControlName="confirmPassword"
+                  [placeholder]="'AUTH.SIGNUP.CONFIRM_PASSWORD_PLACEHOLDER' | translate"
+                ></ion-input>
+                <button
+                  type="button"
+                  slot="end"
+                  class="toggle-btn"
+                  (click)="toggleConfirmPassword()"
+                >
                   <ion-icon
                     [name]="showConfirmPassword() ? 'eye-off-outline' : 'eye-outline'"
                   ></ion-icon>
                 </button>
-                </ion-item>
-                @if (passwordsMismatch) {
+              </ion-item>
+              @if (passwordsMismatch) {
                 <p class="text-xs text-red-500 mt-1 ml-1">
-                    {{ 'AUTH.SIGNUP.PASSWORDS_DONT_MATCH' | translate }}
+                  {{ 'AUTH.SIGNUP.PASSWORDS_DONT_MATCH' | translate }}
                 </p>
-                }
+              }
             </div>
 
             <!-- Submit Reset Button (WITH FIXES: overflow-hidden & !rounded-xl) -->
-            <button type="button" (click)="onResetPasswordSubmit()" [disabled]="isLoading()" class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none flex items-center justify-center gap-2">
+            <button
+              type="button"
+              (click)="onResetPasswordSubmit()"
+              [disabled]="isLoading()"
+              class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none flex items-center justify-center gap-2"
+            >
               @if (isLoading()) {
                 <ion-spinner
                   name="crescent"
@@ -171,12 +228,13 @@
                 <i class="fa-solid fa-circle-check"></i>
                 {{ 'AUTH.PASSWORD_RESET.RESET_PASSWORD' | translate }}
               }
-            </button> }
+            </button>
+          }
         </form>
-        } @else {
+      } @else {
         <!-- ── STANDARD LOGIN FORM ────────────────────────────────────────────── -->
         <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" class="space-y-5">
-            <!-- Social Buttons
+          <!-- Social Buttons
             <div class="space-y-3 mb-6">
                 <button type="button" class="w-full h-12 bg-white border border-slate-200 !rounded-xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm">
               <i class="fa-brands fa-google text-xl text-red-500"></i>
@@ -192,55 +250,74 @@
             </button>
             </div> -->
 
-            <!-- Divider -->
-            <div class="flex items-center my-6">
-                <div class="flex-1 h-px bg-slate-200"></div>
-                <span class="px-4 text-xs text-slate-400 font-medium tracking-wider">{{
+          <!-- Divider -->
+          <div class="flex items-center my-6">
+            <div class="flex-1 h-px bg-slate-200"></div>
+            <span class="px-4 text-xs text-slate-400 font-medium tracking-wider">{{
               'AUTH.LOGIN.DIVIDER_OR_EMAIL' | translate
             }}</span>
-                <div class="flex-1 h-px bg-slate-200"></div>
-            </div>
+            <div class="flex-1 h-px bg-slate-200"></div>
+          </div>
 
-            <!-- Email -->
-            <div class="space-y-2">
-                <label class="text-sm font-semibold text-slate-700 ml-1">{{
+          <!-- Email -->
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-slate-700 ml-1">{{
               'AUTH.LOGIN.EMAIL_LABEL' | translate
             }}</label>
-                <ion-item lines="none" class="custom-input">
-                    <ion-icon slot="start" name="mail-outline"></ion-icon>
-                    <ion-input type="email" inputmode="email" autocomplete="email" formControlName="email" [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"></ion-input>
-                </ion-item>
-            </div>
+            <ion-item lines="none" class="custom-input">
+              <ion-icon slot="start" name="mail-outline"></ion-icon>
+              <ion-input
+                type="email"
+                inputmode="email"
+                autocomplete="email"
+                formControlName="email"
+                [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"
+              ></ion-input>
+            </ion-item>
+          </div>
 
-            <!-- Password -->
-            <div class="space-y-2">
-                <label class="text-sm font-semibold text-slate-700 ml-1">{{
+          <!-- Password -->
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-slate-700 ml-1">{{
               'AUTH.LOGIN.PASSWORD_LABEL' | translate
             }}</label>
-                <ion-item lines="none" class="custom-input">
-                    <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-                    <ion-input [type]="showLoginPassword() ? 'text' : 'password'" autocomplete="current-password" formControlName="password" [placeholder]="'AUTH.LOGIN.PASSWORD_PLACEHOLDER' | translate"></ion-input>
-                    <button type="button" slot="end" class="toggle-btn" (click)="toggleLoginPassword()">
+            <ion-item lines="none" class="custom-input">
+              <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              <ion-input
+                [type]="showLoginPassword() ? 'text' : 'password'"
+                autocomplete="current-password"
+                formControlName="password"
+                [placeholder]="'AUTH.LOGIN.PASSWORD_PLACEHOLDER' | translate"
+              ></ion-input>
+              <button type="button" slot="end" class="toggle-btn" (click)="toggleLoginPassword()">
                 <ion-icon
                   [name]="showLoginPassword() ? 'eye-off-outline' : 'eye-outline'"
                 ></ion-icon>
               </button>
-                </ion-item>
-            </div>
+            </ion-item>
+          </div>
 
-            <!-- Remember / Forgot -->
-            <div class="flex items-center justify-between pt-1">
-                <ion-checkbox formControlName="rememberMe" labelPlacement="end" class="custom-checkbox">
-                    {{ 'AUTH.LOGIN.REMEMBER_ME' | translate }}
-                </ion-checkbox>
-                <!-- FIX: Added click event to trigger the forgot password flow -->
-                <a href="#" (click)="onNavigateToForgot(); $event.preventDefault()" class="text-sm font-semibold text-sky-600 hover:text-sky-700 transition-colors">
+          <!-- Remember / Forgot -->
+          <div class="flex items-center justify-between pt-1">
+            <ion-checkbox formControlName="rememberMe" labelPlacement="end" class="custom-checkbox">
+              {{ 'AUTH.LOGIN.REMEMBER_ME' | translate }}
+            </ion-checkbox>
+            <!-- FIX: Added click event to trigger the forgot password flow -->
+            <a
+              href="#"
+              (click)="onNavigateToForgot(); $event.preventDefault()"
+              class="text-sm font-semibold text-sky-600 hover:text-sky-700 transition-colors"
+            >
               {{ 'AUTH.LOGIN.FORGOT_PASSWORD' | translate }}
             </a>
-            </div>
+          </div>
 
-            <!-- Submit -->
-            <button type="submit" [disabled]="isLoading()" class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none flex items-center justify-center gap-2">
+          <!-- Submit -->
+          <button
+            type="submit"
+            [disabled]="isLoading()"
+            class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none flex items-center justify-center gap-2"
+          >
             @if (isLoading()) {
               <ion-spinner
                 name="crescent"
@@ -252,12 +329,14 @@
             }
           </button>
         </form>
-        } }
+      }
+    }
 
-        <!-- ── SIGNUP FORM (UNCHANGED) ───────────────────────────────────────────── -->
-        @if (activeTab() === 'signup') { @if (!isVerificationStep()) {
+    <!-- ── SIGNUP FORM (UNCHANGED) ───────────────────────────────────────────── -->
+    @if (activeTab() === 'signup') {
+      @if (!isVerificationStep()) {
         <form [formGroup]="signupForm" (ngSubmit)="onRegisterSubmit()" class="space-y-5">
-            <!-- Social Buttons
+          <!-- Social Buttons
             <div class="space-y-3 mb-6">
                 <button type="button" class="w-full h-12 bg-white border border-slate-200 !rounded-xl flex items-center justify-center space-x-3 hover:border-sky-300 hover:bg-sky-50 transition-all active:scale-95 shadow-sm">
               <i class="fa-brands fa-google text-xl text-red-500"></i>
@@ -273,104 +352,134 @@
             </button>
             </div> -->
 
-            <!-- Divider -->
-            <div class="flex items-center my-6">
-                <div class="flex-1 h-px bg-slate-200"></div>
-                <span class="px-4 text-xs text-slate-400 font-medium tracking-wider">{{
+          <!-- Divider -->
+          <div class="flex items-center my-6">
+            <div class="flex-1 h-px bg-slate-200"></div>
+            <span class="px-4 text-xs text-slate-400 font-medium tracking-wider">{{
               'AUTH.SIGNUP.DIVIDER_OR_EMAIL' | translate
             }}</span>
-                <div class="flex-1 h-px bg-slate-200"></div>
-            </div>
+            <div class="flex-1 h-px bg-slate-200"></div>
+          </div>
 
-            <!-- Full Name -->
-            <div class="space-y-2">
-                <label class="text-sm font-semibold text-slate-700 ml-1">{{
+          <!-- Full Name -->
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-slate-700 ml-1">{{
               'AUTH.SIGNUP.FULL_NAME_LABEL' | translate
             }}</label>
-                <ion-item lines="none" class="custom-input">
-                    <ion-icon slot="start" name="person-outline"></ion-icon>
-                    <ion-input type="text" formControlName="fullName" [placeholder]="'AUTH.SIGNUP.FULL_NAME_PLACEHOLDER' | translate"></ion-input>
-                </ion-item>
-                @if (isFieldInvalid(signupForm, 'fullName')) {
-                <p class="text-xs text-red-500 mt-1 ml-1">
-                    {{ 'AUTH.SIGNUP.FULL_NAME_REQUIRED' | translate }}
-                </p>
-                }
-            </div>
+            <ion-item lines="none" class="custom-input">
+              <ion-icon slot="start" name="person-outline"></ion-icon>
+              <ion-input
+                type="text"
+                formControlName="fullName"
+                [placeholder]="'AUTH.SIGNUP.FULL_NAME_PLACEHOLDER' | translate"
+              ></ion-input>
+            </ion-item>
+            @if (isFieldInvalid(signupForm, 'fullName')) {
+              <p class="text-xs text-red-500 mt-1 ml-1">
+                {{ 'AUTH.SIGNUP.FULL_NAME_REQUIRED' | translate }}
+              </p>
+            }
+          </div>
 
-            <!-- Email -->
-            <div class="space-y-2">
-                <label class="text-sm font-semibold text-slate-700 ml-1">{{
+          <!-- Email -->
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-slate-700 ml-1">{{
               'AUTH.LOGIN.EMAIL_LABEL' | translate
             }}</label>
-                <ion-item lines="none" class="custom-input">
-                    <ion-icon slot="start" name="mail-outline"></ion-icon>
-                    <ion-input type="email" inputmode="email" autocomplete="email" formControlName="email" [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"></ion-input>
-                </ion-item>
-                @if (isFieldInvalid(signupForm, 'email')) {
-                <p class="text-xs text-red-500 mt-1 ml-1">
-                    {{ 'AUTH.SIGNUP.EMAIL_INVALID' | translate }}
-                </p>
-                }
-            </div>
+            <ion-item lines="none" class="custom-input">
+              <ion-icon slot="start" name="mail-outline"></ion-icon>
+              <ion-input
+                type="email"
+                inputmode="email"
+                autocomplete="email"
+                formControlName="email"
+                [placeholder]="'AUTH.LOGIN.EMAIL_PLACEHOLDER' | translate"
+              ></ion-input>
+            </ion-item>
+            @if (isFieldInvalid(signupForm, 'email')) {
+              <p class="text-xs text-red-500 mt-1 ml-1">
+                {{ 'AUTH.SIGNUP.EMAIL_INVALID' | translate }}
+              </p>
+            }
+          </div>
 
-            <!-- Password + Strength -->
-            <div class="space-y-2">
-                <label class="text-sm font-semibold text-slate-700 ml-1">{{
+          <!-- Password + Strength -->
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-slate-700 ml-1">{{
               'AUTH.LOGIN.PASSWORD_LABEL' | translate
             }}</label>
-                <ion-item lines="none" class="custom-input">
-                    <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-                    <ion-input [type]="showSignupPassword() ? 'text' : 'password'" autocomplete="new-password" formControlName="password" [placeholder]="'AUTH.SIGNUP.PASSWORD_CREATE_PLACEHOLDER' | translate" (ionInput)="onPasswordInput($event)"></ion-input>
-                    <button type="button" slot="end" class="toggle-btn" (click)="toggleSignupPassword()">
+            <ion-item lines="none" class="custom-input">
+              <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              <ion-input
+                [type]="showSignupPassword() ? 'text' : 'password'"
+                autocomplete="new-password"
+                formControlName="password"
+                [placeholder]="'AUTH.SIGNUP.PASSWORD_CREATE_PLACEHOLDER' | translate"
+                (ionInput)="onPasswordInput($event)"
+              ></ion-input>
+              <button type="button" slot="end" class="toggle-btn" (click)="toggleSignupPassword()">
                 <ion-icon
                   [name]="showSignupPassword() ? 'eye-off-outline' : 'eye-outline'"
                 ></ion-icon>
               </button>
-                </ion-item>
-                <!-- Strength Bars -->
-                <div class="flex space-x-1 mt-2 px-1">
-                    @for (bar of strengthBars; track bar) {
-                    <div class="flex-1 h-1 rounded-full transition-colors duration-300" [class.bg-slate-200]="bar >= passwordStrength()" [class.bg-red-500]="bar < passwordStrength() && passwordStrength() <= 1" [class.bg-yellow-500]="bar < passwordStrength() && passwordStrength() === 2"
-                        [class.bg-blue-400]="bar < passwordStrength() && passwordStrength() === 3" [class.bg-green-500]="bar < passwordStrength() && passwordStrength() >= 4"></div>
-                    }
-                </div>
-                @if (isFieldInvalid(signupForm, 'password', 'pattern')) {
-                <p class="text-xs text-red-500 mt-1 ml-1">
-                    {{ 'AUTH.SIGNUP.PASSWORD_REQUIREMENTS' | translate }}
-                </p>
-                } @else {
-                <p class="text-xs text-slate-500 mt-1 ml-1">
-                    {{ 'AUTH.SIGNUP.PASSWORD_REQUIREMENTS' | translate }}
-                </p>
-                }
+            </ion-item>
+            <!-- Strength Bars -->
+            <div class="flex space-x-1 mt-2 px-1">
+              @for (bar of strengthBars; track bar) {
+                <div
+                  class="flex-1 h-1 rounded-full transition-colors duration-300"
+                  [class.bg-slate-200]="bar >= passwordStrength()"
+                  [class.bg-red-500]="bar < passwordStrength() && passwordStrength() <= 1"
+                  [class.bg-yellow-500]="bar < passwordStrength() && passwordStrength() === 2"
+                  [class.bg-blue-400]="bar < passwordStrength() && passwordStrength() === 3"
+                  [class.bg-green-500]="bar < passwordStrength() && passwordStrength() >= 4"
+                ></div>
+              }
             </div>
+            @if (isFieldInvalid(signupForm, 'password', 'pattern')) {
+              <p class="text-xs text-red-500 mt-1 ml-1">
+                {{ 'AUTH.SIGNUP.PASSWORD_REQUIREMENTS' | translate }}
+              </p>
+            } @else {
+              <p class="text-xs text-slate-500 mt-1 ml-1">
+                {{ 'AUTH.SIGNUP.PASSWORD_REQUIREMENTS' | translate }}
+              </p>
+            }
+          </div>
 
-            <!-- Confirm Password -->
-            <div class="space-y-2">
-                <label class="text-sm font-semibold text-slate-700 ml-1">{{
+          <!-- Confirm Password -->
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-slate-700 ml-1">{{
               'AUTH.SIGNUP.CONFIRM_PASSWORD_LABEL' | translate
             }}</label>
-                <ion-item lines="none" class="custom-input">
-                    <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-                    <ion-input [type]="showConfirmPassword() ? 'text' : 'password'" autocomplete="new-password" formControlName="confirmPassword" [placeholder]="'AUTH.SIGNUP.CONFIRM_PASSWORD_PLACEHOLDER' | translate"></ion-input>
-                    <button type="button" slot="end" class="toggle-btn" (click)="toggleConfirmPassword()">
+            <ion-item lines="none" class="custom-input">
+              <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              <ion-input
+                [type]="showConfirmPassword() ? 'text' : 'password'"
+                autocomplete="new-password"
+                formControlName="confirmPassword"
+                [placeholder]="'AUTH.SIGNUP.CONFIRM_PASSWORD_PLACEHOLDER' | translate"
+              ></ion-input>
+              <button type="button" slot="end" class="toggle-btn" (click)="toggleConfirmPassword()">
                 <ion-icon
                   [name]="showConfirmPassword() ? 'eye-off-outline' : 'eye-outline'"
                 ></ion-icon>
               </button>
-                </ion-item>
-                @if (passwordsMismatch) {
-                <p class="text-xs text-red-500 mt-1 ml-1">
-                    {{ 'AUTH.SIGNUP.PASSWORDS_DONT_MATCH' | translate }}
-                </p>
-                }
-            </div>
+            </ion-item>
+            @if (passwordsMismatch) {
+              <p class="text-xs text-red-500 mt-1 ml-1">
+                {{ 'AUTH.SIGNUP.PASSWORDS_DONT_MATCH' | translate }}
+              </p>
+            }
+          </div>
 
-            <!-- Terms -->
-            <div class="flex items-center gap-3 pt-2">
-                <ion-checkbox formControlName="terms" class="custom-checkbox flex-shrink-0"></ion-checkbox>
-                <label class="text-xs text-slate-600 leading-relaxed">
+          <!-- Terms -->
+          <div class="flex items-center gap-3 pt-2">
+            <ion-checkbox
+              formControlName="terms"
+              class="custom-checkbox flex-shrink-0"
+            ></ion-checkbox>
+            <label class="text-xs text-slate-600 leading-relaxed">
               {{ 'AUTH.SIGNUP.TERMS_AGREE' | translate }}
               <a
                 href="#"
@@ -386,46 +495,62 @@
                 >{{ 'AUTH.FOOTER.PRIVACY_POLICY' | translate }}</a
               >
             </label>
-            </div>
-            @if (isFieldInvalid(signupForm, 'terms')) {
+          </div>
+          @if (isFieldInvalid(signupForm, 'terms')) {
             <p class="text-xs text-red-500 mt-1 ml-1">
-                {{ 'AUTH.SIGNUP.TERMS_REQUIRED' | translate }}
+              {{ 'AUTH.SIGNUP.TERMS_REQUIRED' | translate }}
             </p>
-            }
+          }
 
-            <!-- Submit -->
-            <button type="submit" [disabled]="isLoading()" class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none">
+          <!-- Submit -->
+          <button
+            type="submit"
+            [disabled]="isLoading()"
+            class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none"
+          >
             {{ 'AUTH.SIGNUP.CREATE_ACCOUNT_BTN' | translate }}
           </button>
         </form>
-        } @else {
+      } @else {
         <!-- ── OTP VERIFICATION STEP ─────────────────────────────── -->
         <form [formGroup]="verificationForm" (ngSubmit)="onVerificationSubmit()" class="space-y-6">
-            <div class="text-center pb-4">
-                <div class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-envelope-open-text text-sky-600 text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-slate-900 mb-2">
-                    {{ 'AUTH.SIGNUP.VERIFY_TITLE' | translate }}
-                </h3>
-                <p class="text-sm text-slate-500 leading-relaxed">
-                    {{ 'AUTH.SIGNUP.VERIFY_SUBTITLE' | translate }}
-                </p>
+          <div class="text-center pb-4">
+            <div
+              class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <i class="fa-solid fa-envelope-open-text text-sky-600 text-2xl"></i>
             </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">
+              {{ 'AUTH.SIGNUP.VERIFY_TITLE' | translate }}
+            </h3>
+            <p class="text-sm text-slate-500 leading-relaxed">
+              {{ 'AUTH.SIGNUP.VERIFY_SUBTITLE' | translate }}
+            </p>
+          </div>
 
-            <!-- OTP Code Input -->
-            <div class="space-y-2">
-                <label class="text-sm font-semibold text-slate-700 ml-1">{{
+          <!-- OTP Code Input -->
+          <div class="space-y-2">
+            <label class="text-sm font-semibold text-slate-700 ml-1">{{
               'AUTH.SIGNUP.VERIFY_CODE_LABEL' | translate
             }}</label>
-                <ion-item lines="none" class="custom-input">
-                    <ion-icon slot="start" name="shield-checkmark-outline"></ion-icon>
-                    <ion-input type="text" inputmode="numeric" autocomplete="one-time-code" formControlName="code" [placeholder]="'AUTH.SIGNUP.VERIFY_CODE_PLACEHOLDER' | translate"></ion-input>
-                </ion-item>
-            </div>
+            <ion-item lines="none" class="custom-input">
+              <ion-icon slot="start" name="shield-checkmark-outline"></ion-icon>
+              <ion-input
+                type="text"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                formControlName="code"
+                [placeholder]="'AUTH.SIGNUP.VERIFY_CODE_PLACEHOLDER' | translate"
+              ></ion-input>
+            </ion-item>
+          </div>
 
-            <!-- Submit -->
-            <button type="submit" [disabled]="isLoading()" class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none flex items-center justify-center gap-2">
+          <!-- Submit -->
+          <button
+            type="submit"
+            [disabled]="isLoading()"
+            class="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold !rounded-xl shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all mt-6 text-sm tracking-wide disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none flex items-center justify-center gap-2"
+          >
             @if (isLoading()) {
               <ion-spinner
                 name="crescent"
@@ -437,72 +562,90 @@
             }
           </button>
         </form>
-        } }
+      }
+    }
 
-        <!-- Features Section -->
-        <div class="mt-10 space-y-4 pt-8 border-t border-slate-200">
-            <div class="flex items-start space-x-4 p-3 rounded-xl hover:bg-white/60 transition-colors">
-                <div class="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <i class="fa-solid fa-wind text-sky-600 text-lg"></i>
-                </div>
-                <div>
-                    <h3 class="text-sm font-bold text-slate-900">
-                        {{ 'AUTH.FEATURES.ANALYSIS_TITLE' | translate }}
-                    </h3>
-                    <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                        {{ 'AUTH.FEATURES.ANALYSIS_DESC_SHORT' | translate }}
-                    </p>
-                </div>
-            </div>
-            <div class="flex items-start space-x-4 p-3 rounded-xl hover:bg-white/60 transition-colors">
-                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <i class="fa-solid fa-chart-line text-blue-600 text-lg"></i>
-                </div>
-                <div>
-                    <h3 class="text-sm font-bold text-slate-900">
-                        {{ 'AUTH.FEATURES.MONITORING_TITLE' | translate }}
-                    </h3>
-                    <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                        {{ 'AUTH.FEATURES.MONITORING_DESC' | translate }}
-                    </p>
-                </div>
-            </div>
-            <div class="flex items-start space-x-4 p-3 rounded-xl hover:bg-white/60 transition-colors">
-                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <i class="fa-solid fa-users text-blue-600 text-lg"></i>
-                </div>
-                <div>
-                    <h3 class="text-sm font-bold text-slate-900">
-                        {{ 'AUTH.FEATURES.COLLABORATION_TITLE' | translate }}
-                    </h3>
-                    <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                        {{ 'AUTH.FEATURES.COLLABORATION_DESC' | translate }}
-                    </p>
-                </div>
-            </div>
+    <!-- Features Section -->
+    <div class="mt-10 space-y-4 pt-8 border-t border-slate-200">
+      <div class="flex items-start space-x-4 p-3 rounded-xl hover:bg-white/60 transition-colors">
+        <div
+          class="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm"
+        >
+          <i class="fa-solid fa-wind text-sky-600 text-lg"></i>
         </div>
-
-        <!-- Footer -->
-        <div class="mt-auto pt-8 text-center pb-4">
-            <p class="text-xs text-slate-400">{{ 'AUTH.FOOTER.ALL_RIGHTS_RESERVED' | translate }}</p>
+        <div>
+          <h3 class="text-sm font-bold text-slate-900">
+            {{ 'AUTH.FEATURES.ANALYSIS_TITLE' | translate }}
+          </h3>
+          <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
+            {{ 'AUTH.FEATURES.ANALYSIS_DESC_SHORT' | translate }}
+          </p>
         </div>
+      </div>
+      <div class="flex items-start space-x-4 p-3 rounded-xl hover:bg-white/60 transition-colors">
+        <div
+          class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm"
+        >
+          <i class="fa-solid fa-chart-line text-blue-600 text-lg"></i>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-slate-900">
+            {{ 'AUTH.FEATURES.MONITORING_TITLE' | translate }}
+          </h3>
+          <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
+            {{ 'AUTH.FEATURES.MONITORING_DESC' | translate }}
+          </p>
+        </div>
+      </div>
+      <div class="flex items-start space-x-4 p-3 rounded-xl hover:bg-white/60 transition-colors">
+        <div
+          class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm"
+        >
+          <i class="fa-solid fa-users text-blue-600 text-lg"></i>
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-slate-900">
+            {{ 'AUTH.FEATURES.COLLABORATION_TITLE' | translate }}
+          </h3>
+          <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">
+            {{ 'AUTH.FEATURES.COLLABORATION_DESC' | translate }}
+          </p>
+        </div>
+      </div>
     </div>
+
+    <!-- Footer -->
+    <div class="mt-auto pt-8 text-center pb-4">
+      <p class="text-xs text-slate-400">{{ 'AUTH.FOOTER.ALL_RIGHTS_RESERVED' | translate }}</p>
+    </div>
+  </div>
 </ion-content>
 
 <!-- Sibling of ion-content, not nested: nesting ion-modal in ion-content breaks its overlay -->
 <!-- ng-template defers stamping so Ionic only renders content once the modal is presented -->
-<ion-modal [isOpen]="isLegalModalOpen()" (didDismiss)="closeLegalModal()" [initialBreakpoint]="0.85" [breakpoints]="[0, 0.85, 1]">
-    <ng-template>
-        <ion-content class="ion-padding">
-            <div class="flex flex-col h-full justify-between pb-4">
-                <div>
-                    <h2 class="text-xl font-bold text-gray-900 mb-4">{{ legalModalTitle() }}</h2>
-                    <div class="prose prose-sm max-w-none text-gray-600 overflow-y-auto max-h-[60vh] space-y-3" [innerHTML]="legalContent()"></div>
-                </div>
-                <button (click)="closeLegalModal()" class="w-full bg-[#0066FF] hover:bg-blue-700 active:scale-[0.98] text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition-all uppercase tracking-wider text-sm mt-6">
+<ion-modal
+  [isOpen]="isLegalModalOpen()"
+  (didDismiss)="closeLegalModal()"
+  [initialBreakpoint]="0.85"
+  [breakpoints]="[0, 0.85, 1]"
+>
+  <ng-template>
+    <ion-content class="ion-padding">
+      <div class="flex flex-col h-full justify-between pb-4">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900 mb-4">{{ legalModalTitle() }}</h2>
+          <div
+            class="prose prose-sm max-w-none text-gray-600 overflow-y-auto max-h-[60vh] space-y-3"
+            [innerHTML]="legalContent()"
+          ></div>
+        </div>
+        <button
+          (click)="closeLegalModal()"
+          class="w-full bg-[#0066FF] hover:bg-blue-700 active:scale-[0.98] text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition-all uppercase tracking-wider text-sm mt-6"
+        >
           Close
         </button>
-            </div>
-        </ion-content>
-    </ng-template>
+      </div>
+    </ion-content>
+  </ng-template>
 </ion-modal>
