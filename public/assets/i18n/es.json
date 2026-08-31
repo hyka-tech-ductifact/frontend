@@ -111,6 +111,61 @@
                 "WEB_HINT": "Haz clic en \"Nuevo Cliente\" para añadir uno",
                 "MOBILE_HINT": "Pulsa \"Nuevo Cliente\" para añadir uno"
             }
+        },
+        "NEW_CLIENT": {
+            "TITLE": "Nuevo Cliente",
+            "SUBTITLE": "Completa la información del cliente",
+            "SECTIONS": {
+                "CLIENT_INFO": "Información del Cliente",
+                "REQUIRED_NOTE": "Completa todos los campos requeridos",
+                "ACTIONS": "Acciones",
+                "INFORMATION": "Información",
+                "RECENT_CLIENTS": "Clientes Recientes"
+            },
+            "FIELDS": {
+                "NAME": "Nombre del Cliente",
+                "NAME_PLACEHOLDER": "Ej: Hotel Mediterráneo",
+                "ADDRESS": "Dirección",
+                "ADDRESS_PLACEHOLDER": "Calle, número, ciudad",
+                "PHONE": "Teléfono",
+                "PHONE_PLACEHOLDER": "+34 963 123 456",
+                "EMAIL": "Correo Electrónico",
+                "EMAIL_PLACEHOLDER": "cliente@ejemplo.com",
+                "TYPE": "Tipo de Cliente",
+                "TYPE_SELECT": "Seleccionar tipo",
+                "DESCRIPTION": "Información Adicional",
+                "DESCRIPTION_PLACEHOLDER": "Notas, preferencias o información relevante del cliente..."
+            },
+            "TYPE_OPTIONS": {
+                "HOTEL": "Hotel",
+                "RESTAURANT": "Restaurante",
+                "RETAIL": "Comercio",
+                "CORPORATE": "Corporativo"
+            },
+            "BUTTONS": {
+                "CREATE": "Crear Cliente",
+                "CREATING": "Creando...",
+                "CANCEL": "Cancelar"
+            },
+            "INFO_NOTES": {
+                "REQUIRED_FIELDS": "Los campos marcados con * son obligatorios",
+                "DATA_PROTECTED": "Todos los datos están protegidos y encriptados",
+                "IMMEDIATE_LIST": "El cliente aparecerá inmediatamente en tu lista"
+            },
+            "RECENT_ITEMS": {
+                "FIRST": {
+                    "NAME": "Hotel Palacio Real",
+                    "TIME": "Hace 2 horas"
+                },
+                "SECOND": {
+                    "NAME": "Restaurante Luna",
+                    "TIME": "Ayer"
+                }
+            },
+            "MOBILE": {
+                "EMAIL_LABEL": "Correo",
+                "DESCRIPTION_PLACEHOLDER": "Información adicional sobre el cliente..."
+            }
         }
     },
     "LAYOUT": {

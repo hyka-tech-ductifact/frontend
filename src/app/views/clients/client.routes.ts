@@ -14,10 +14,7 @@ export const clientRoutes: Routes = [
        * Lazily loads NewClientComponent for client creation.
        * @returns {Promise<unknown>} Promise resolving to the NewClientComponent class.
        */
-      () =>
-        import('./pages/new-client/new-client.component').then(
-          (m) => m.NewClientComponent,
-        ),
+      () => import('./pages/new-client/new-client.component').then((m) => m.NewClientComponent),
   },
   {
     path: '',

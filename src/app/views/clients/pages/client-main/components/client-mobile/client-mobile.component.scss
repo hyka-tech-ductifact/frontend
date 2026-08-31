@@ -1,57 +1,57 @@
 :host {
-    display: contents;
+  display: contents;
 }
 
 ion-header,
 ion-toolbar {
-    overflow: visible;
+  overflow: visible;
 }
 
 .client-header-toolbar {
-    --background: transparent;
-    --border-width: 0;
-    --min-height: 0;
-    --padding-top: 0;
-    --padding-bottom: 0;
-    --padding-start: 0;
-    --padding-end: 0;
+  --background: transparent;
+  --border-width: 0;
+  --min-height: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
 }
 
 .client-content {
-    --background: #f8fafc;
+  --background: #f8fafc;
 }
 
 .client-content::part(scroll) {
-    overflow: visible;
+  overflow: visible;
 }
 
 .mobile-add-wrap {
-    position: relative;
-    z-index: 50;
-    margin-top: -28px;
+  position: relative;
+  z-index: 50;
+  margin-top: -28px;
 }
 
 .mobile-add-button {
-    position: relative;
-    z-index: 50;
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 1rem 1.25rem;
-    font-weight: 700;
-    background-color: #ffffff;
-    border: 1px solid rgba(2, 132, 199, 0.2);
-    border-radius: 1rem;
-    color: #0284c7;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 50;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  font-weight: 700;
+  background-color: #ffffff;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+  border-radius: 1rem;
+  color: #0284c7;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
 .mobile-add-button:hover {
-    background: #f8fbff;
+  background: #f8fbff;
 }
 
 .mobile-add-button__icon {
-    color: #0284c7;
+  color: #0284c7;
 }

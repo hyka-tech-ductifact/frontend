@@ -1,26 +1,26 @@
 :host {
-    display: contents;
+  display: contents;
 }
 
 .client-dashboard-header {
-    background: linear-gradient(90deg, #1d6fa5 0%, #299be8 100%);
-    box-shadow: 0 18px 40px -24px rgba(29, 111, 165, 0.65);
+  background: linear-gradient(90deg, #1d6fa5 0%, #299be8 100%);
+  box-shadow: 0 18px 40px -24px rgba(29, 111, 165, 0.65);
 }
 
 .client-add-button {
-    /* Flex alignment for perfectly centered content */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    /* Clear Ionic button constraints */
-    border-radius: 1rem; // matches rounded-2xl
-    width: 160px;
-    min-width: 160px;
-    height: 48px;
-    min-height: 48px;
-    box-sizing: border-box;
-    /* Prevent global CSS resets from overriding border radius */
-    overflow: hidden;
-    appearance: none;
-    -webkit-appearance: none;
+  /* Flex alignment for perfectly centered content */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Clear Ionic button constraints */
+  border-radius: 1rem; // matches rounded-2xl
+  width: 160px;
+  min-width: 160px;
+  height: 48px;
+  min-height: 48px;
+  box-sizing: border-box;
+  /* Prevent global CSS resets from overriding border radius */
+  overflow: hidden;
+  appearance: none;
+  -webkit-appearance: none;
 }
