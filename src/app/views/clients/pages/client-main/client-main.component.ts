@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { ClientsService } from '../../../../core/services/clients.service';
 import { DeviceService } from '../../../../core/services/device.service';
@@ -17,6 +18,7 @@ import { ClientWebComponent } from './components/client-web/client-web.component
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientMainComponent implements OnInit {
+  protected readonly router = inject(Router);
   protected readonly authService = inject(AuthService);
 
   /** Service used to determine whether the app is running on a mobile device. */
@@ -46,6 +48,6 @@ export class ClientMainComponent implements OnInit {
    * @returns {void}
    */
   onAddClient(): void {
-    // TODO: Open add-client modal/form
+    void this.router.navigate(['/client/new']);
   }
 }

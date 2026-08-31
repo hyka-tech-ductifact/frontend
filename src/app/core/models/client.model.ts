@@ -3,6 +3,8 @@ export interface Client {
   name: string;
   phone?: string;
   email?: string;
+  address?: string;
+  type?: string;
   description?: string;
   user_id: string;
   created_at?: string;
@@ -19,8 +21,10 @@ export interface PaginatedClientsResponse {
 
 export interface CreateClientDto {
   name: string;
-  phone?: string;
+  phone: string;
   email?: string;
+  address?: string;
+  type?: string;
   description?: string;
 }
 

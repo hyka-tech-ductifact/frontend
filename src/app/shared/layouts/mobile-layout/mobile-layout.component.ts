@@ -26,7 +26,7 @@ import {
   starOutline,
 } from 'ionicons/icons';
 import { filter, map } from 'rxjs/operators';
-import { AuthService } from '../../core/services/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 /**
  * Mobile layout component that wraps routed views with an Ionic side menu.

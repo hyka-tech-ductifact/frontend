@@ -54,11 +54,12 @@ export class ClientsService {
   }
 
   /**
-   * Placeholder for future client creation flow.
+   * Creates a client record through the API.
    * @param {CreateClientDto} payload - The client payload.
+   * @returns {Observable<Client>} Stream of the created client response.
    */
-  createClient(payload: CreateClientDto): void {
-    void payload;
+  createClient(payload: CreateClientDto): Observable<Client> {
+    return this.http.post<Client>(`${environment.apiUrl}/clients`, payload);
   }
 
   /**

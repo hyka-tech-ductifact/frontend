@@ -4,8 +4,8 @@ import { Keyboard } from '@capacitor/keyboard';
 import { Capacitor } from '@capacitor/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceService } from './core/services/device.service';
-import { WebLayoutComponent } from './layouts/web-layout/web-layout.component';
-import { MobileLayoutComponent } from './layouts/mobile-layout/mobile-layout.component';
+import { WebLayoutComponent } from './shared/layouts/web-layout/web-layout.component';
+import { MobileLayoutComponent } from './shared/layouts/mobile-layout/mobile-layout.component';
 
 /**
  * Root component of the application.

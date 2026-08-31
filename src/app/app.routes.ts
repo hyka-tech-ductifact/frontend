@@ -17,7 +17,7 @@ export const routes: Routes = [
        * Lazily loads LoginComponent for the authentication page.
        * @returns {Promise<unknown>} Promise resolving to the LoginComponent class.
        */
-      () => import('./features/auth/pages/login/login.component').then((m) => m.LoginComponent),
+      () => import('./views/auth/pages/login/login.component').then((m) => m.LoginComponent),
   },
   {
     path: 'client',
@@ -27,7 +27,7 @@ export const routes: Routes = [
        * Lazily loads the client feature child routes.
        * @returns {Promise<unknown>} Promise resolving to the clientRoutes array.
        */
-      () => import('./features/client/client.routes').then((m) => m.clientRoutes),
+      () => import('./views/clients/client.routes').then((m) => m.clientRoutes),
   },
   {
     path: '',

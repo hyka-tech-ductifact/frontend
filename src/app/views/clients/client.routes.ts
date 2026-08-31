@@ -8,6 +8,18 @@ import { Routes } from '@angular/router';
  */
 export const clientRoutes: Routes = [
   {
+    path: 'new',
+    loadComponent:
+      /**
+       * Lazily loads NewClientComponent for client creation.
+       * @returns {Promise<unknown>} Promise resolving to the NewClientComponent class.
+       */
+      () =>
+        import('./pages/new-client/new-client.component').then(
+          (m) => m.NewClientComponent,
+        ),
+  },
+  {
     path: '',
     loadComponent:
       /**
