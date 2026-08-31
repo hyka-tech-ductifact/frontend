@@ -4,7 +4,7 @@
         <div>
             <h1 class="text-2xl font-bold">{{ 'CLIENTS.DASHBOARD.TITLE' | translate }}</h1>
             <p class="text-sm text-sky-50/90 mt-0.5">
-                {{ 'CLIENTS.DASHBOARD.REGISTERED_COUNT' | translate: { count: clients().length } }}
+                {{ 'CLIENTS.DASHBOARD.REGISTERED_COUNT' | translate: { count: totalClients() } }}
             </p>
         </div>
         <button type="button" (click)="onAdd()" class="client-add-button flex items-center justify-center gap-2.5 bg-white text-[#1d6fa5] hover:bg-sky-50 font-bold px-7 h-12 rounded-2xl shadow-md transition-all active:scale-95 border-none cursor-pointer">
@@ -76,7 +76,12 @@
 
     <!-- Client Grid -->
     <div class="flex-1 overflow-y-auto px-8 pb-8">
-        @if (clients().length > 0) {
+        @if (isLoading()) {
+        <div class="flex h-64 flex-col items-center justify-center text-slate-400">
+            <div class="h-12 w-12 animate-spin rounded-full border-4 border-sky-200 border-t-sky-500"></div>
+            <p class="mt-4 text-sm font-medium">Cargando clientes...</p>
+        </div>
+        } @else if (clients().length > 0) {
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
             @for (client of clients(); track client.id) {
             <div class="bg-white rounded-3xl p-6 border border-slate-100 hover:shadow-lg transition-all cursor-pointer group" style="box-shadow: 0 4px 24px -6px rgba(14, 165, 233, 0.06)" (click)="onView(client.id)">

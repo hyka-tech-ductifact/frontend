@@ -10,7 +10,7 @@ import {
 import { TranslatePipe } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { addOutline, callOutline, trashOutline } from 'ionicons/icons';
-import type { Client } from '../../../../models/client.models';
+import type { Client } from '../../../../../../core/models/client.model';
 
 /**
  * Mobile presentation component for the clients page.
@@ -26,6 +26,9 @@ import type { Client } from '../../../../models/client.models';
 export class ClientMobileComponent {
   /** The list of clients to display. Defaults to an empty array. */
   readonly clients = input<Client[]>([]);
+
+  /** The total number of clients reported by the API. */
+  readonly totalClients = input(0);
 
   /** The signed-in user's display name for the mobile header. */
   readonly userName = input('Usuario');

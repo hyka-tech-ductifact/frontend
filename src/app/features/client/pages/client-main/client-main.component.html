@@ -1,16 +1,8 @@
-@if (deviceService.isMobile()) {
-  <app-client-mobile
-    [clients]="clientService.clients()"
-    [isLoading]="clientService.isLoading()"
-    [userName]="authService.currentUser()?.name ?? 'Usuario'"
-    (addClient)="onAddClient()"
-    (deleteClient)="onDeleteClient($event)"
-  />
-} @else {
-  <app-client-web
-    [clients]="clientService.clients()"
-    [isLoading]="clientService.isLoading()"
-    (addClient)="onAddClient()"
-    (deleteClient)="onDeleteClient($event)"
-  />
-}
+@if (clientsService.error()) {
+<div class="mx-8 mt-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+    {{ clientsService.error() }}
+</div>
+} @if (deviceService.isMobile()) {
+<app-client-mobile [clients]="clientsService.clients()" [totalClients]="clientsService.totalClients()" [isLoading]="clientsService.isLoading()" [userName]="authService.currentUser()?.name ?? 'Usuario'" (addClient)="onAddClient()" (deleteClient)="onDeleteClient($event)"
+/> } @else {
+<app-client-web [clients]="clientsService.clients()" [totalClients]="clientsService.totalClients()" [isLoading]="clientsService.isLoading()" (addClient)="onAddClient()" (deleteClient)="onDeleteClient($event)" /> }

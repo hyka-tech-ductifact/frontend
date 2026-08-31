@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import type { Client } from '../../../../models/client.models';
+import type { Client } from '../../../../../../core/models/client.model';
 
 /**
  * Web/desktop presentation component for the clients page.
@@ -16,6 +16,9 @@ import type { Client } from '../../../../models/client.models';
 export class ClientWebComponent {
   /** The list of clients to display. Defaults to an empty array. */
   readonly clients = input<Client[]>([]);
+
+  /** The total number of clients reported by the API. */
+  readonly totalClients = input(0);
 
   /** Whether a loading operation is in progress. */
   readonly isLoading = input(false);
