@@ -1,0 +1,15 @@
+@if (deviceService.isMobile()) {
+  <app-new-client-mobile
+    [clientForm]="clientForm"
+    [isSubmitting]="isSubmitting()"
+    (formSubmit)="onSubmit()"
+    (cancel)="onCancel()"
+  />
+} @else {
+  <app-new-client-web
+    [clientForm]="clientForm"
+    [isSubmitting]="isSubmitting()"
+    (formSubmit)="onSubmit()"
+    (cancel)="onCancel()"
+  />
+}

@@ -1,0 +1,34 @@
+:host {
+  display: contents;
+}
+
+.gradient-header {
+  background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #38bdf8 100%);
+}
+
+.action-button {
+  display: flex;
+  width: 100%;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border-radius: 0.75rem;
+  box-sizing: border-box;
+  overflow: visible;
+  appearance: none;
+  -webkit-appearance: none;
+  line-height: 1.25rem;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.action-button--primary {
+  border-color: transparent;
+  box-shadow: 0 10px 20px -8px rgba(0, 136, 204, 0.45);
+}
+
+.action-button--secondary {
+  border-color: rgb(226 232 240);
+}

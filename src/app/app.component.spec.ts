@@ -1,12 +1,13 @@
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { importProvidersFrom, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { signal, EventEmitter } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Platform, provideIonicAngular } from '@ionic/angular/standalone';
-import { TranslateService } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
-import { DeviceService } from './core/services/device.service';
 import { AppComponent } from './app.component';
+import { DeviceService } from './core/services/device.service';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -16,28 +17,17 @@ describe('AppComponent', () => {
     const platformMock = {
       ready: jest.fn(() => Promise.resolve('cordova')),
     };
-    const translateServiceMock = {
-      use: jest.fn(),
-      get: jest.fn(() => of('')),
-      instant: jest.fn(),
-      setDefaultLang: jest.fn(),
-      addLangs: jest.fn(),
-      getBrowserLang: jest.fn(() => 'es'),
-      onLangChange: new EventEmitter(),
-      onTranslationChange: new EventEmitter(),
-      onDefaultLangChange: new EventEmitter(),
-      stream: jest.fn(() => of({})),
-      currentLang: 'es',
-    };
     const deviceServiceMock = { isMobile: signal(false) };
 
     await TestBed.configureTestingModule({
       imports: [AppComponent],
       providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
         provideRouter([]),
         provideIonicAngular(),
+        importProvidersFrom(TranslateModule.forRoot()),
         { provide: Platform, useValue: platformMock },
-        { provide: TranslateService, useValue: translateServiceMock },
         { provide: DeviceService, useValue: deviceServiceMock },
       ],
     }).compileComponents();

@@ -1,0 +1,275 @@
+<header class="gradient-header px-8 py-6 text-white">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/20 transition-colors"
+      >
+        <i class="fa-solid fa-arrow-left text-lg"></i>
+      </button>
+      <div>
+        <h1 class="text-3xl font-bold tracking-tight">
+          {{ 'CLIENTS.NEW_CLIENT.TITLE' | translate }}
+        </h1>
+        <p class="text-sky-100 mt-1 opacity-90">
+          {{ 'CLIENTS.NEW_CLIENT.SUBTITLE' | translate }}
+        </p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <button
+        type="button"
+        class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/20 transition-colors"
+      >
+        <i class="fa-solid fa-bell text-lg"></i>
+      </button>
+      <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+        <i class="fa-solid fa-user"></i>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="flex-1 p-8 overflow-y-auto bg-bgLight">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Main Form Section -->
+    <div class="lg:col-span-2">
+      <div class="bg-white rounded-2xl shadow-soft border border-slate-100 overflow-hidden">
+        <div class="bg-sky-50 px-8 py-6 border-b border-slate-100">
+          <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3">
+            <i class="fa-solid fa-user-plus text-primary"></i>
+            {{ 'CLIENTS.NEW_CLIENT.SECTIONS.CLIENT_INFO' | translate }}
+          </h2>
+          <p class="text-slate-600 mt-1">
+            {{ 'CLIENTS.NEW_CLIENT.SECTIONS.REQUIRED_NOTE' | translate }}
+          </p>
+        </div>
+
+        <div class="p-8" [formGroup]="clientForm()">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Nombre del Cliente -->
+            <div class="md:col-span-2 space-y-3">
+              <label for="client-name" class="block text-slate-700 font-semibold text-sm">
+                {{ 'CLIENTS.NEW_CLIENT.FIELDS.NAME' | translate }}
+                <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative">
+                <i
+                  class="fa-solid fa-building absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"
+                ></i>
+                <input
+                  type="text"
+                  id="client-name"
+                  formControlName="name"
+                  [placeholder]="'CLIENTS.NEW_CLIENT.FIELDS.NAME_PLACEHOLDER' | translate"
+                  class="w-full bg-slate-50 border border-slate-200 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/10 text-slate-800 rounded-xl py-4 pl-12 pr-4 outline-none transition-all placeholder-slate-400 text-sm font-medium"
+                />
+              </div>
+            </div>
+
+            <!-- Dirección -->
+            <div class="space-y-3">
+              <label for="client-address" class="block text-slate-700 font-semibold text-sm">
+                {{ 'CLIENTS.NEW_CLIENT.FIELDS.ADDRESS' | translate }}
+              </label>
+              <div class="relative">
+                <i
+                  class="fa-solid fa-map-marker-alt absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"
+                ></i>
+                <input
+                  type="text"
+                  id="client-address"
+                  formControlName="address"
+                  [placeholder]="'CLIENTS.NEW_CLIENT.FIELDS.ADDRESS_PLACEHOLDER' | translate"
+                  class="w-full bg-slate-50 border border-slate-200 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/10 text-slate-800 rounded-xl py-4 pl-12 pr-4 outline-none transition-all placeholder-slate-400 text-sm font-medium"
+                />
+              </div>
+            </div>
+
+            <!-- Teléfono -->
+            <div class="space-y-3">
+              <label for="client-phone" class="block text-slate-700 font-semibold text-sm">
+                {{ 'CLIENTS.NEW_CLIENT.FIELDS.PHONE' | translate }}
+                <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative">
+                <i
+                  class="fa-solid fa-phone absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"
+                ></i>
+                <input
+                  type="tel"
+                  id="client-phone"
+                  formControlName="phone"
+                  [placeholder]="'CLIENTS.NEW_CLIENT.FIELDS.PHONE_PLACEHOLDER' | translate"
+                  class="w-full bg-slate-50 border border-slate-200 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/10 text-slate-800 rounded-xl py-4 pl-12 pr-4 outline-none transition-all placeholder-slate-400 text-sm font-medium"
+                />
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="space-y-3">
+              <label for="client-email" class="block text-slate-700 font-semibold text-sm">
+                {{ 'CLIENTS.NEW_CLIENT.FIELDS.EMAIL' | translate }}
+              </label>
+              <div class="relative">
+                <i
+                  class="fa-solid fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"
+                ></i>
+                <input
+                  type="email"
+                  id="client-email"
+                  formControlName="email"
+                  [placeholder]="'CLIENTS.NEW_CLIENT.FIELDS.EMAIL_PLACEHOLDER' | translate"
+                  class="w-full bg-slate-50 border border-slate-200 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/10 text-slate-800 rounded-xl py-4 pl-12 pr-4 outline-none transition-all placeholder-slate-400 text-sm font-medium"
+                />
+              </div>
+            </div>
+
+            <!-- Tipo de Cliente
+                        <div class="space-y-3">
+                            <label for="client-type" class="block text-slate-700 font-semibold text-sm">
+                {{ 'CLIENTS.NEW_CLIENT.FIELDS.TYPE' | translate }}
+              </label>
+                            <div class="relative">
+                                <i class="fa-solid fa-tags absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                                <select id="client-type" formControlName="type" class="w-full bg-slate-50 border border-slate-200 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/10 text-slate-800 rounded-xl py-4 pl-12 pr-10 outline-none transition-all text-sm font-medium appearance-none">
+                  <option value="">
+                    {{ 'CLIENTS.NEW_CLIENT.FIELDS.TYPE_SELECT' | translate }}
+                  </option>
+                  <option value="hotel">
+                    {{ 'CLIENTS.NEW_CLIENT.TYPE_OPTIONS.HOTEL' | translate }}
+                  </option>
+                  <option value="restaurant">
+                    {{ 'CLIENTS.NEW_CLIENT.TYPE_OPTIONS.RESTAURANT' | translate }}
+                  </option>
+                  <option value="retail">
+                    {{ 'CLIENTS.NEW_CLIENT.TYPE_OPTIONS.RETAIL' | translate }}
+                  </option>
+                  <option value="corporate">
+                    {{ 'CLIENTS.NEW_CLIENT.TYPE_OPTIONS.CORPORATE' | translate }}
+                  </option>
+                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                            </div>
+                        </div> -->
+
+            <!-- Descripción -->
+            <div class="md:col-span-2 space-y-3">
+              <label for="client-desc" class="block text-slate-700 font-semibold text-sm">
+                {{ 'CLIENTS.NEW_CLIENT.FIELDS.DESCRIPTION' | translate }}
+              </label>
+              <div class="relative">
+                <textarea
+                  id="client-desc"
+                  formControlName="description"
+                  rows="4"
+                  [placeholder]="'CLIENTS.NEW_CLIENT.FIELDS.DESCRIPTION_PLACEHOLDER' | translate"
+                  class="w-full bg-slate-50 border border-slate-200 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/10 text-slate-800 rounded-xl py-4 px-4 outline-none transition-all placeholder-slate-400 text-sm font-medium resize-none"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar Info & Actions -->
+    <div class="lg:col-span-1 space-y-6">
+      <!-- Actions Card -->
+      <div class="bg-white rounded-2xl shadow-soft border border-slate-100 p-6">
+        <h3 class="text-lg font-semibold text-slate-800 mb-6">
+          {{ 'CLIENTS.NEW_CLIENT.SECTIONS.ACTIONS' | translate }}
+        </h3>
+        <div class="space-y-4 overflow-visible">
+          <button
+            type="button"
+            (click)="onSubmit()"
+            [disabled]="isSubmitting()"
+            class="action-button action-button--primary w-full bg-[#0088cc] text-white font-semibold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 shadow-md hover:bg-[#0077bb] transition-all transform active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            <i class="fa-regular fa-floppy-disk text-lg"></i>
+            <span>{{
+              (isSubmitting()
+                ? 'CLIENTS.NEW_CLIENT.BUTTONS.CREATING'
+                : 'CLIENTS.NEW_CLIENT.BUTTONS.CREATE'
+              ) | translate
+            }}</span>
+          </button>
+          <button
+            type="button"
+            (click)="onCancel()"
+            class="action-button action-button--secondary w-full bg-slate-100 text-slate-700 font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2 hover:bg-slate-200 transition-all transform active:scale-[0.98] border border-slate-200"
+          >
+            <i class="fa-solid fa-times text-lg"></i>
+            <span>{{ 'CLIENTS.NEW_CLIENT.BUTTONS.CANCEL' | translate }}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Info Card -->
+      <div class="bg-white rounded-2xl shadow-soft border border-slate-100 p-6">
+        <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-info-circle text-primary"></i>
+          {{ 'CLIENTS.NEW_CLIENT.SECTIONS.INFORMATION' | translate }}
+        </h3>
+        <div class="space-y-4 text-sm">
+          <div class="flex items-start gap-3">
+            <i class="fa-solid fa-check-circle text-emerald-500 mt-0.5"></i>
+            <p class="text-slate-600">
+              {{ 'CLIENTS.NEW_CLIENT.INFO_NOTES.REQUIRED_FIELDS' | translate }}
+            </p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fa-solid fa-shield-alt text-primary mt-0.5"></i>
+            <p class="text-slate-600">
+              {{ 'CLIENTS.NEW_CLIENT.INFO_NOTES.DATA_PROTECTED' | translate }}
+            </p>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fa-solid fa-clock text-amber-500 mt-0.5"></i>
+            <p class="text-slate-600">
+              {{ 'CLIENTS.NEW_CLIENT.INFO_NOTES.IMMEDIATE_LIST' | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Clients Preview -->
+      <div class="bg-white rounded-2xl shadow-soft border border-slate-100 p-6">
+        <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-history text-primary"></i>
+          {{ 'CLIENTS.NEW_CLIENT.SECTIONS.RECENT_CLIENTS' | translate }}
+        </h3>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+            <div class="w-8 h-8 bg-sky-100 rounded-full flex items-center justify-center">
+              <i class="fa-solid fa-building text-primary text-xs"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-slate-800 truncate">
+                {{ 'CLIENTS.NEW_CLIENT.RECENT_ITEMS.FIRST.NAME' | translate }}
+              </p>
+              <p class="text-xs text-slate-500">
+                {{ 'CLIENTS.NEW_CLIENT.RECENT_ITEMS.FIRST.TIME' | translate }}
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+            <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
+              <i class="fa-solid fa-utensils text-amber-600 text-xs"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-slate-800 truncate">
+                {{ 'CLIENTS.NEW_CLIENT.RECENT_ITEMS.SECOND.NAME' | translate }}
+              </p>
+              <p class="text-xs text-slate-500">
+                {{ 'CLIENTS.NEW_CLIENT.RECENT_ITEMS.SECOND.TIME' | translate }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
