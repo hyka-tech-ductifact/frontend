@@ -1,5 +1,16 @@
 :host {
-  display: contents;
+  display: block;
+  height: 100%;
+}
+
+.new-client-mobile-shell {
+  position: relative;
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+  flex-direction: column;
+  overflow: hidden;
+  background: #f8fafc;
 }
 
 ion-header,
@@ -19,11 +30,29 @@ ion-toolbar {
 
 .new-client-content {
   --background: #f8fafc;
+  flex: 1;
+  overflow: hidden;
+}
+
+.new-client-content::part(scroll) {
+  padding-bottom: 8rem;
+}
+
+.new-client-scroll {
+  min-height: 100%;
+}
+
+.new-client-footer-shell {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  pointer-events: none;
 }
 
 .new-client-footer {
-  position: sticky;
-  bottom: 0;
+  width: 100%;
   overflow: visible;
   flex-shrink: 0;
 }
