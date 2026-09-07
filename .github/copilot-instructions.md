@@ -6,13 +6,13 @@
 - **Platform Targets:** Dual-target hybrid codebase: Mobile app (via Capacitor) and Web app (via Docker/Nginx container).
 - **Directory Layout:**
   - `src/app/core/`: Globally isolated system brain (guards, interceptors, global services).
-  - `src/app/shared/`: Globally reusable elements (components, custom UI web/mobile folders, interfaces, utils).
-  - `src/app/layouts/`: Shell navigation wrappers (`mobile-layout` with `<ion-menu>`, `web-layout` with sidebar).
-  - `src/app/features/`: Feature modules containing pages, lazy-loaded routes, and feature-specific components.
+  - `src/app/shared/`: Globally reusable elements (components, pipes, directives, interfaces, utils).
+  - `src/app/shared/layouts/`: Shell navigation wrappers (`mobile-layout` with `<ion-menu>`, `web-layout` with sidebar).
+  - `src/app/views/`: Domain feature roots (for example `auth`, `clients`) with routes and feature-specific components.
 
 ## 🏗️ Dual-UI Design Pattern (Smart/Dumb Split)
 
-Every major page view within the `features/` folder must follow this exact architectural pattern:
+Every major page view within the `views/` folder must follow this exact architectural pattern:
 
 1. **One Smart Parent Component** (e.g., `login.component.ts`): Handles all lifecycle logic, API integrations, error handling, configuration injection, and state management. It controls which visual view to display based on the environment platform context.
 2. **Two Dumb Presentation Components** (e.g., `login-mobile.component.ts` and `login-web.component.ts`): Contain ONLY the isolated platform-specific HTML/SCSS presentation layer. They accept data via `input()` and bubble user interactions up via `output()`.
@@ -35,7 +35,10 @@ Every major page view within the `features/` folder must follow this exact archi
 - **Inputs/Outputs:** Use modern `input()` and `output()` functions instead of old `@Input` or `@Output` decorators.
 - **Optimization:** Set `changeDetection: ChangeDetectionStrategy.OnPush` in every `@Component` decorator.
 - **Bindings & Selectors:** Do NOT use `ngClass` or `ngStyle`. Use native `class` and `style` bindings instead. Do NOT use `@HostBinding` or `@HostListener` decorators; declare host bindings inside the `host` object of the component decorator.
-- **Templates & Images:** Prefer inline templates for small components. Use native control flow (`@if`, `@for`, `@switch`) instead of legacy structural directives (`*ngIf`, `*ngFor`). Use `NgOptimizedImage` for static images (note: it does not work for base64 strings).
+- **Feature Placement:** Always place route features in `src/app/views/<domain>/`.
+- **Component File Structure:** Never generate inline templates or inline styles. Always generate exactly 3 component files: `.ts`, `.html`, and `.scss`.
+- **Decorator Conventions:** Every `@Component` decorator must use `templateUrl` and `styleUrl` pointing to external files.
+- **Templates & Images:** Use native control flow (`@if`, `@for`, `@switch`) instead of legacy structural directives (`*ngIf`, `*ngFor`). Use `NgOptimizedImage` for static images (note: it does not work for base64 strings).
 - **Forms:** Prefer explicit Reactive Forms instead of Template-driven ones.
 
 ## 🧬 Angular Services & Pipes
@@ -50,3 +53,26 @@ Every major page view within the `features/` folder must follow this exact archi
 - Be highly concise. Omit conversational filler.
 - Provide targeted code snippets, component modifications, or git diffs rather than reprinting entire unmodified files.
 - Deeply analyze existing open file tabs in the workspace before writing code to prevent broken imports, duplicate patterns, or fractured logic paths.
+
+## JSDoc & Linting Rules (Mandatory)
+
+1. **JSDoc Documentation Requirements:**
+   - Every class, property, helper function, and method must have a complete JSDoc block.
+   - JSDoc blocks MUST include:
+     - A concise description of what the function/method does.
+     - `@param {Type} paramName - Description` for every argument (including type and description).
+     - `@returns {Type} Description` for every return statement (including return type and description).
+
+   _Example:_
+
+   ```typescript
+   /**
+    * Submits the new client form payload to the backend service.
+    *
+    * @param {CreateClientDto} payload - The validated client registration data.
+    * @returns {Observable<Client>} An observable containing the created client entity.
+    */
+   public createClient(payload: CreateClientDto): Observable<Client> {
+     return this.clientsService.create(payload);
+   }
+   ```

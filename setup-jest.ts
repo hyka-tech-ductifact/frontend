@@ -1,3 +1,5 @@
+import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
 import 'zone.js';
 import 'zone.js/testing';
-import 'jest-preset-angular/setup-jest';
+
+setupZoneTestEnv();

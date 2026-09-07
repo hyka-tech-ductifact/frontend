@@ -20,7 +20,8 @@
             "DIVIDER_OR": "OR",
             "DIVIDER_OR_EMAIL": "OR CONTINUE WITH EMAIL",
             "SHOW_PANEL": "Show panel",
-            "HIDE_PANEL": "Hide panel"
+            "HIDE_PANEL": "Hide panel",
+            "INVALID_CREDENTIALS": "Invalid email or password. Please try again."
         },
         "PASSWORD_RESET": {
             "NEW_PASSWORD_LABEL": "New Password",
@@ -92,6 +93,93 @@
             "ALL_RIGHTS_RESERVED": "© 2024 Ductifact Inc. All rights reserved.",
             "PRIVACY_POLICY": "Privacy Policy",
             "TERMS_OF_SERVICE": "Terms of Service"
+        }
+    },
+    "CLIENTS": {
+        "DASHBOARD": {
+            "TITLE": "My Clients",
+            "REGISTERED_COUNT": "{{count}} registered clients",
+            "NEW_CLIENT": "New Client",
+            "ROLE_ADMIN": "Administrator",
+            "STATS": {
+                "TOTAL": "Total",
+                "ACTIVE": "Active",
+                "PREMIUM": "Premium"
+            },
+            "EMPTY": {
+                "TITLE": "No clients registered",
+                "WEB_HINT": "Click \"New Client\" to add one",
+                "MOBILE_HINT": "Tap \"New Client\" to add one"
+            }
+        },
+        "NEW_CLIENT": {
+            "TITLE": "New Client",
+            "SUBTITLE": "Complete the client information",
+            "SECTIONS": {
+                "CLIENT_INFO": "Client Information",
+                "REQUIRED_NOTE": "Complete all required fields",
+                "ACTIONS": "Actions",
+                "INFORMATION": "Information",
+                "RECENT_CLIENTS": "Recent Clients"
+            },
+            "FIELDS": {
+                "NAME": "Client Name",
+                "NAME_PLACEHOLDER": "Ex: Mediterranean Hotel",
+                "ADDRESS": "Address",
+                "ADDRESS_PLACEHOLDER": "Street, number, city",
+                "PHONE": "Phone",
+                "PHONE_PLACEHOLDER": "+34 963 123 456",
+                "EMAIL": "Email Address",
+                "EMAIL_PLACEHOLDER": "client@example.com",
+                "TYPE": "Client Type",
+                "TYPE_SELECT": "Select type",
+                "DESCRIPTION": "Additional Information",
+                "DESCRIPTION_PLACEHOLDER": "Notes, preferences or relevant client information..."
+            },
+            "TYPE_OPTIONS": {
+                "HOTEL": "Hotel",
+                "RESTAURANT": "Restaurant",
+                "RETAIL": "Retail",
+                "CORPORATE": "Corporate"
+            },
+            "BUTTONS": {
+                "CREATE": "Create Client",
+                "CREATING": "Creating...",
+                "CANCEL": "Cancel"
+            },
+            "INFO_NOTES": {
+                "REQUIRED_FIELDS": "Fields marked with * are required",
+                "DATA_PROTECTED": "All data is protected and encrypted",
+                "IMMEDIATE_LIST": "The client will appear immediately in your list"
+            },
+            "RECENT_ITEMS": {
+                "FIRST": {
+                    "NAME": "Royal Palace Hotel",
+                    "TIME": "2 hours ago"
+                },
+                "SECOND": {
+                    "NAME": "Luna Restaurant",
+                    "TIME": "Yesterday"
+                }
+            },
+            "MOBILE": {
+                "EMAIL_LABEL": "Email",
+                "DESCRIPTION_PLACEHOLDER": "Additional information about the client..."
+            }
+        }
+    },
+    "LAYOUT": {
+        "SIDEBAR": {
+            "PROFILE": "Profile",
+            "ROLE_ADMIN": "Administrator",
+            "DASHBOARD": "Dashboard",
+            "MY_CLIENTS": "My Clients",
+            "EDIT_PROFILE": "Edit Profile",
+            "GO_PREMIUM": "Go Premium",
+            "UNLOCK_FEATURES": "Unlock all features",
+            "SETTINGS": "Settings",
+            "SUPPORT": "Support",
+            "LOGOUT": "Log Out"
         }
     },
     "COMMON": {

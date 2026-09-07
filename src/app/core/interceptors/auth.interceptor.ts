@@ -1,22 +1,24 @@
 import {
-  HttpInterceptorFn,
   HttpErrorResponse,
-  HttpRequest,
-  HttpHandlerFn,
   HttpEvent,
-  HttpClient,
+  HttpHandlerFn,
+  HttpInterceptorFn,
+  HttpRequest,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, catchError, filter, switchMap, take, throwError } from 'rxjs';
-import { ConfigService } from '../config/config.service';
 import {
-  AuthService,
-  ACCESS_TOKEN_KEY,
-  REFRESH_TOKEN_KEY,
-  REFRESH_TOKEN_EXPIRES_AT_KEY,
-} from '../services/auth.service';
-import type { TokenResponse } from '../models/auth.models';
+  Observable,
+  ReplaySubject,
+  catchError,
+  finalize,
+  from,
+  switchMap,
+  take,
+  throwError,
+} from 'rxjs';
+import { ConfigService } from '../config/config.service';
+import { AuthService } from '../services/auth.service';
 
 /** Public auth endpoints that never carry a Bearer token and never trigger a refresh. */
 const UNAUTHENTICATED_PATHS = [
@@ -31,7 +33,7 @@ const UNAUTHENTICATED_PATHS = [
 // Module-scoped mutex state shared across all requests handled by this interceptor.
 let isRefreshing = false;
 // Emits the new access token once a refresh completes; queued requests wait on this.
-const refreshedToken$ = new BehaviorSubject<string | null>(null);
+let refreshTokenSubject: ReplaySubject<string> | null = null;
 
 /**
  * Attaches a Bearer token to outbound requests that target the backend API,
@@ -54,7 +56,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   const config = inject(ConfigService);
   const router = inject(Router);
-  const http = inject(HttpClient);
   const authService = inject(AuthService);
 
   const backendUrl = config.get('BACKEND_URL');
@@ -66,15 +67,18 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   );
   if (isPublicAuthEndpoint) return next(req);
 
-  const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-  const authReq = token ? attachToken(req, token) : req;
+  return from(authService.getAccessToken()).pipe(
+    switchMap((token) => {
+      const authReq = token ? attachToken(req, token) : req;
 
-  return next(authReq).pipe(
-    catchError((err: unknown) => {
-      if (err instanceof HttpErrorResponse && err.status === 401) {
-        return handleUnauthorized(authReq, next, { http, router, authService, authBaseUrl });
-      }
-      return throwError(() => err);
+      return next(authReq).pipe(
+        catchError((err: unknown) => {
+          if (err instanceof HttpErrorResponse && err.status === 401) {
+            return handleUnauthorized(authReq, next, { router, authService });
+          }
+          return throwError(() => err);
+        }),
+      );
     }),
   );
 };
@@ -91,10 +95,8 @@ function attachToken(req: HttpRequest<unknown>, token: string): HttpRequest<unkn
 
 /** Collaborators needed by {@link handleUnauthorized}, threaded through to avoid calling `inject()` inside RxJS callbacks. */
 interface RefreshContext {
-  http: HttpClient;
   router: Router;
   authService: AuthService;
-  authBaseUrl: string;
 }
 
 /**
@@ -111,38 +113,46 @@ function handleUnauthorized(
   next: HttpHandlerFn,
   ctx: RefreshContext,
 ): Observable<HttpEvent<unknown>> {
-  const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
-  const refreshExpiresAt = Number(localStorage.getItem(REFRESH_TOKEN_EXPIRES_AT_KEY) ?? 0);
-
-  if (!refreshToken || Date.now() >= refreshExpiresAt) {
-    forceLogout(ctx.authService, ctx.router);
-    return throwError(() => new Error('Session expired'));
-  }
-
   if (!isRefreshing) {
     isRefreshing = true;
-    refreshedToken$.next(null);
+    refreshTokenSubject = new ReplaySubject<string>(1);
 
-    return ctx.http
-      .post<TokenResponse>(`${ctx.authBaseUrl}/refresh`, { refresh_token: refreshToken })
-      .pipe(
-        switchMap((response) => {
-          isRefreshing = false;
-          ctx.authService.persistTokenPair(response);
-          refreshedToken$.next(response.access_token);
-          return next(attachToken(req, response.access_token));
-        }),
-        catchError((refreshErr: unknown) => {
-          isRefreshing = false;
-          forceLogout(ctx.authService, ctx.router);
-          return throwError(() => refreshErr);
-        }),
-      );
+    return from(ctx.authService.refreshToken()).pipe(
+      switchMap((response) => {
+        if (!response) {
+          const sessionError = new Error('Session expired');
+          refreshTokenSubject?.error(sessionError);
+          return from(forceLogout(ctx.authService, ctx.router)).pipe(
+            switchMap(() => throwError(() => sessionError)),
+          );
+        }
+
+        refreshTokenSubject?.next(response.access_token);
+        refreshTokenSubject?.complete();
+        return next(attachToken(req, response.access_token));
+      }),
+      catchError((refreshErr: unknown) => {
+        refreshTokenSubject?.error(refreshErr);
+        return from(forceLogout(ctx.authService, ctx.router)).pipe(
+          catchError((refreshErr: unknown) => {
+            return throwError(() => refreshErr);
+          }),
+          switchMap(() => throwError(() => refreshErr)),
+        );
+      }),
+      finalize(() => {
+        isRefreshing = false;
+        refreshTokenSubject = null;
+      }),
+    );
   }
 
   // A refresh is already in flight — queue behind it and replay once it resolves.
-  return refreshedToken$.pipe(
-    filter((accessToken): accessToken is string => accessToken !== null),
+  if (!refreshTokenSubject) {
+    return throwError(() => new Error('Refresh state unavailable'));
+  }
+
+  return refreshTokenSubject.pipe(
     take(1),
     switchMap((accessToken) => next(attachToken(req, accessToken))),
   );
@@ -155,7 +165,7 @@ function handleUnauthorized(
  * @param {Router} router - Used to navigate back to `/login`.
  * @returns {void}
  */
-function forceLogout(authService: AuthService, router: Router): void {
-  authService.clearSession();
-  router.navigate(['/login']);
+async function forceLogout(authService: AuthService, router: Router): Promise<void> {
+  await authService.clearSession();
+  await router.navigate(['/login']);
 }

@@ -20,7 +20,8 @@
             "DIVIDER_OR": "O",
             "DIVIDER_OR_EMAIL": "O CONTINÚA CON EMAIL",
             "SHOW_PANEL": "Mostrar panel",
-            "HIDE_PANEL": "Ocultar panel"
+            "HIDE_PANEL": "Ocultar panel",
+            "INVALID_CREDENTIALS": "Correo electrónico o contraseña inválidos. Por favor, inténtalo de nuevo."
         },
         "PASSWORD_RESET": {
             "NEW_PASSWORD_LABEL": "Contraseña nueva",
@@ -92,6 +93,93 @@
             "ALL_RIGHTS_RESERVED": "© 2024 Ductifact Inc. Todos los derechos reservados.",
             "PRIVACY_POLICY": "Política de Privacidad",
             "TERMS_OF_SERVICE": "Términos de Servicio"
+        }
+    },
+    "CLIENTS": {
+        "DASHBOARD": {
+            "TITLE": "Mis Clientes",
+            "REGISTERED_COUNT": "{{count}} clientes registrados",
+            "NEW_CLIENT": "Nuevo Cliente",
+            "ROLE_ADMIN": "Administrador",
+            "STATS": {
+                "TOTAL": "Total",
+                "ACTIVE": "Activos",
+                "PREMIUM": "Premium"
+            },
+            "EMPTY": {
+                "TITLE": "No hay clientes registrados",
+                "WEB_HINT": "Haz clic en \"Nuevo Cliente\" para añadir uno",
+                "MOBILE_HINT": "Pulsa \"Nuevo Cliente\" para añadir uno"
+            }
+        },
+        "NEW_CLIENT": {
+            "TITLE": "Nuevo Cliente",
+            "SUBTITLE": "Completa la información del cliente",
+            "SECTIONS": {
+                "CLIENT_INFO": "Información del Cliente",
+                "REQUIRED_NOTE": "Completa todos los campos requeridos",
+                "ACTIONS": "Acciones",
+                "INFORMATION": "Información",
+                "RECENT_CLIENTS": "Clientes Recientes"
+            },
+            "FIELDS": {
+                "NAME": "Nombre del Cliente",
+                "NAME_PLACEHOLDER": "Ej: Hotel Mediterráneo",
+                "ADDRESS": "Dirección",
+                "ADDRESS_PLACEHOLDER": "Calle, número, ciudad",
+                "PHONE": "Teléfono",
+                "PHONE_PLACEHOLDER": "+34 963 123 456",
+                "EMAIL": "Correo Electrónico",
+                "EMAIL_PLACEHOLDER": "cliente@ejemplo.com",
+                "TYPE": "Tipo de Cliente",
+                "TYPE_SELECT": "Seleccionar tipo",
+                "DESCRIPTION": "Información Adicional",
+                "DESCRIPTION_PLACEHOLDER": "Notas, preferencias o información relevante del cliente..."
+            },
+            "TYPE_OPTIONS": {
+                "HOTEL": "Hotel",
+                "RESTAURANT": "Restaurante",
+                "RETAIL": "Comercio",
+                "CORPORATE": "Corporativo"
+            },
+            "BUTTONS": {
+                "CREATE": "Crear Cliente",
+                "CREATING": "Creando...",
+                "CANCEL": "Cancelar"
+            },
+            "INFO_NOTES": {
+                "REQUIRED_FIELDS": "Los campos marcados con * son obligatorios",
+                "DATA_PROTECTED": "Todos los datos están protegidos y encriptados",
+                "IMMEDIATE_LIST": "El cliente aparecerá inmediatamente en tu lista"
+            },
+            "RECENT_ITEMS": {
+                "FIRST": {
+                    "NAME": "Hotel Palacio Real",
+                    "TIME": "Hace 2 horas"
+                },
+                "SECOND": {
+                    "NAME": "Restaurante Luna",
+                    "TIME": "Ayer"
+                }
+            },
+            "MOBILE": {
+                "EMAIL_LABEL": "Correo",
+                "DESCRIPTION_PLACEHOLDER": "Información adicional sobre el cliente..."
+            }
+        }
+    },
+    "LAYOUT": {
+        "SIDEBAR": {
+            "PROFILE": "Perfil",
+            "ROLE_ADMIN": "Administrador",
+            "DASHBOARD": "Dashboard",
+            "MY_CLIENTS": "Mis Clientes",
+            "EDIT_PROFILE": "Editar Perfil",
+            "GO_PREMIUM": "Hazte Premium",
+            "UNLOCK_FEATURES": "Desbloquea todas las funciones",
+            "SETTINGS": "Ajustes",
+            "SUPPORT": "Soporte",
+            "LOGOUT": "Cerrar Sesión"
         }
     },
     "COMMON": {
