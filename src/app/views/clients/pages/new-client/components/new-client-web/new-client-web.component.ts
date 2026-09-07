@@ -21,17 +21,17 @@ export class NewClientWebComponent {
   readonly isSubmitting = input(false);
 
   /** Emitted when the user submits the new-client form. */
-  readonly formSubmit = output<void>();
+  readonly clientSubmit = output<void>();
 
   /** Emitted when the user cancels client creation. */
-  readonly cancel = output<void>();
+  readonly cancelAction = output<void>();
 
   /**
    * Forwards the submit action to the parent component.
    * @returns {void}
    */
   onSubmit(): void {
-    this.formSubmit.emit();
+    this.clientSubmit.emit();
   }
 
   /**
@@ -39,6 +39,6 @@ export class NewClientWebComponent {
    * @returns {void}
    */
   onCancel(): void {
-    this.cancel.emit();
+    this.cancelAction.emit();
   }
 }

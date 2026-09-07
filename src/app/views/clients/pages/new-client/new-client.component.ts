@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import type { CreateClientDto } from '../../../../core/models/client.model';
 import { ClientsService } from '../../../../core/services/clients.service';
 import { DeviceService } from '../../../../core/services/device.service';
@@ -44,7 +45,7 @@ export class NewClientComponent {
    * Navigates back to the client list on success.
    * @returns {void}
    */
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.clientForm.invalid || this.isSubmitting()) {
       this.clientForm.markAllAsTouched();
       return;
@@ -53,20 +54,13 @@ export class NewClientComponent {
     this.isSubmitting.set(true);
     const payload = this.clientForm.getRawValue() as CreateClientDto;
 
-    this.clientsService.createClient(payload).subscribe({
-      /**
-       *
-       */
-      next: () => this.navigateToClientList(),
-      /**
-       *
-       */
-      error: () => this.isSubmitting.set(false),
-      /**
-       *
-       */
-      complete: () => this.isSubmitting.set(false),
-    });
+    try {
+      await firstValueFrom(this.clientsService.createClient(payload));
+      this.isSubmitting.set(false);
+      this.navigateToClientList();
+    } catch {
+      this.isSubmitting.set(false);
+    }
   }
 
   /**

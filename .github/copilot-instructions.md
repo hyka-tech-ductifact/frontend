@@ -53,3 +53,26 @@ Every major page view within the `views/` folder must follow this exact architec
 - Be highly concise. Omit conversational filler.
 - Provide targeted code snippets, component modifications, or git diffs rather than reprinting entire unmodified files.
 - Deeply analyze existing open file tabs in the workspace before writing code to prevent broken imports, duplicate patterns, or fractured logic paths.
+
+## JSDoc & Linting Rules (Mandatory)
+
+1. **JSDoc Documentation Requirements:**
+   - Every class, property, helper function, and method must have a complete JSDoc block.
+   - JSDoc blocks MUST include:
+     - A concise description of what the function/method does.
+     - `@param {Type} paramName - Description` for every argument (including type and description).
+     - `@returns {Type} Description` for every return statement (including return type and description).
+
+   _Example:_
+
+   ```typescript
+   /**
+    * Submits the new client form payload to the backend service.
+    *
+    * @param {CreateClientDto} payload - The validated client registration data.
+    * @returns {Observable<Client>} An observable containing the created client entity.
+    */
+   public createClient(payload: CreateClientDto): Observable<Client> {
+     return this.clientsService.create(payload);
+   }
+   ```

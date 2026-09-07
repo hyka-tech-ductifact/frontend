@@ -31,6 +31,10 @@ interface TokenPayload {
   refresh_expires_in: number;
 }
 
+/**
+ * Central authentication service responsible for session lifecycle, token storage,
+ * and auth-related API calls.
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
@@ -39,6 +43,10 @@ export class AuthService {
   private readonly storage = inject(StorageService);
   private readonly translate = inject(TranslateService);
 
+  /**
+   * Returns the base authentication endpoint built from the configured backend URL.
+   * @returns {string} The absolute auth API base path.
+   */
   private get baseUrl(): string {
     return `${this.config.get('BACKEND_URL')}/auth`;
   }

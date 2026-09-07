@@ -395,7 +395,11 @@ export class LoginWebComponent {
     }
   }
 
-  /** Loads and opens terms/privacy markdown content in the web legal modal. */
+  /**
+   * Loads and opens terms/privacy markdown content in the web legal modal.
+   * @param {"terms" | "privacy"} type - The legal document to load.
+   * @returns {Promise<void>} Resolves once the modal content has been loaded or a fallback is shown.
+   */
   async openLegalModal(type: 'terms' | 'privacy'): Promise<void> {
     const currentLang = this.translate.currentLang || 'en';
     const lang = currentLang.startsWith('es') ? 'es' : 'en';
@@ -421,7 +425,10 @@ export class LoginWebComponent {
     }
   }
 
-  /** Closes legal modal and clears title/content state. */
+  /**
+   * Closes the legal modal and clears its loaded content.
+   * @returns {void} Nothing is returned.
+   */
   closeLegalModal(): void {
     this.isLegalModalOpen.set(false);
     this.legalModalTitle.set('');

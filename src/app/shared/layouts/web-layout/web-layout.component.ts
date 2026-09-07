@@ -52,7 +52,8 @@ export class WebLayoutComponent {
   }
 
   /**
-   *
+   * Signs the current user out and returns them to the login state.
+   * @returns {Promise<void>} Resolves once logout completes.
    */
   async logout(): Promise<void> {
     await this.authService.logout();

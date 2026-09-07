@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 /**
@@ -7,30 +7,28 @@ import { AuthService } from '../services/auth.service';
  * Delegates the validity check to {@link AuthService.isAuthenticated}, which
  * verifies that a non-expired JWT token exists in localStorage.
  * Unauthenticated users are redirected to the `/login` route.
- * @returns {boolean | import('@angular/router').UrlTree} `true` when the user is
- *   authenticated; a `UrlTree` redirecting to `/login` otherwise.
+ * @returns {Promise<boolean | UrlTree>} Resolves to `true` when the user is authenticated;
+ *   otherwise resolves to a `UrlTree` redirecting to `/login`.
  */
-export const authGuard: CanActivateFn = () => {
+export const authGuard: CanActivateFn = async (): Promise<boolean | UrlTree> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  return (async () => {
-    if (await authService.hasValidAccessToken()) {
-      authService.isAuthenticated.set(true);
-      return true;
+  if (await authService.hasValidAccessToken()) {
+    authService.isAuthenticated.set(true);
+    return true;
+  }
+
+  if (await authService.hasValidRefreshToken()) {
+    try {
+      const refreshed = await authService.refreshToken();
+      if (refreshed) return true;
+    } catch {
+      // Fall through to the login redirect below.
     }
+  }
 
-    if (await authService.hasValidRefreshToken()) {
-      try {
-        const refreshed = await authService.refreshToken();
-        if (refreshed) return true;
-      } catch {
-        // Fall through to the login redirect below.
-      }
-    }
+  await authService.clearSession();
 
-    await authService.clearSession();
-
-    return router.createUrlTree(['/login']);
-  })();
+  return router.createUrlTree(['/login']);
 };
