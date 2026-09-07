@@ -1,0 +1,7 @@
+<div class="hidden h-full md:block">
+    <app-settings-web [workers]="workers()" [selectedLanguage]="currentLanguage" (languageChange)="onLanguageChange($event)" (workerAdd)="onWorkerAdd($event)" (workerDelete)="onWorkerDelete($event)" />
+</div>
+
+<div class="block md:hidden">
+    <app-settings-mobile [workers]="workers()" [selectedLanguage]="currentLanguage" (languageChange)="onLanguageChange($event)" (workerAdd)="onWorkerAdd($event)" (workerDelete)="onWorkerDelete($event)" />
+</div>

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import {
   IonApp,
   IonContent,
@@ -47,6 +47,8 @@ import { AuthService } from '../../../core/services/auth.service';
     IonIcon,
     IonMenuToggle,
     IonRouterOutlet,
+    RouterLink,
+    RouterLinkActive,
     TranslateModule,
   ],
   templateUrl: './mobile-layout.component.html',

@@ -7,6 +7,7 @@ import { authGuard } from './core/guards/auth.guard';
  * Defines the top-level lazy-loaded feature routes for the Ductifact frontend:
  * - `/login`  — Authentication page (standalone LoginComponent).
  * - `/client` — Client feature module with its own child routes.
+ * - `/settings` — Application settings page (standalone SettingsComponent).
  * - `/`       — Redirects to `/client` by default.
  */
 export const routes: Routes = [
@@ -28,6 +29,16 @@ export const routes: Routes = [
        * @returns {Promise<unknown>} Promise resolving to the clientRoutes array.
        */
       () => import('./views/clients/client.routes').then((m) => m.clientRoutes),
+  },
+  {
+    path: 'settings',
+    canActivate: [authGuard],
+    loadComponent:
+      /**
+       * Lazily loads SettingsComponent for the settings page.
+       * @returns {Promise<unknown>} Promise resolving to the SettingsComponent class.
+       */
+      () => import('./views/settings/settings.component').then((m) => m.SettingsComponent),
   },
   {
     path: '',

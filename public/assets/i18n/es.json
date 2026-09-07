@@ -168,6 +168,81 @@
             }
         }
     },
+    "SETTINGS": {
+        "NAV": {
+            "BACK_TO_CLIENTS": "Volver a Clientes",
+            "TITLE": "Configuracion",
+            "SUBTITLE": "Administra los permisos del equipo y la configuracion general",
+            "WORKERS": "Trabajadores",
+            "GENERAL": "General"
+        },
+        "HEADER": {
+            "WORKERS_TITLE": "Gestion de Trabajadores",
+            "WORKERS_SUBTITLE": "Administra los permisos y accesos del equipo",
+            "GENERAL_TITLE": "Configuracion General",
+            "GENERAL_SUBTITLE": "Ajusta las preferencias de la aplicacion"
+        },
+        "ACTIONS": {
+            "ADD_WORKER": "Agregar Trabajador",
+            "CREATE_WORKER": "Crear Trabajador",
+            "PERMISSIONS": "Permisos",
+            "EDIT_PERMISSIONS": "Editar Permisos",
+            "SAVE_CHANGES": "Guardar Cambios",
+            "SAVE_PERMISSIONS": "Guardar Permisos"
+        },
+        "WORKERS": {
+            "ASSIGNED_PERMISSIONS": "Permisos Asignados",
+            "ROLE_WORKER": "Trabajador",
+            "ROLE_SUPERVISOR": "Supervisor",
+            "ROLE_ADMINISTRATOR": "Administrador",
+            "DELETE_CONFIRM": "¿Seguro que deseas eliminar a {{name}}?"
+        },
+        "PERMISSIONS": {
+            "VIEW_CLIENTS": "Ver Clientes",
+            "VIEW_PROJECTS": "Ver Proyectos",
+            "VIEW_ORDERS": "Ver Pedidos",
+            "VIEW_REPORTS": "Ver Reportes",
+            "EDIT_CLIENTS": "Editar Clientes",
+            "EDIT_PROJECTS": "Editar Proyectos",
+            "EDIT_ORDERS": "Editar Pedidos",
+            "MANAGE_TEAM": "Gestionar Equipo",
+            "VIEW_ALL": "Ver Todo",
+            "EDIT_ALL": "Editar Todo"
+        },
+        "STATS": {
+            "TOTAL_WORKERS": "Total Trabajadores",
+            "ACTIVE": "Activos",
+            "SUPERVISORS": "Supervisores",
+            "PENDING": "Pendientes"
+        },
+        "GENERAL": {
+            "APP_LANGUAGE": "Idioma de la Aplicacion",
+            "LANGUAGE_ES": "Espanol",
+            "LANGUAGE_EN": "Ingles",
+            "TIMEZONE": "Zona Horaria",
+            "TIMEZONE_MADRID": "Europe/Madrid (GMT+1)",
+            "TIMEZONE_NEW_YORK": "America/New_York (GMT-5)",
+            "TIMEZONE_TOKYO": "Asia/Tokyo (GMT+9)",
+            "APP_INFORMATION": "Informacion de la Aplicacion",
+            "ABOUT_APP": "Acerca de la App",
+            "VERSION": "Version",
+            "LAST_UPDATE": "Ultima Actualizacion",
+            "DEVELOPED_FOR": "Desarrollado para",
+            "HVAC_INSTALLERS": "Instaladores HVAC",
+            "TOTAL_WORKERS": "Total trabajadores"
+        },
+        "MODALS": {
+            "NEW_WORKER": "Nuevo Trabajador",
+            "MANAGE_PERMISSIONS": "Gestionar Permisos",
+            "VIEW_PERMISSIONS": "Permisos de Visualizacion",
+            "EDIT_PERMISSIONS": "Permisos de Edicion",
+            "FULL_NAME": "Nombre Completo",
+            "FULL_NAME_PLACEHOLDER": "Ej: Ana Lopez",
+            "EMAIL": "Email",
+            "EMAIL_PLACEHOLDER": "ana.lopez@climatech.es",
+            "ROLE": "Rol"
+        }
+    },
     "LAYOUT": {
         "SIDEBAR": {
             "PROFILE": "Perfil",

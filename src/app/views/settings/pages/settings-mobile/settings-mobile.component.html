@@ -1,0 +1,291 @@
+<div class="settings-mobile-shell">
+    <ion-header class="ion-no-border">
+        <ion-toolbar class="settings-header-toolbar">
+            <div class="bg-gradient-to-r from-sky-600 to-blue-700 pt-12 pb-8 px-6 rounded-b-3xl shadow-lg text-white">
+                <div class="flex items-center mb-2">
+                    <button type="button" (click)="goBack()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/20 transition-colors mr-2">
+            <i class="fa-solid fa-arrow-left text-xl"></i>
+          </button>
+                    <h1 class="text-2xl font-bold tracking-tight">{{ 'SETTINGS.NAV.TITLE' | translate }}</h1>
+                </div>
+                <p class="text-sky-100/90 text-sm ml-12 font-medium">
+                    {{ 'SETTINGS.NAV.SUBTITLE' | translate }}
+                </p>
+            </div>
+        </ion-toolbar>
+    </ion-header>
+
+    <div class="settings-tabs-bar bg-white px-4 pt-4 pb-3 border-b border-slate-100">
+        <div class="bg-slate-100 p-1 rounded-xl flex gap-2">
+            <button type="button" (click)="switchTab('workers')" class="flex-1 py-2 rounded-lg text-sm transition-all" [class.bg-white]="activeTab() === 'workers'" [class.shadow-sm]="activeTab() === 'workers'" [class.text-blue-600]="activeTab() === 'workers'" [class.font-semibold]="activeTab() === 'workers'"
+                [class.text-slate-500]="activeTab() !== 'workers'" [class.font-medium]="activeTab() !== 'workers'">
+        {{ 'SETTINGS.NAV.WORKERS' | translate }}
+      </button>
+            <button type="button" (click)="switchTab('general')" class="flex-1 py-2 rounded-lg text-sm transition-all" [class.bg-white]="activeTab() === 'general'" [class.shadow-sm]="activeTab() === 'general'" [class.text-blue-600]="activeTab() === 'general'" [class.font-semibold]="activeTab() === 'general'"
+                [class.text-slate-500]="activeTab() !== 'general'" [class.font-medium]="activeTab() !== 'general'">
+        {{ 'SETTINGS.NAV.GENERAL' | translate }}
+      </button>
+        </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto px-4 py-4 bg-slate-50">
+        @if (activeTab() === 'workers') {
+        <button type="button" (click)="openAddWorkerModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl shadow-sm flex items-center justify-center gap-2 mb-4 transition-all active:scale-[0.98]">
+        <i class="fa-solid fa-plus"></i>
+        <span>{{ 'SETTINGS.ACTIONS.ADD_WORKER' | translate }}</span>
+      </button> @for (worker of workers(); track worker.id) {
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 mb-3">
+            <div class="flex items-start justify-between mb-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-sky-600 to-blue-700 rounded-xl flex items-center justify-center text-white shadow-sm">
+                        <i class="fa-solid fa-user text-sm"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-sm">{{ worker.name }}</h3>
+                        <p class="text-xs text-slate-500">{{ worker.email }}</p>
+                    </div>
+                </div>
+                <span class="bg-sky-50 text-sky-700 text-[10px] font-bold px-2 py-1 rounded-full border border-sky-100">
+              {{ getRoleLabelKey(worker.role) | translate }}
+            </span>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-3 mb-3 space-y-2 border border-slate-100">
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-slate-600 font-medium">{{
+                'SETTINGS.PERMISSIONS.VIEW_CLIENTS' | translate
+              }}</span>
+                    <i class="fa-solid fa-eye text-emerald-500"></i>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-slate-600 font-medium">{{
+                'SETTINGS.PERMISSIONS.VIEW_PROJECTS' | translate
+              }}</span>
+                    <i class="fa-solid fa-eye text-emerald-500"></i>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-slate-600 font-medium">{{
+                'SETTINGS.PERMISSIONS.VIEW_ORDERS' | translate
+              }}</span>
+                    <i class="fa-solid fa-eye text-emerald-500"></i>
+                </div>
+            </div>
+
+            <div class="flex gap-2">
+                <button type="button" (click)="openPermissionsModal(worker)" class="flex-1 py-2 border border-sky-200 text-sky-700 rounded-lg text-xs font-semibold hover:bg-sky-50 transition-colors flex items-center justify-center gap-2 active:scale-[0.98]">
+              <i class="fa-regular fa-pen-to-square"></i>
+              {{ 'SETTINGS.ACTIONS.EDIT_PERMISSIONS' | translate }}
+            </button>
+
+                <button type="button" (click)="requestDeleteWorker(worker)" class="px-3 py-2 border border-rose-200 text-rose-600 rounded-lg hover:bg-rose-50 transition-colors">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+            </div>
+        </div>
+        } } @if (activeTab() === 'general') {
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 mb-3">
+            <div class="flex items-center gap-3 mb-4">
+                <i class="fa-solid fa-globe text-blue-600 text-lg"></i>
+                <h3 class="font-bold text-slate-900">
+                    {{ 'SETTINGS.GENERAL.APP_LANGUAGE' | translate }}
+                </h3>
+            </div>
+            <div class="relative">
+                <select [value]="selectedLanguage()" (change)="onLanguageSelect($event)" class="w-full bg-slate-50 border border-slate-200 text-slate-700 py-3 px-4 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 text-sm font-medium">
+            <option value="es">{{ 'SETTINGS.GENERAL.LANGUAGE_ES' | translate }}</option>
+            <option value="en">{{ 'SETTINGS.GENERAL.LANGUAGE_EN' | translate }}</option>
+          </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-sky-50 rounded-2xl p-5 border border-sky-100">
+            <h3 class="font-bold text-slate-900 mb-1">
+                {{ 'SETTINGS.GENERAL.ABOUT_APP' | translate }}
+            </h3>
+            <p class="text-xs text-slate-600 mb-1">
+                <span class="font-semibold">{{ 'SETTINGS.GENERAL.VERSION' | translate }}:</span> 1.0.0
+            </p>
+            <p class="text-xs text-slate-600 mb-1">
+                <span class="font-semibold">{{ 'SETTINGS.GENERAL.TOTAL_WORKERS' | translate }}:</span> {{ totalWorkers() }}
+            </p>
+            <p class="text-xs text-slate-600 leading-relaxed">
+                <span class="font-semibold">{{ 'SETTINGS.GENERAL.DEVELOPED_FOR' | translate }}:</span> {{ 'SETTINGS.GENERAL.HVAC_INSTALLERS' | translate }}
+            </p>
+        </div>
+        }
+    </div>
+
+    <div class="fixed inset-0 bg-slate-900/60 z-40 backdrop-blur-sm transition-opacity" [class.hidden]="!isAddWorkerModalOpen() && !isPermissionsModalOpen()" [class.opacity-0]="!isAddWorkerModalOpen() && !isPermissionsModalOpen()" [class.opacity-100]="isAddWorkerModalOpen() || isPermissionsModalOpen()"
+        (click)="closeAllModals()"></div>
+
+    <div class="fixed bottom-0 left-0 right-0 top-0 m-auto w-[340px] h-fit max-h-[80vh] bg-white z-50 rounded-3xl shadow-2xl transform transition-all duration-300 overflow-y-auto" [class.pointer-events-none]="!isAddWorkerModalOpen()" [class.scale-95]="!isAddWorkerModalOpen()"
+        [class.opacity-0]="!isAddWorkerModalOpen()" [class.scale-100]="isAddWorkerModalOpen()" [class.opacity-100]="isAddWorkerModalOpen()">
+        <div class="p-6 relative">
+            <button type="button" (click)="closeAddWorkerModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+            <h3 class="text-xl font-bold text-center mb-6 text-slate-900">
+                {{ 'SETTINGS.MODALS.NEW_WORKER' | translate }}
+            </h3>
+
+            <form class="space-y-4" [formGroup]="addWorkerForm" (ngSubmit)="submitAddWorker()">
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-700 ml-1">{{ 'SETTINGS.MODALS.FULL_NAME' | translate }}
+            <span class="text-rose-500">*</span></label
+          >
+          <input
+            type="text"
+            formControlName="name"
+            [placeholder]="'SETTINGS.MODALS.FULL_NAME_PLACEHOLDER' | translate"
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 focus:bg-white transition-all font-medium"
+          />
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-700 ml-1"
+            >{{ 'SETTINGS.MODALS.EMAIL' | translate }} <span class="text-rose-500">*</span></label
+          >
+          <input
+            type="email"
+            formControlName="email"
+            [placeholder]="'SETTINGS.MODALS.EMAIL_PLACEHOLDER' | translate"
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 focus:bg-white transition-all font-medium"
+          />
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-700 ml-1"
+            >{{ 'SETTINGS.MODALS.ROLE' | translate }} <span class="text-rose-500">*</span></label
+          >
+          <div class="relative">
+            <select
+              formControlName="role"
+              class="w-full bg-slate-50 border border-slate-200 text-slate-700 py-3 px-4 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 text-sm font-medium"
+            >
+              <option value="worker">{{ 'SETTINGS.WORKERS.ROLE_WORKER' | translate }}</option>
+              <option value="administrator">
+                {{ 'SETTINGS.WORKERS.ROLE_ADMINISTRATOR' | translate }}
+              </option>
+              <option value="supervisor">
+                {{ 'SETTINGS.WORKERS.ROLE_SUPERVISOR' | translate }}
+              </option>
+            </select>
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500"
+            >
+              <i class="fa-solid fa-chevron-down text-xs"></i>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl shadow-sm mt-4 transition-all active:scale-[0.98]"
+        >
+          {{ 'SETTINGS.ACTIONS.CREATE_WORKER' | translate }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div
+    class="fixed bottom-0 left-0 right-0 top-0 m-auto w-[340px] h-fit max-h-[85vh] bg-white z-50 rounded-3xl shadow-2xl transform transition-all duration-300 overflow-y-auto"
+    [class.pointer-events-none]="!isPermissionsModalOpen()"
+    [class.scale-95]="!isPermissionsModalOpen()"
+    [class.opacity-0]="!isPermissionsModalOpen()"
+    [class.scale-100]="isPermissionsModalOpen()"
+    [class.opacity-100]="isPermissionsModalOpen()"
+  >
+    <div class="p-6 relative">
+      <button
+        type="button"
+        (click)="closePermissionsModal()"
+        class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2"
+      >
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <h3 class="text-lg font-bold text-center mb-1 text-slate-900 pr-6 pl-6 leading-tight">
+        {{ 'SETTINGS.MODALS.MANAGE_PERMISSIONS' | translate }} - {{ selectedWorker()?.name ?? '' }}
+      </h3>
+
+      <div class="mt-6 space-y-6">
+        <div>
+          <div class="flex items-center gap-2 mb-3 text-emerald-600">
+            <i class="fa-regular fa-eye text-sm"></i>
+            <h4 class="text-xs font-bold uppercase tracking-wider">
+              {{ 'SETTINGS.MODALS.VIEW_PERMISSIONS' | translate }}
+            </h4>
+          </div>
+
+          <div class="space-y-4 pl-1">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.VIEW_CLIENTS' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-emerald-500"></i>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.VIEW_PROJECTS' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-emerald-500"></i>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.VIEW_ORDERS' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-emerald-500"></i>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center gap-2 mb-3 text-sky-600">
+            <i class="fa-regular fa-pen-to-square text-sm"></i>
+            <h4 class="text-xs font-bold uppercase tracking-wider">
+              {{ 'SETTINGS.MODALS.EDIT_PERMISSIONS' | translate }}
+            </h4>
+          </div>
+
+          <div class="space-y-4 pl-1">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.EDIT_CLIENTS' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-sky-500"></i>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.EDIT_PROJECTS' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-sky-500"></i>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.EDIT_ORDERS' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-sky-500"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        (click)="closePermissionsModal()"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl shadow-sm mt-8 transition-all active:scale-[0.98]"
+      >
+        {{ 'SETTINGS.ACTIONS.SAVE_PERMISSIONS' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+:host {
+    display: contents;
+}
+
+.toggle-checkbox:checked {
+    right: 0;
+    border-color: #0284c7;
+}
+
+.toggle-checkbox:checked+.toggle-label {
+    background-color: #0284c7;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.modal {
+    transition: opacity 0.25s ease;
+}
+
+.modal-active {
+    overflow-x: hidden;
+    overflow-y: visible !important;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

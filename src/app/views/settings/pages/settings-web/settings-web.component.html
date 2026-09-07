@@ -1,0 +1,458 @@
+<div class="h-full flex overflow-hidden bg-slate-50 text-slate-800">
+    <aside class="w-72 flex-shrink-0 h-full overflow-y-auto bg-white border-r border-slate-200">
+        <div class="p-6">
+            <button type="button" (click)="goBack()" class="w-full flex items-center gap-3 px-4 py-3 mb-6 rounded-xl text-slate-600 hover:bg-slate-50 font-medium transition-all group">
+        <i
+          class="fa-solid fa-arrow-left text-sky-600 group-hover:-translate-x-1 transition-transform"
+        ></i>
+        <span>{{ 'SETTINGS.NAV.BACK_TO_CLIENTS' | translate }}</span>
+      </button>
+
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 bg-gradient-to-br from-[#0c4a6e] via-[#0284c7] to-[#38bdf8] rounded-xl flex items-center justify-center text-white">
+                    <i class="fa-solid fa-cog text-lg"></i>
+                </div>
+                <h1 class="text-xl font-bold text-slate-900">{{ 'SETTINGS.NAV.TITLE' | translate }}</h1>
+            </div>
+
+            <nav class="space-y-2">
+                <button type="button" (click)="switchTab('workers')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all" [class.bg-[#0284c7]]="activeTab() === 'workers'" [class.text-white]="activeTab() === 'workers'" [class.font-semibold]="activeTab() === 'workers'"
+                    [class.text-slate-600]="activeTab() !== 'workers'" [class.hover:bg-slate-50]="activeTab() !== 'workers'" [class.font-medium]="activeTab() !== 'workers'">
+          <i class="fa-solid fa-users"></i>
+          <span>{{ 'SETTINGS.NAV.WORKERS' | translate }}</span>
+        </button>
+
+                <button type="button" (click)="switchTab('general')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all" [class.bg-[#0284c7]]="activeTab() === 'general'" [class.text-white]="activeTab() === 'general'" [class.font-semibold]="activeTab() === 'general'"
+                    [class.text-slate-600]="activeTab() !== 'general'" [class.hover:bg-slate-50]="activeTab() !== 'general'" [class.font-medium]="activeTab() !== 'general'">
+          <i class="fa-solid fa-globe"></i>
+          <span>{{ 'SETTINGS.NAV.GENERAL' | translate }}</span>
+        </button>
+            </nav>
+        </div>
+    </aside>
+
+    <div class="flex-1 min-w-0 h-full overflow-y-auto">
+        <header class="bg-white border-b border-slate-200 px-8 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <button type="button" (click)="goBack()" class="w-10 h-10 flex items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 transition-all">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">{{ getPageTitleKey() | translate }}</h2>
+                        <p class="text-slate-600 mt-1">{{ getPageSubtitleKey() | translate }}</p>
+                    </div>
+                </div>
+
+                @if (activeTab() === 'workers') {
+                <button type="button" (click)="openAddWorkerModal()" class="bg-[#0284c7] hover:bg-[#0369a1] text-white font-semibold px-6 py-3 rounded-xl shadow-lg shadow-sky-200/50 flex items-center gap-2 transition-all">
+            <i class="fa-solid fa-plus"></i>
+            <span>{{ 'SETTINGS.ACTIONS.ADD_WORKER' | translate }}</span>
+          </button> }
+            </div>
+        </header>
+
+        @if (activeTab() === 'workers') {
+        <main class="p-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+                @for (worker of workers(); track worker.id) {
+                <div class="bg-white rounded-2xl p-6 shadow-md shadow-slate-200/50 border border-slate-100">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center gap-4">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" [alt]="worker.name" class="w-12 h-12 rounded-xl object-cover" />
+                            <div>
+                                <h3 class="font-bold text-slate-900">{{ worker.name }}</h3>
+                                <p class="text-sm text-slate-500">{{ worker.email }}</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-bold px-3 py-1 rounded-full border" [class]="
+                    'text-xs font-bold px-3 py-1 rounded-full border ' +
+                    getRoleBadgeClass(worker.role)
+                  ">{{ getRoleLabelKey(worker.role) | translate }}</span
+                >
+              </div>
+
+              <div class="bg-slate-50 rounded-xl p-4 mb-4 space-y-3 border border-slate-100">
+                <h4 class="font-semibold text-slate-700 text-sm">
+                  {{ 'SETTINGS.WORKERS.ASSIGNED_PERMISSIONS' | translate }}
+                </h4>
+
+                @if (hasFullPermissions(worker.role)) {
+                  <div class="grid grid-cols-2 gap-3 text-xs">
+                    <div class="flex items-center gap-2">
+                      <i class="fa-solid fa-eye text-emerald-500"></i>
+                      <span class="text-slate-600">{{
+                        'SETTINGS.PERMISSIONS.VIEW_ALL' | translate
+                      }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-pen text-sky-500"></i>
+                        <span class="text-slate-600">{{
+                        'SETTINGS.PERMISSIONS.EDIT_ALL' | translate
+                      }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-users text-purple-500"></i>
+                        <span class="text-slate-600">{{
+                        'SETTINGS.PERMISSIONS.MANAGE_TEAM' | translate
+                      }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-orange-500"></i>
+                        <span class="text-slate-600">{{
+                        'SETTINGS.PERMISSIONS.VIEW_REPORTS' | translate
+                      }}</span>
+                    </div>
+                </div>
+                } @else {
+                <div class="grid grid-cols-2 gap-3 text-xs">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-eye text-emerald-500"></i>
+                        <span class="text-slate-600">{{
+                        'SETTINGS.PERMISSIONS.VIEW_CLIENTS' | translate
+                      }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-eye text-emerald-500"></i>
+                        <span class="text-slate-600">{{
+                        'SETTINGS.PERMISSIONS.VIEW_PROJECTS' | translate
+                      }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-eye text-emerald-500"></i>
+                        <span class="text-slate-600">{{
+                        'SETTINGS.PERMISSIONS.VIEW_ORDERS' | translate
+                      }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-pen text-sky-500"></i>
+                        <span class="text-slate-600">{{
+                        'SETTINGS.PERMISSIONS.EDIT_PROJECTS' | translate
+                      }}</span>
+                    </div>
+                </div>
+                }
+            </div>
+
+            <div class="flex gap-2">
+                <button type="button" (click)="openPermissionsModal(worker)" class="flex-1 py-2 border border-sky-200 text-sky-700 rounded-lg text-sm font-semibold hover:bg-sky-50 transition-colors flex items-center justify-center gap-2">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                  {{ 'SETTINGS.ACTIONS.PERMISSIONS' | translate }}
+                </button>
+                <button type="button" (click)="requestDeleteWorker(worker)" class="px-3 py-2 border border-rose-200 text-rose-600 rounded-lg hover:bg-rose-50 transition-colors">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+    </div>
+    }
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="bg-white rounded-xl p-6 border border-slate-100">
+        <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-users text-sky-600"></i>
+            </div>
+            <div>
+                <p class="text-2xl font-bold text-slate-900">{{ totalWorkers() }}</p>
+                <p class="text-sm text-slate-600">
+                    {{ 'SETTINGS.STATS.TOTAL_WORKERS' | translate }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 border border-slate-100">
+        <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-user-check text-emerald-600"></i>
+            </div>
+            <div>
+                <p class="text-2xl font-bold text-slate-900">{{ activeWorkers() }}</p>
+                <p class="text-sm text-slate-600">{{ 'SETTINGS.STATS.ACTIVE' | translate }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 border border-slate-100">
+        <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-crown text-purple-600"></i>
+            </div>
+            <div>
+                <p class="text-2xl font-bold text-slate-900">{{ supervisorsCount() }}</p>
+                <p class="text-sm text-slate-600">{{ 'SETTINGS.STATS.SUPERVISORS' | translate }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 border border-slate-100">
+        <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-clock text-orange-600"></i>
+            </div>
+            <div>
+                <p class="text-2xl font-bold text-slate-900">{{ pendingWorkers() }}</p>
+                <p class="text-sm text-slate-600">{{ 'SETTINGS.STATS.PENDING' | translate }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+} @if (activeTab() === 'general') {
+<main class="p-8">
+    <div class="max-w-4xl">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white rounded-2xl p-6 shadow-md shadow-slate-200/50 border border-slate-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fa-solid fa-globe text-[#0284c7] text-xl"></i>
+                    <h3 class="font-bold text-slate-900 text-lg">
+                        {{ 'SETTINGS.GENERAL.APP_LANGUAGE' | translate }}
+                    </h3>
+                </div>
+
+                <div class="relative">
+                    <select [value]="selectedLanguage()" (change)="onLanguageSelect($event)" class="w-full bg-slate-50 border border-slate-200 text-slate-700 py-3 px-4 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 font-medium">
+                  <option value="es">{{ 'SETTINGS.GENERAL.LANGUAGE_ES' | translate }}</option>
+                  <option value="en">{{ 'SETTINGS.GENERAL.LANGUAGE_EN' | translate }}</option>
+                </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 shadow-md shadow-slate-200/50 border border-slate-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fa-solid fa-clock text-[#0284c7] text-xl"></i>
+                    <h3 class="font-bold text-slate-900 text-lg">
+                        {{ 'SETTINGS.GENERAL.TIMEZONE' | translate }}
+                    </h3>
+                </div>
+                <div class="relative">
+                    <select class="w-full bg-slate-50 border border-slate-200 text-slate-700 py-3 px-4 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 font-medium">
+                  <option>{{ 'SETTINGS.GENERAL.TIMEZONE_MADRID' | translate }}</option>
+                  <option>{{ 'SETTINGS.GENERAL.TIMEZONE_NEW_YORK' | translate }}</option>
+                  <option>{{ 'SETTINGS.GENERAL.TIMEZONE_TOKYO' | translate }}</option>
+                </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-sky-50 rounded-2xl p-6 border border-sky-100 lg:col-span-2">
+                <h3 class="font-bold text-slate-900 mb-4 text-lg">
+                    {{ 'SETTINGS.GENERAL.APP_INFORMATION' | translate }}
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <p class="text-sm text-slate-600 mb-1">
+                            {{ 'SETTINGS.GENERAL.VERSION' | translate }}
+                        </p>
+                        <p class="font-semibold text-slate-900">1.0.0</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-slate-600 mb-1">
+                            {{ 'SETTINGS.GENERAL.LAST_UPDATE' | translate }}
+                        </p>
+                        <p class="font-semibold text-slate-900">15 Nov 2023</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-slate-600 mb-1">
+                            {{ 'SETTINGS.GENERAL.DEVELOPED_FOR' | translate }}
+                        </p>
+                        <p class="font-semibold text-slate-900">
+                            {{ 'SETTINGS.GENERAL.HVAC_INSTALLERS' | translate }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+}
+</div>
+
+<div class="fixed inset-0 bg-slate-900/60 z-40 backdrop-blur-sm transition-opacity" [class.hidden]="!isAddWorkerModalOpen() && !isPermissionsModalOpen()" [class.opacity-0]="!isAddWorkerModalOpen() && !isPermissionsModalOpen()" [class.opacity-100]="isAddWorkerModalOpen() || isPermissionsModalOpen()"
+    (click)="closeAllModals()"></div>
+
+<div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] max-h-[80vh] bg-white z-50 rounded-3xl shadow-2xl transition-all duration-300 overflow-y-auto" [class.pointer-events-none]="!isAddWorkerModalOpen()" [class.scale-95]="!isAddWorkerModalOpen()"
+    [class.opacity-0]="!isAddWorkerModalOpen()" [class.scale-100]="isAddWorkerModalOpen()" [class.opacity-100]="isAddWorkerModalOpen()">
+    <div class="p-8 relative">
+        <button type="button" (click)="closeAddWorkerModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 p-2">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+
+        <h3 class="text-2xl font-bold text-center mb-8 text-slate-900">
+            {{ 'SETTINGS.MODALS.NEW_WORKER' | translate }}
+        </h3>
+
+        <form class="space-y-6" [formGroup]="addWorkerForm" (ngSubmit)="submitAddWorker()">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-slate-700">{{ 'SETTINGS.MODALS.FULL_NAME' | translate }}
+              <span class="text-rose-500">*</span></label
+            >
+            <input
+              type="text"
+              formControlName="name"
+              [placeholder]="'SETTINGS.MODALS.FULL_NAME_PLACEHOLDER' | translate"
+              class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-slate-400 focus:bg-white transition-all font-medium"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label class="text-sm font-bold text-slate-700"
+              >{{ 'SETTINGS.MODALS.EMAIL' | translate }} <span class="text-rose-500">*</span></label
+            >
+            <input
+              type="email"
+              formControlName="email"
+              [placeholder]="'SETTINGS.MODALS.EMAIL_PLACEHOLDER' | translate"
+              class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-slate-400 focus:bg-white transition-all font-medium"
+            />
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label class="text-sm font-bold text-slate-700"
+            >{{ 'SETTINGS.MODALS.ROLE' | translate }} <span class="text-rose-500">*</span></label
+          >
+          <div class="relative">
+            <select
+              formControlName="role"
+              class="w-full bg-slate-50 border border-slate-200 text-slate-700 py-3 px-4 rounded-xl appearance-none focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-slate-400 font-medium"
+            >
+              <option value="worker">{{ 'SETTINGS.WORKERS.ROLE_WORKER' | translate }}</option>
+              <option value="administrator">
+                {{ 'SETTINGS.WORKERS.ROLE_ADMINISTRATOR' | translate }}
+              </option>
+              <option value="supervisor">
+                {{ 'SETTINGS.WORKERS.ROLE_SUPERVISOR' | translate }}
+              </option>
+            </select>
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500"
+            >
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-[#0284c7] hover:bg-[#0369a1] text-white font-bold py-4 rounded-xl shadow-lg shadow-sky-200/50 mt-8 transition-all"
+        >
+          {{ 'SETTINGS.ACTIONS.CREATE_WORKER' | translate }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div
+    class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] max-h-[80vh] bg-white z-50 rounded-3xl shadow-2xl transition-all duration-300 overflow-y-auto"
+    [class.pointer-events-none]="!isPermissionsModalOpen()"
+    [class.scale-95]="!isPermissionsModalOpen()"
+    [class.opacity-0]="!isPermissionsModalOpen()"
+    [class.scale-100]="isPermissionsModalOpen()"
+    [class.opacity-100]="isPermissionsModalOpen()"
+  >
+    <div class="p-8 relative">
+      <button
+        type="button"
+        (click)="closePermissionsModal()"
+        class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 p-2"
+      >
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+
+      <h3 class="text-2xl font-bold text-center mb-2 text-slate-900">
+        {{ 'SETTINGS.MODALS.MANAGE_PERMISSIONS' | translate }}
+      </h3>
+      <p class="text-center text-slate-600 mb-8">{{ selectedWorker()?.name ?? '' }}</p>
+
+      <div class="space-y-8">
+        <div>
+          <div class="flex items-center gap-3 mb-6 text-emerald-600">
+            <i class="fa-regular fa-eye text-lg"></i>
+            <h4 class="text-sm font-bold uppercase tracking-wider">
+              {{ 'SETTINGS.MODALS.VIEW_PERMISSIONS' | translate }}
+            </h4>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+              <span class="font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.VIEW_CLIENTS' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-emerald-500"></i>
+            </div>
+            <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+              <span class="font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.VIEW_PROJECTS' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-emerald-500"></i>
+            </div>
+            <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+              <span class="font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.VIEW_ORDERS' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-emerald-500"></i>
+            </div>
+            <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+              <span class="font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.VIEW_REPORTS' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-emerald-500"></i>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center gap-3 mb-6 text-sky-600">
+            <i class="fa-solid fa-pen text-lg"></i>
+            <h4 class="text-sm font-bold uppercase tracking-wider">
+              {{ 'SETTINGS.MODALS.EDIT_PERMISSIONS' | translate }}
+            </h4>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+              <span class="font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.EDIT_CLIENTS' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-sky-500"></i>
+            </div>
+            <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+              <span class="font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.EDIT_PROJECTS' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-sky-500"></i>
+            </div>
+            <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+              <span class="font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.EDIT_ORDERS' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-sky-500"></i>
+            </div>
+            <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+              <span class="font-medium text-slate-700">{{
+                'SETTINGS.PERMISSIONS.MANAGE_TEAM' | translate
+              }}</span>
+              <i class="fa-solid fa-check text-sky-500"></i>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          (click)="closePermissionsModal()"
+          class="w-full bg-[#0284c7] hover:bg-[#0369a1] text-white font-bold py-4 rounded-xl shadow-lg shadow-sky-200/50 transition-all"
+        >
+          {{ 'SETTINGS.ACTIONS.SAVE_CHANGES' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
