@@ -13,6 +13,7 @@
     [userName]="authService.currentUser()?.name ?? 'Usuario'"
     (addClient)="onAddClient()"
     (deleteClient)="onDeleteClient($event)"
+    (viewDetails)="onViewDetails($event)"
   />
 } @else {
   <app-client-web
@@ -21,5 +22,6 @@
     [isLoading]="clientsService.isLoading()"
     (addClient)="onAddClient()"
     (deleteClient)="onDeleteClient($event)"
+    (viewDetails)="onViewDetails($event)"
   />
 }

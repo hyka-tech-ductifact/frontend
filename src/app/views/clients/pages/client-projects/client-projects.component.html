@@ -1,0 +1,26 @@
+@if (clientProjectsService.error()) {
+  <div
+    class="mx-8 mt-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+  >
+    {{ clientProjectsService.error() }}
+  </div>
+}
+@if (deviceService.isMobile()) {
+  <app-client-projects-mobile
+    [client]="client()"
+    [projects]="clientProjectsService.projects()"
+    [isLoading]="clientProjectsService.isLoading()"
+    (addProject)="onAddProject()"
+    (advanceStatus)="onAdvanceStatus($event)"
+    (deleteProject)="onDeleteProject($event)"
+  />
+} @else {
+  <app-client-projects-web
+    [client]="client()"
+    [projects]="clientProjectsService.projects()"
+    [isLoading]="clientProjectsService.isLoading()"
+    (addProject)="onAddProject()"
+    (advanceStatus)="onAdvanceStatus($event)"
+    (deleteProject)="onDeleteProject($event)"
+  />
+}

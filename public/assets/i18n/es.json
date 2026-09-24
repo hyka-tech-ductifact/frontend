@@ -1,263 +1,301 @@
 {
-    "AUTH": {
-        "LOGIN": {
-            "TITLE_WELCOME": "Bienvenido de vuelta",
-            "TITLE_CREATE": "Crear cuenta",
-            "SUBTITLE_WELCOME": "Soluciones inteligentes para tus sistemas de aire",
-            "SUBTITLE_CREATE": "Únete a Ductifact para una gestión de flujo de aire más inteligente",
-            "SIGN_IN_TAB": "Iniciar sesión",
-            "SIGN_UP_TAB": "Registrarse",
-            "EMAIL_LABEL": "Correo electrónico",
-            "EMAIL_PLACEHOLDER": "nombre@empresa.com",
-            "PASSWORD_LABEL": "Contraseña",
-            "PASSWORD_PLACEHOLDER": "Introduce tu contraseña",
-            "REMEMBER_ME": "Recordarme",
-            "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
-            "SIGNING_IN": "INICIANDO SESIÓN...",
-            "SIGN_IN_BTN": "INICIAR SESIÓN",
-            "NEW_TO_DUCTIFACT": "¿Nuevo en Ductifact?",
-            "CREATE_ACCOUNT_LINK": "Crea una cuenta",
-            "DIVIDER_OR": "O",
-            "DIVIDER_OR_EMAIL": "O CONTINÚA CON EMAIL",
-            "SHOW_PANEL": "Mostrar panel",
-            "HIDE_PANEL": "Ocultar panel",
-            "INVALID_CREDENTIALS": "Correo electrónico o contraseña inválidos. Por favor, inténtalo de nuevo."
-        },
-        "PASSWORD_RESET": {
-            "NEW_PASSWORD_LABEL": "Contraseña nueva",
-            "RESET_PASSWORD": "Restablecer contraseña",
-            "SEND_RESET_PASSWORD_CODE": "Enviar código de restablecimiento",
-            "EMAIL_REQUIRED": "El correo electrónico es obligatorio",
-            "CODE_REQUIRED": "El código de verificación es obligatorio",
-            "CODE_INVALID": "Introduce un código válido",
-            "SUCCESS_COMPLETE": "¡Contraseña restablecida con éxito!",
-            "ERROR_VERIFY_FAILED": "El código de verificación es inválido o ha expirado",
-            "CODE_SENT_SUCCESS": "¡Código de verificación enviado con éxito! Por favor, revisa tu correo electrónico.",
-            "ERROR_REQUEST_FAILED": "Error al solicitar el restablecimiento de contraseña. Por favor, inténtalo de nuevo más tarde.",
-            "VERIFY_SUBTITLE_RESET_CODE": "Hemos enviado un código de verificación a tu correo electrónico. Por favor, introduce el código a continuación para completar el restablecimiento."
-        },
-        "SIGNUP": {
-            "FIRST_NAME_LABEL": "Nombre",
-            "FIRST_NAME_PLACEHOLDER": "Juan",
-            "LAST_NAME_LABEL": "Apellido",
-            "LAST_NAME_PLACEHOLDER": "García",
-            "FULL_NAME_LABEL": "Nombre completo",
-            "FULL_NAME_PLACEHOLDER": "Juan García",
-            "PHONE_LABEL": "Número de teléfono",
-            "PHONE_PLACEHOLDER": "+34 600 000 000",
-            "PASSWORD_CREATE_PLACEHOLDER": "Crea una contraseña segura",
-            "PASSWORD_HINT": "Usa 9+ caracteres con letras, números y símbolos",
-            "PASSWORD_REQUIREMENTS": "La contraseña debe tener al menos 8 caracteres e incluir una mayúscula, una minúscula, un número y un carácter especial",
-            "CONFIRM_PASSWORD_LABEL": "Confirmar contraseña",
-            "CONFIRM_PASSWORD_PLACEHOLDER": "Vuelve a introducir tu contraseña",
-            "FULL_NAME_REQUIRED": "El nombre completo es obligatorio",
-            "EMAIL_INVALID": "Introduce una dirección de correo electrónico válida",
-            "TERMS_REQUIRED": "Debes aceptar los términos y condiciones",
-            "TERMS_AGREE": "Acepto los",
-            "CREATE_ACCOUNT_BTN": "CREAR CUENTA",
-            "ALREADY_HAVE_ACCOUNT": "¿Ya tienes una cuenta?",
-            "SIGN_IN_LINK": "Iniciar sesión",
-            "DIVIDER_OR_EMAIL": "O REGÍSTRATE CON EMAIL",
-            "PASSWORDS_DONT_MATCH": "Las contraseñas no coinciden",
-            "VERIFY_TITLE": "Verifica tu correo electrónico",
-            "VERIFY_SUBTITLE": "Hemos enviado un código de verificación a tu correo electrónico. Por favor, introduce el código a continuación para completar tu registro.",
-            "VERIFY_CODE_LABEL": "Código de verificación",
-            "VERIFY_CODE_PLACEHOLDER": "Introduce el código de verificación",
-            "VERIFY_BTN": "VERIFICAR",
-            "VERIFY_VERIFYING": "VERIFICANDO...",
-            "CLOSE_MODAL": "Cerrar"
-        },
-        "SOCIAL": {
-            "GOOGLE": "Google",
-            "APPLE": "Apple",
-            "CONTINUE_GOOGLE": "Continuar con Google",
-            "CONTINUE_APPLE": "Continuar con Apple",
-            "SIGNUP_GOOGLE": "Registrarse con Google",
-            "SIGNUP_APPLE": "Registrarse con Apple"
-        },
-        "FEATURES": {
-            "HERO_TITLE": "Plataforma Inteligente de Gestión de Conductos de Aire",
-            "HERO_SUBTITLE": "Transforma tus operaciones HVAC con analíticas impulsadas por IA, monitoreo en tiempo real y herramientas avanzadas de optimización.",
-            "ANALYSIS_TITLE": "Análisis Avanzado de Conductos",
-            "ANALYSIS_DESC": "Optimiza el flujo de aire con algoritmos de IA propietarios diseñados para la máxima eficiencia y ahorro energético.",
-            "ANALYSIS_DESC_SHORT": "Optimiza el flujo de aire con nuestros algoritmos de IA propietarios diseñados para la eficiencia.",
-            "MONITORING_TITLE": "Monitoreo en Tiempo Real",
-            "MONITORING_DESC": "Rastrea métricas de presión, temperatura y caudal al instante desde cualquier lugar.",
-            "SECURITY_TITLE": "Seguridad Empresarial",
-            "SECURITY_DESC": "Cifrado y protocolos de seguridad bancaria para proteger tus datos sensibles.",
-            "COLLABORATION_TITLE": "Colaboración en Equipo",
-            "COLLABORATION_DESC": "Herramientas de trabajo en equipo para coordinar entre departamentos y ubicaciones."
-        },
-        "FOOTER": {
-            "COPYRIGHT": "© 2024 Ductifact Inc.",
-            "ALL_RIGHTS_RESERVED": "© 2024 Ductifact Inc. Todos los derechos reservados.",
-            "PRIVACY_POLICY": "Política de Privacidad",
-            "TERMS_OF_SERVICE": "Términos de Servicio"
-        }
+  "AUTH": {
+    "LOGIN": {
+      "TITLE_WELCOME": "Bienvenido de vuelta",
+      "TITLE_CREATE": "Crear cuenta",
+      "SUBTITLE_WELCOME": "Soluciones inteligentes para tus sistemas de aire",
+      "SUBTITLE_CREATE": "Únete a Ductifact para una gestión de flujo de aire más inteligente",
+      "SIGN_IN_TAB": "Iniciar sesión",
+      "SIGN_UP_TAB": "Registrarse",
+      "EMAIL_LABEL": "Correo electrónico",
+      "EMAIL_PLACEHOLDER": "nombre@empresa.com",
+      "PASSWORD_LABEL": "Contraseña",
+      "PASSWORD_PLACEHOLDER": "Introduce tu contraseña",
+      "REMEMBER_ME": "Recordarme",
+      "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
+      "SIGNING_IN": "INICIANDO SESIÓN...",
+      "SIGN_IN_BTN": "INICIAR SESIÓN",
+      "NEW_TO_DUCTIFACT": "¿Nuevo en Ductifact?",
+      "CREATE_ACCOUNT_LINK": "Crea una cuenta",
+      "DIVIDER_OR": "O",
+      "DIVIDER_OR_EMAIL": "O CONTINÚA CON EMAIL",
+      "SHOW_PANEL": "Mostrar panel",
+      "HIDE_PANEL": "Ocultar panel",
+      "INVALID_CREDENTIALS": "Correo electrónico o contraseña inválidos. Por favor, inténtalo de nuevo."
     },
-    "CLIENTS": {
-        "DASHBOARD": {
-            "TITLE": "Mis Clientes",
-            "REGISTERED_COUNT": "{{count}} clientes registrados",
-            "NEW_CLIENT": "Nuevo Cliente",
-            "ROLE_ADMIN": "Administrador",
-            "STATS": {
-                "TOTAL": "Total",
-                "ACTIVE": "Activos",
-                "PREMIUM": "Premium"
-            },
-            "EMPTY": {
-                "TITLE": "No hay clientes registrados",
-                "WEB_HINT": "Haz clic en \"Nuevo Cliente\" para añadir uno",
-                "MOBILE_HINT": "Pulsa \"Nuevo Cliente\" para añadir uno"
-            }
-        },
-        "NEW_CLIENT": {
-            "TITLE": "Nuevo Cliente",
-            "SUBTITLE": "Completa la información del cliente",
-            "SECTIONS": {
-                "CLIENT_INFO": "Información del Cliente",
-                "REQUIRED_NOTE": "Completa todos los campos requeridos",
-                "ACTIONS": "Acciones",
-                "INFORMATION": "Información",
-                "RECENT_CLIENTS": "Clientes Recientes"
-            },
-            "FIELDS": {
-                "NAME": "Nombre del Cliente",
-                "NAME_PLACEHOLDER": "Ej: Hotel Mediterráneo",
-                "ADDRESS": "Dirección",
-                "ADDRESS_PLACEHOLDER": "Calle, número, ciudad",
-                "PHONE": "Teléfono",
-                "PHONE_PLACEHOLDER": "+34 963 123 456",
-                "EMAIL": "Correo Electrónico",
-                "EMAIL_PLACEHOLDER": "cliente@ejemplo.com",
-                "TYPE": "Tipo de Cliente",
-                "TYPE_SELECT": "Seleccionar tipo",
-                "DESCRIPTION": "Información Adicional",
-                "DESCRIPTION_PLACEHOLDER": "Notas, preferencias o información relevante del cliente..."
-            },
-            "TYPE_OPTIONS": {
-                "HOTEL": "Hotel",
-                "RESTAURANT": "Restaurante",
-                "RETAIL": "Comercio",
-                "CORPORATE": "Corporativo"
-            },
-            "BUTTONS": {
-                "CREATE": "Crear Cliente",
-                "CREATING": "Creando...",
-                "CANCEL": "Cancelar"
-            },
-            "INFO_NOTES": {
-                "REQUIRED_FIELDS": "Los campos marcados con * son obligatorios",
-                "DATA_PROTECTED": "Todos los datos están protegidos y encriptados",
-                "IMMEDIATE_LIST": "El cliente aparecerá inmediatamente en tu lista"
-            },
-            "RECENT_ITEMS": {
-                "FIRST": {
-                    "NAME": "Hotel Palacio Real",
-                    "TIME": "Hace 2 horas"
-                },
-                "SECOND": {
-                    "NAME": "Restaurante Luna",
-                    "TIME": "Ayer"
-                }
-            },
-            "MOBILE": {
-                "EMAIL_LABEL": "Correo",
-                "DESCRIPTION_PLACEHOLDER": "Información adicional sobre el cliente..."
-            }
-        }
+    "PASSWORD_RESET": {
+      "NEW_PASSWORD_LABEL": "Contraseña nueva",
+      "RESET_PASSWORD": "Restablecer contraseña",
+      "SEND_RESET_PASSWORD_CODE": "Enviar código de restablecimiento",
+      "EMAIL_REQUIRED": "El correo electrónico es obligatorio",
+      "CODE_REQUIRED": "El código de verificación es obligatorio",
+      "CODE_INVALID": "Introduce un código válido",
+      "SUCCESS_COMPLETE": "¡Contraseña restablecida con éxito!",
+      "ERROR_VERIFY_FAILED": "El código de verificación es inválido o ha expirado",
+      "CODE_SENT_SUCCESS": "¡Código de verificación enviado con éxito! Por favor, revisa tu correo electrónico.",
+      "ERROR_REQUEST_FAILED": "Error al solicitar el restablecimiento de contraseña. Por favor, inténtalo de nuevo más tarde.",
+      "VERIFY_SUBTITLE_RESET_CODE": "Hemos enviado un código de verificación a tu correo electrónico. Por favor, introduce el código a continuación para completar el restablecimiento."
     },
-    "SETTINGS": {
-        "NAV": {
-            "BACK_TO_CLIENTS": "Volver a Clientes",
-            "TITLE": "Configuracion",
-            "SUBTITLE": "Administra los permisos del equipo y la configuracion general",
-            "WORKERS": "Trabajadores",
-            "GENERAL": "General"
-        },
-        "HEADER": {
-            "WORKERS_TITLE": "Gestion de Trabajadores",
-            "WORKERS_SUBTITLE": "Administra los permisos y accesos del equipo",
-            "GENERAL_TITLE": "Configuracion General",
-            "GENERAL_SUBTITLE": "Ajusta las preferencias de la aplicacion"
-        },
-        "ACTIONS": {
-            "ADD_WORKER": "Agregar Trabajador",
-            "CREATE_WORKER": "Crear Trabajador",
-            "PERMISSIONS": "Permisos",
-            "EDIT_PERMISSIONS": "Editar Permisos",
-            "SAVE_CHANGES": "Guardar Cambios",
-            "SAVE_PERMISSIONS": "Guardar Permisos"
-        },
-        "WORKERS": {
-            "ASSIGNED_PERMISSIONS": "Permisos Asignados",
-            "ROLE_WORKER": "Trabajador",
-            "ROLE_SUPERVISOR": "Supervisor",
-            "ROLE_ADMINISTRATOR": "Administrador",
-            "DELETE_CONFIRM": "¿Seguro que deseas eliminar a {{name}}?"
-        },
-        "PERMISSIONS": {
-            "VIEW_CLIENTS": "Ver Clientes",
-            "VIEW_PROJECTS": "Ver Proyectos",
-            "VIEW_ORDERS": "Ver Pedidos",
-            "VIEW_REPORTS": "Ver Reportes",
-            "EDIT_CLIENTS": "Editar Clientes",
-            "EDIT_PROJECTS": "Editar Proyectos",
-            "EDIT_ORDERS": "Editar Pedidos",
-            "MANAGE_TEAM": "Gestionar Equipo",
-            "VIEW_ALL": "Ver Todo",
-            "EDIT_ALL": "Editar Todo"
-        },
-        "STATS": {
-            "TOTAL_WORKERS": "Total Trabajadores",
-            "ACTIVE": "Activos",
-            "SUPERVISORS": "Supervisores",
-            "PENDING": "Pendientes"
-        },
-        "GENERAL": {
-            "APP_LANGUAGE": "Idioma de la Aplicacion",
-            "LANGUAGE_ES": "Espanol",
-            "LANGUAGE_EN": "Ingles",
-            "TIMEZONE": "Zona Horaria",
-            "TIMEZONE_MADRID": "Europe/Madrid (GMT+1)",
-            "TIMEZONE_NEW_YORK": "America/New_York (GMT-5)",
-            "TIMEZONE_TOKYO": "Asia/Tokyo (GMT+9)",
-            "APP_INFORMATION": "Informacion de la Aplicacion",
-            "ABOUT_APP": "Acerca de la App",
-            "VERSION": "Version",
-            "LAST_UPDATE": "Ultima Actualizacion",
-            "DEVELOPED_FOR": "Desarrollado para",
-            "HVAC_INSTALLERS": "Instaladores HVAC",
-            "TOTAL_WORKERS": "Total trabajadores"
-        },
-        "MODALS": {
-            "NEW_WORKER": "Nuevo Trabajador",
-            "MANAGE_PERMISSIONS": "Gestionar Permisos",
-            "VIEW_PERMISSIONS": "Permisos de Visualizacion",
-            "EDIT_PERMISSIONS": "Permisos de Edicion",
-            "FULL_NAME": "Nombre Completo",
-            "FULL_NAME_PLACEHOLDER": "Ej: Ana Lopez",
-            "EMAIL": "Email",
-            "EMAIL_PLACEHOLDER": "ana.lopez@climatech.es",
-            "ROLE": "Rol"
-        }
+    "SIGNUP": {
+      "FIRST_NAME_LABEL": "Nombre",
+      "FIRST_NAME_PLACEHOLDER": "Juan",
+      "LAST_NAME_LABEL": "Apellido",
+      "LAST_NAME_PLACEHOLDER": "García",
+      "FULL_NAME_LABEL": "Nombre completo",
+      "FULL_NAME_PLACEHOLDER": "Juan García",
+      "PHONE_LABEL": "Número de teléfono",
+      "PHONE_PLACEHOLDER": "+34 600 000 000",
+      "PASSWORD_CREATE_PLACEHOLDER": "Crea una contraseña segura",
+      "PASSWORD_HINT": "Usa 9+ caracteres con letras, números y símbolos",
+      "PASSWORD_REQUIREMENTS": "La contraseña debe tener al menos 8 caracteres e incluir una mayúscula, una minúscula, un número y un carácter especial",
+      "CONFIRM_PASSWORD_LABEL": "Confirmar contraseña",
+      "CONFIRM_PASSWORD_PLACEHOLDER": "Vuelve a introducir tu contraseña",
+      "FULL_NAME_REQUIRED": "El nombre completo es obligatorio",
+      "EMAIL_INVALID": "Introduce una dirección de correo electrónico válida",
+      "TERMS_REQUIRED": "Debes aceptar los términos y condiciones",
+      "TERMS_AGREE": "Acepto los",
+      "CREATE_ACCOUNT_BTN": "CREAR CUENTA",
+      "ALREADY_HAVE_ACCOUNT": "¿Ya tienes una cuenta?",
+      "SIGN_IN_LINK": "Iniciar sesión",
+      "DIVIDER_OR_EMAIL": "O REGÍSTRATE CON EMAIL",
+      "PASSWORDS_DONT_MATCH": "Las contraseñas no coinciden",
+      "VERIFY_TITLE": "Verifica tu correo electrónico",
+      "VERIFY_SUBTITLE": "Hemos enviado un código de verificación a tu correo electrónico. Por favor, introduce el código a continuación para completar tu registro.",
+      "VERIFY_CODE_LABEL": "Código de verificación",
+      "VERIFY_CODE_PLACEHOLDER": "Introduce el código de verificación",
+      "VERIFY_BTN": "VERIFICAR",
+      "VERIFY_VERIFYING": "VERIFICANDO...",
+      "CLOSE_MODAL": "Cerrar"
     },
-    "LAYOUT": {
-        "SIDEBAR": {
-            "PROFILE": "Perfil",
-            "ROLE_ADMIN": "Administrador",
-            "DASHBOARD": "Dashboard",
-            "MY_CLIENTS": "Mis Clientes",
-            "EDIT_PROFILE": "Editar Perfil",
-            "GO_PREMIUM": "Hazte Premium",
-            "UNLOCK_FEATURES": "Desbloquea todas las funciones",
-            "SETTINGS": "Ajustes",
-            "SUPPORT": "Soporte",
-            "LOGOUT": "Cerrar Sesión"
-        }
+    "SOCIAL": {
+      "GOOGLE": "Google",
+      "APPLE": "Apple",
+      "CONTINUE_GOOGLE": "Continuar con Google",
+      "CONTINUE_APPLE": "Continuar con Apple",
+      "SIGNUP_GOOGLE": "Registrarse con Google",
+      "SIGNUP_APPLE": "Registrarse con Apple"
     },
-    "COMMON": {
-        "AND": "y"
+    "FEATURES": {
+      "HERO_TITLE": "Plataforma Inteligente de Gestión de Conductos de Aire",
+      "HERO_SUBTITLE": "Transforma tus operaciones HVAC con analíticas impulsadas por IA, monitoreo en tiempo real y herramientas avanzadas de optimización.",
+      "ANALYSIS_TITLE": "Análisis Avanzado de Conductos",
+      "ANALYSIS_DESC": "Optimiza el flujo de aire con algoritmos de IA propietarios diseñados para la máxima eficiencia y ahorro energético.",
+      "ANALYSIS_DESC_SHORT": "Optimiza el flujo de aire con nuestros algoritmos de IA propietarios diseñados para la eficiencia.",
+      "MONITORING_TITLE": "Monitoreo en Tiempo Real",
+      "MONITORING_DESC": "Rastrea métricas de presión, temperatura y caudal al instante desde cualquier lugar.",
+      "SECURITY_TITLE": "Seguridad Empresarial",
+      "SECURITY_DESC": "Cifrado y protocolos de seguridad bancaria para proteger tus datos sensibles.",
+      "COLLABORATION_TITLE": "Colaboración en Equipo",
+      "COLLABORATION_DESC": "Herramientas de trabajo en equipo para coordinar entre departamentos y ubicaciones."
+    },
+    "FOOTER": {
+      "COPYRIGHT": "© 2024 Ductifact Inc.",
+      "ALL_RIGHTS_RESERVED": "© 2024 Ductifact Inc. Todos los derechos reservados.",
+      "PRIVACY_POLICY": "Política de Privacidad",
+      "TERMS_OF_SERVICE": "Términos de Servicio"
     }
+  },
+  "CLIENTS": {
+    "DASHBOARD": {
+      "TITLE": "Mis Clientes",
+      "REGISTERED_COUNT": "{{count}} clientes registrados",
+      "NEW_CLIENT": "Nuevo Cliente",
+      "ROLE_ADMIN": "Administrador",
+      "STATS": {
+        "TOTAL": "Total",
+        "ACTIVE": "Activos",
+        "PREMIUM": "Premium"
+      },
+      "EMPTY": {
+        "TITLE": "No hay clientes registrados",
+        "WEB_HINT": "Haz clic en \"Nuevo Cliente\" para añadir uno",
+        "MOBILE_HINT": "Pulsa \"Nuevo Cliente\" para añadir uno"
+      }
+    },
+    "NEW_CLIENT": {
+      "TITLE": "Nuevo Cliente",
+      "SUBTITLE": "Completa la información del cliente",
+      "SECTIONS": {
+        "CLIENT_INFO": "Información del Cliente",
+        "REQUIRED_NOTE": "Completa todos los campos requeridos",
+        "ACTIONS": "Acciones",
+        "INFORMATION": "Información",
+        "RECENT_CLIENTS": "Clientes Recientes"
+      },
+      "FIELDS": {
+        "NAME": "Nombre del Cliente",
+        "NAME_PLACEHOLDER": "Ej: Hotel Mediterráneo",
+        "ADDRESS": "Dirección",
+        "ADDRESS_PLACEHOLDER": "Calle, número, ciudad",
+        "PHONE": "Teléfono",
+        "PHONE_PLACEHOLDER": "+34 963 123 456",
+        "EMAIL": "Correo Electrónico",
+        "EMAIL_PLACEHOLDER": "cliente@ejemplo.com",
+        "TYPE": "Tipo de Cliente",
+        "TYPE_SELECT": "Seleccionar tipo",
+        "DESCRIPTION": "Información Adicional",
+        "DESCRIPTION_PLACEHOLDER": "Notas, preferencias o información relevante del cliente..."
+      },
+      "TYPE_OPTIONS": {
+        "HOTEL": "Hotel",
+        "RESTAURANT": "Restaurante",
+        "RETAIL": "Comercio",
+        "CORPORATE": "Corporativo"
+      },
+      "BUTTONS": {
+        "CREATE": "Crear Cliente",
+        "CREATING": "Creando...",
+        "CANCEL": "Cancelar"
+      },
+      "INFO_NOTES": {
+        "REQUIRED_FIELDS": "Los campos marcados con * son obligatorios",
+        "DATA_PROTECTED": "Todos los datos están protegidos y encriptados",
+        "IMMEDIATE_LIST": "El cliente aparecerá inmediatamente en tu lista"
+      },
+      "RECENT_ITEMS": {
+        "FIRST": {
+          "NAME": "Hotel Palacio Real",
+          "TIME": "Hace 2 horas"
+        },
+        "SECOND": {
+          "NAME": "Restaurante Luna",
+          "TIME": "Ayer"
+        }
+      },
+      "MOBILE": {
+        "EMAIL_LABEL": "Correo",
+        "DESCRIPTION_PLACEHOLDER": "Información adicional sobre el cliente..."
+      }
+    },
+    "PROJECTS": {
+      "MOBILE": {
+        "TITLE": "Proyectos"
+      },
+      "HEADER": {
+        "TITLE": "Proyectos - {{clientName}}",
+        "SUBTITLE": "{{count}} proyectos • {{area}} m² totales"
+      },
+      "STATS": {
+        "TOTAL": "Total Proyectos",
+        "IN_PROGRESS": "En Curso",
+        "COMPLETED": "Terminados",
+        "TOTAL_AREA": "Total m²"
+      },
+      "STATUS": {
+        "NOT_STARTED": "No Iniciado",
+        "IN_PROGRESS": "En Curso",
+        "COMPLETED": "Terminado"
+      },
+      "CARD": {
+        "TOTAL_METERS": "Total metros pedidos",
+        "CHANGE_TO_IN_PROGRESS": "Cambiar a: En Curso",
+        "CHANGE_TO_COMPLETED": "Cambiar a: Terminado",
+        "VIEW_DETAILS": "Ver Detalles"
+      },
+      "ACTIONS": {
+        "NEW_PROJECT": "Nuevo Proyecto"
+      },
+      "DELETE_MODAL": {
+        "TITLE": "¿Eliminar proyecto?",
+        "MESSAGE": "Esta acción no se puede deshacer. ¿Estás seguro de que quieres eliminar este proyecto?",
+        "CANCEL": "Cancelar",
+        "CONFIRM": "Sí, Eliminar"
+      },
+      "EMPTY": {
+        "TITLE": "No hay proyectos registrados"
+      }
+    }
+  },
+  "SETTINGS": {
+    "NAV": {
+      "BACK_TO_CLIENTS": "Volver a Clientes",
+      "TITLE": "Configuracion",
+      "SUBTITLE": "Administra los permisos del equipo y la configuracion general",
+      "WORKERS": "Trabajadores",
+      "GENERAL": "General"
+    },
+    "HEADER": {
+      "WORKERS_TITLE": "Gestion de Trabajadores",
+      "WORKERS_SUBTITLE": "Administra los permisos y accesos del equipo",
+      "GENERAL_TITLE": "Configuracion General",
+      "GENERAL_SUBTITLE": "Ajusta las preferencias de la aplicacion"
+    },
+    "ACTIONS": {
+      "ADD_WORKER": "Agregar Trabajador",
+      "CREATE_WORKER": "Crear Trabajador",
+      "PERMISSIONS": "Permisos",
+      "EDIT_PERMISSIONS": "Editar Permisos",
+      "SAVE_CHANGES": "Guardar Cambios",
+      "SAVE_PERMISSIONS": "Guardar Permisos"
+    },
+    "WORKERS": {
+      "ASSIGNED_PERMISSIONS": "Permisos Asignados",
+      "ROLE_WORKER": "Trabajador",
+      "ROLE_SUPERVISOR": "Supervisor",
+      "ROLE_ADMINISTRATOR": "Administrador",
+      "DELETE_CONFIRM": "¿Seguro que deseas eliminar a {{name}}?"
+    },
+    "PERMISSIONS": {
+      "VIEW_CLIENTS": "Ver Clientes",
+      "VIEW_PROJECTS": "Ver Proyectos",
+      "VIEW_ORDERS": "Ver Pedidos",
+      "VIEW_REPORTS": "Ver Reportes",
+      "EDIT_CLIENTS": "Editar Clientes",
+      "EDIT_PROJECTS": "Editar Proyectos",
+      "EDIT_ORDERS": "Editar Pedidos",
+      "MANAGE_TEAM": "Gestionar Equipo",
+      "VIEW_ALL": "Ver Todo",
+      "EDIT_ALL": "Editar Todo"
+    },
+    "STATS": {
+      "TOTAL_WORKERS": "Total Trabajadores",
+      "ACTIVE": "Activos",
+      "SUPERVISORS": "Supervisores",
+      "PENDING": "Pendientes"
+    },
+    "GENERAL": {
+      "APP_LANGUAGE": "Idioma de la Aplicacion",
+      "LANGUAGE_ES": "Espanol",
+      "LANGUAGE_EN": "Ingles",
+      "TIMEZONE": "Zona Horaria",
+      "TIMEZONE_MADRID": "Europe/Madrid (GMT+1)",
+      "TIMEZONE_NEW_YORK": "America/New_York (GMT-5)",
+      "TIMEZONE_TOKYO": "Asia/Tokyo (GMT+9)",
+      "APP_INFORMATION": "Informacion de la Aplicacion",
+      "ABOUT_APP": "Acerca de la App",
+      "VERSION": "Version",
+      "LAST_UPDATE": "Ultima Actualizacion",
+      "DEVELOPED_FOR": "Desarrollado para",
+      "HVAC_INSTALLERS": "Instaladores HVAC",
+      "TOTAL_WORKERS": "Total trabajadores"
+    },
+    "MODALS": {
+      "NEW_WORKER": "Nuevo Trabajador",
+      "MANAGE_PERMISSIONS": "Gestionar Permisos",
+      "VIEW_PERMISSIONS": "Permisos de Visualizacion",
+      "EDIT_PERMISSIONS": "Permisos de Edicion",
+      "FULL_NAME": "Nombre Completo",
+      "FULL_NAME_PLACEHOLDER": "Ej: Ana Lopez",
+      "EMAIL": "Email",
+      "EMAIL_PLACEHOLDER": "ana.lopez@climatech.es",
+      "ROLE": "Rol"
+    }
+  },
+  "LAYOUT": {
+    "SIDEBAR": {
+      "PROFILE": "Perfil",
+      "ROLE_ADMIN": "Administrador",
+      "DASHBOARD": "Dashboard",
+      "MY_CLIENTS": "Mis Clientes",
+      "EDIT_PROFILE": "Editar Perfil",
+      "GO_PREMIUM": "Hazte Premium",
+      "UNLOCK_FEATURES": "Desbloquea todas las funciones",
+      "SETTINGS": "Ajustes",
+      "SUPPORT": "Soporte",
+      "LOGOUT": "Cerrar Sesión"
+    }
+  },
+  "COMMON": {
+    "AND": "y"
+  }
 }

@@ -55,8 +55,9 @@
     } @else {
       @for (client of clients(); track client.id) {
         <div
-          class="bg-white rounded-3xl p-5 border border-slate-100 relative group hover:shadow-lg transition-shadow"
+          class="bg-white rounded-3xl p-5 border border-slate-100 relative group hover:shadow-lg transition-shadow cursor-pointer"
           style="box-shadow: 0 10px 40px -10px rgba(14, 165, 233, 0.08)"
+          (click)="onView(client.id)"
         >
           <div class="flex justify-between items-start">
             <div class="flex gap-4">
@@ -102,7 +103,7 @@
             <!-- Delete Button -->
             <button
               type="button"
-              (click)="onDelete(client.id)"
+              (click)="$event.stopPropagation(); onDelete(client.id)"
               class="text-slate-300 hover:text-red-500 transition-colors p-2 -mr-2 -mt-2 active:scale-95"
             >
               <ion-icon name="trash-outline" class="text-lg"></ion-icon>

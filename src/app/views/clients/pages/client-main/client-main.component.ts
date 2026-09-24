@@ -50,4 +50,14 @@ export class ClientMainComponent implements OnInit {
   onAddClient(): void {
     void this.router.navigate(['/client/new']);
   }
+
+  /**
+   * Handles the view-details event emitted by a child component.
+   * Navigates to the selected client's projects page.
+   * @param {string} id - The unique identifier of the client to view.
+   * @returns {void}
+   */
+  onViewDetails(id: string): void {
+    void this.router.navigate(['/client', id, 'projects']);
+  }
 }

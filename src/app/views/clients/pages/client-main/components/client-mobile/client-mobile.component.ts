@@ -42,6 +42,9 @@ export class ClientMobileComponent {
   /** Emitted with the client id when the user requests deletion of a client. */
   readonly deleteClient = output<string>();
 
+  /** Emitted with the client id when the user requests to view client details. */
+  readonly viewDetails = output<string>();
+
   /**
    * Registers the Ionicons used in this component's template.
    */
@@ -56,6 +59,15 @@ export class ClientMobileComponent {
    */
   onDelete(id: string): void {
     this.deleteClient.emit(id);
+  }
+
+  /**
+   * Forwards the view-details action to the parent component by emitting the client id.
+   * @param {string} id - The unique identifier of the client whose details to view.
+   * @returns {void}
+   */
+  onView(id: string): void {
+    this.viewDetails.emit(id);
   }
 
   /**

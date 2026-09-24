@@ -75,4 +75,10 @@ Every major page view within the `views/` folder must follow this exact architec
    public createClient(payload: CreateClientDto): Observable<Client> {
      return this.clientsService.create(payload);
    }
+
+   ### 🎨 Button & Tab Styling Rules (STRICT)
    ```
+
+- **Standard Buttons:** Use native `<button type="button">` with static `rounded-xl` classes instead of `<ion-button>` unless Ionic native ripples are explicitly required.
+- **Dynamic Classes:** Use `[ngClass]="{ 'bg-sky-600 text-white shadow-sm': activeTab() === 'x', 'text-slate-600 hover:bg-slate-100': activeTab() !== 'x' }"` rather than multiple individual `[class.X]` directives.
+- **Ionic Exception:** If `<ion-button>` MUST be used, always apply `class="custom-rounded-btn"` and include `::part(native) { border-radius: 0.75rem !important; }` in the component's SCSS file.

@@ -1,100 +1,301 @@
 {
-    "AUTH": {
-        "LOGIN": {
-            "TITLE_WELCOME": "Welcome Back",
-            "TITLE_CREATE": "Create Account",
-            "SUBTITLE_WELCOME": "Smart solutions for your air systems",
-            "SUBTITLE_CREATE": "Join Ductifact for smarter airflow management",
-            "SIGN_IN_TAB": "Sign In",
-            "SIGN_UP_TAB": "Sign Up",
-            "EMAIL_LABEL": "Email Address",
-            "EMAIL_PLACEHOLDER": "name@company.com",
-            "PASSWORD_LABEL": "Password",
-            "PASSWORD_PLACEHOLDER": "Enter your password",
-            "REMEMBER_ME": "Remember me",
-            "FORGOT_PASSWORD": "Forgot Password?",
-            "SIGNING_IN": "SIGNING IN...",
-            "SIGN_IN_BTN": "SIGN IN",
-            "NEW_TO_DUCTIFACT": "New to Ductifact?",
-            "CREATE_ACCOUNT_LINK": "Create an account",
-            "DIVIDER_OR": "OR",
-            "DIVIDER_OR_EMAIL": "OR CONTINUE WITH EMAIL",
-            "SHOW_PANEL": "Show panel",
-            "HIDE_PANEL": "Hide panel"
-        },
-        "PASSWORD_RESET": {
-            "NEW_PASSWORD_LABEL": "New Password",
-            "RESET_PASSWORD": "Reset Password",
-            "SEND_RESET_PASSWORD_CODE": "Send Reset Password Code",
-            "EMAIL_REQUIRED": "Email is required",
-            "CODE_REQUIRED": "Verification code is required",
-            "CODE_INVALID": "Please enter a valid code",
-            "SUCCESS_COMPLETE": "Password reset successfully!",
-            "ERROR_VERIFY_FAILED": "Verification code is invalid or has expired",
-            "CODE_SENT_SUCCESS": "Verification code sent successfully! Please check your email.",
-            "ERROR_REQUEST_FAILED": "Failed to request password reset. Please try again later.",
-            "VERIFY_SUBTITLE_RESET_CODE": "We've sent a verification code to your email. Please enter the code below to complete the reset."
-        },
-        "SIGNUP": {
-            "FIRST_NAME_LABEL": "First Name",
-            "FIRST_NAME_PLACEHOLDER": "John",
-            "LAST_NAME_LABEL": "Last Name",
-            "LAST_NAME_PLACEHOLDER": "Doe",
-            "FULL_NAME_LABEL": "Full Name",
-            "FULL_NAME_PLACEHOLDER": "John Doe",
-            "PHONE_LABEL": "Phone Number",
-            "PHONE_PLACEHOLDER": "+1 (555) 000-0000",
-            "PASSWORD_CREATE_PLACEHOLDER": "Create a strong password",
-            "PASSWORD_HINT": "Use 9+ characters with letters, numbers & symbols",
-            "PASSWORD_REQUIREMENTS": "Password must be at least 8 characters and include an uppercase letter, a lowercase letter, a number, and a special character",
-            "CONFIRM_PASSWORD_LABEL": "Confirm Password",
-            "CONFIRM_PASSWORD_PLACEHOLDER": "Re-enter your password",
-            "FULL_NAME_REQUIRED": "Full name is required",
-            "EMAIL_INVALID": "Please enter a valid email address",
-            "TERMS_REQUIRED": "You must accept the terms and conditions",
-            "TERMS_AGREE": "I agree to the",
-            "CREATE_ACCOUNT_BTN": "CREATE ACCOUNT",
-            "ALREADY_HAVE_ACCOUNT": "Already have an account?",
-            "SIGN_IN_LINK": "Sign in",
-            "DIVIDER_OR_EMAIL": "OR SIGN UP WITH EMAIL",
-            "PASSWORDS_DONT_MATCH": "Passwords don't match",
-            "VERIFY_TITLE": "Verify your email",
-            "VERIFY_SUBTITLE": "We've sent a verification code to your email. Please enter the code below to complete your registration.",
-            "VERIFY_CODE_LABEL": "Verification Code",
-            "VERIFY_CODE_PLACEHOLDER": "Enter the verification code",
-            "VERIFY_BTN": "VERIFY",
-            "VERIFY_VERIFYING": "VERIFYING...",
-            "CLOSE_MODAL": "Close"
-        },
-        "SOCIAL": {
-            "GOOGLE": "Google",
-            "APPLE": "Apple",
-            "CONTINUE_GOOGLE": "Continue with Google",
-            "CONTINUE_APPLE": "Continue with Apple",
-            "SIGNUP_GOOGLE": "Sign up with Google",
-            "SIGNUP_APPLE": "Sign up with Apple"
-        },
-        "FEATURES": {
-            "HERO_TITLE": "Smart Air Duct Management Platform",
-            "HERO_SUBTITLE": "Transform your HVAC operations with AI-powered analytics, real-time monitoring, and advanced optimization tools.",
-            "ANALYSIS_TITLE": "Advanced Duct Analysis",
-            "ANALYSIS_DESC": "Optimize airflow with proprietary AI algorithms designed for maximum efficiency and energy savings.",
-            "ANALYSIS_DESC_SHORT": "Optimize airflow with our proprietary AI algorithms designed for efficiency.",
-            "MONITORING_TITLE": "Real-time Monitoring",
-            "MONITORING_DESC": "Track pressure, temperature and flow metrics instantly from anywhere.",
-            "SECURITY_TITLE": "Enterprise Security",
-            "SECURITY_DESC": "Bank-level encryption and security protocols to protect your sensitive data.",
-            "COLLABORATION_TITLE": "Team Collaboration",
-            "COLLABORATION_DESC": "Seamless teamwork tools for coordinating across departments and locations."
-        },
-        "FOOTER": {
-            "COPYRIGHT": "© 2024 Ductifact Inc.",
-            "ALL_RIGHTS_RESERVED": "© 2024 Ductifact Inc. All rights reserved.",
-            "PRIVACY_POLICY": "Privacy Policy",
-            "TERMS_OF_SERVICE": "Terms of Service"
-        }
+  "AUTH": {
+    "LOGIN": {
+      "TITLE_WELCOME": "Welcome Back",
+      "TITLE_CREATE": "Create Account",
+      "SUBTITLE_WELCOME": "Smart solutions for your air systems",
+      "SUBTITLE_CREATE": "Join Ductifact for smarter airflow management",
+      "SIGN_IN_TAB": "Sign In",
+      "SIGN_UP_TAB": "Sign Up",
+      "EMAIL_LABEL": "Email Address",
+      "EMAIL_PLACEHOLDER": "name@company.com",
+      "PASSWORD_LABEL": "Password",
+      "PASSWORD_PLACEHOLDER": "Enter your password",
+      "REMEMBER_ME": "Remember me",
+      "FORGOT_PASSWORD": "Forgot Password?",
+      "SIGNING_IN": "SIGNING IN...",
+      "SIGN_IN_BTN": "SIGN IN",
+      "NEW_TO_DUCTIFACT": "New to Ductifact?",
+      "CREATE_ACCOUNT_LINK": "Create an account",
+      "DIVIDER_OR": "OR",
+      "DIVIDER_OR_EMAIL": "OR CONTINUE WITH EMAIL",
+      "SHOW_PANEL": "Show panel",
+      "HIDE_PANEL": "Hide panel",
+      "INVALID_CREDENTIALS": "Invalid email or password. Please try again."
     },
-    "COMMON": {
-        "AND": "and"
+    "PASSWORD_RESET": {
+      "NEW_PASSWORD_LABEL": "New Password",
+      "RESET_PASSWORD": "Reset Password",
+      "SEND_RESET_PASSWORD_CODE": "Send Reset Password Code",
+      "EMAIL_REQUIRED": "Email is required",
+      "CODE_REQUIRED": "Verification code is required",
+      "CODE_INVALID": "Please enter a valid code",
+      "SUCCESS_COMPLETE": "Password reset successfully!",
+      "ERROR_VERIFY_FAILED": "Verification code is invalid or has expired",
+      "CODE_SENT_SUCCESS": "Verification code sent successfully! Please check your email.",
+      "ERROR_REQUEST_FAILED": "Failed to request password reset. Please try again later.",
+      "VERIFY_SUBTITLE_RESET_CODE": "We've sent a verification code to your email. Please enter the code below to complete the reset."
+    },
+    "SIGNUP": {
+      "FIRST_NAME_LABEL": "First Name",
+      "FIRST_NAME_PLACEHOLDER": "John",
+      "LAST_NAME_LABEL": "Last Name",
+      "LAST_NAME_PLACEHOLDER": "Doe",
+      "FULL_NAME_LABEL": "Full Name",
+      "FULL_NAME_PLACEHOLDER": "John Doe",
+      "PHONE_LABEL": "Phone Number",
+      "PHONE_PLACEHOLDER": "+1 (555) 000-0000",
+      "PASSWORD_CREATE_PLACEHOLDER": "Create a strong password",
+      "PASSWORD_HINT": "Use 9+ characters with letters, numbers & symbols",
+      "PASSWORD_REQUIREMENTS": "Password must be at least 8 characters and include an uppercase letter, a lowercase letter, a number, and a special character",
+      "CONFIRM_PASSWORD_LABEL": "Confirm Password",
+      "CONFIRM_PASSWORD_PLACEHOLDER": "Re-enter your password",
+      "FULL_NAME_REQUIRED": "Full name is required",
+      "EMAIL_INVALID": "Please enter a valid email address",
+      "TERMS_REQUIRED": "You must accept the terms and conditions",
+      "TERMS_AGREE": "I agree to the",
+      "CREATE_ACCOUNT_BTN": "CREATE ACCOUNT",
+      "ALREADY_HAVE_ACCOUNT": "Already have an account?",
+      "SIGN_IN_LINK": "Sign in",
+      "DIVIDER_OR_EMAIL": "OR SIGN UP WITH EMAIL",
+      "PASSWORDS_DONT_MATCH": "Passwords don't match",
+      "VERIFY_TITLE": "Verify your email",
+      "VERIFY_SUBTITLE": "We've sent a verification code to your email. Please enter the code below to complete your registration.",
+      "VERIFY_CODE_LABEL": "Verification Code",
+      "VERIFY_CODE_PLACEHOLDER": "Enter the verification code",
+      "VERIFY_BTN": "VERIFY",
+      "VERIFY_VERIFYING": "VERIFYING...",
+      "CLOSE_MODAL": "Close"
+    },
+    "SOCIAL": {
+      "GOOGLE": "Google",
+      "APPLE": "Apple",
+      "CONTINUE_GOOGLE": "Continue with Google",
+      "CONTINUE_APPLE": "Continue with Apple",
+      "SIGNUP_GOOGLE": "Sign up with Google",
+      "SIGNUP_APPLE": "Sign up with Apple"
+    },
+    "FEATURES": {
+      "HERO_TITLE": "Smart Air Duct Management Platform",
+      "HERO_SUBTITLE": "Transform your HVAC operations with AI-powered analytics, real-time monitoring, and advanced optimization tools.",
+      "ANALYSIS_TITLE": "Advanced Duct Analysis",
+      "ANALYSIS_DESC": "Optimize airflow with proprietary AI algorithms designed for maximum efficiency and energy savings.",
+      "ANALYSIS_DESC_SHORT": "Optimize airflow with our proprietary AI algorithms designed for efficiency.",
+      "MONITORING_TITLE": "Real-time Monitoring",
+      "MONITORING_DESC": "Track pressure, temperature and flow metrics instantly from anywhere.",
+      "SECURITY_TITLE": "Enterprise Security",
+      "SECURITY_DESC": "Bank-level encryption and security protocols to protect your sensitive data.",
+      "COLLABORATION_TITLE": "Team Collaboration",
+      "COLLABORATION_DESC": "Seamless teamwork tools for coordinating across departments and locations."
+    },
+    "FOOTER": {
+      "COPYRIGHT": "© 2024 Ductifact Inc.",
+      "ALL_RIGHTS_RESERVED": "© 2024 Ductifact Inc. All rights reserved.",
+      "PRIVACY_POLICY": "Privacy Policy",
+      "TERMS_OF_SERVICE": "Terms of Service"
     }
+  },
+  "CLIENTS": {
+    "DASHBOARD": {
+      "TITLE": "My Clients",
+      "REGISTERED_COUNT": "{{count}} registered clients",
+      "NEW_CLIENT": "New Client",
+      "ROLE_ADMIN": "Administrator",
+      "STATS": {
+        "TOTAL": "Total",
+        "ACTIVE": "Active",
+        "PREMIUM": "Premium"
+      },
+      "EMPTY": {
+        "TITLE": "No clients registered",
+        "WEB_HINT": "Click \"New Client\" to add one",
+        "MOBILE_HINT": "Tap \"New Client\" to add one"
+      }
+    },
+    "NEW_CLIENT": {
+      "TITLE": "New Client",
+      "SUBTITLE": "Complete the client information",
+      "SECTIONS": {
+        "CLIENT_INFO": "Client Information",
+        "REQUIRED_NOTE": "Complete all required fields",
+        "ACTIONS": "Actions",
+        "INFORMATION": "Information",
+        "RECENT_CLIENTS": "Recent Clients"
+      },
+      "FIELDS": {
+        "NAME": "Client Name",
+        "NAME_PLACEHOLDER": "Ex: Mediterranean Hotel",
+        "ADDRESS": "Address",
+        "ADDRESS_PLACEHOLDER": "Street, number, city",
+        "PHONE": "Phone",
+        "PHONE_PLACEHOLDER": "+34 963 123 456",
+        "EMAIL": "Email Address",
+        "EMAIL_PLACEHOLDER": "client@example.com",
+        "TYPE": "Client Type",
+        "TYPE_SELECT": "Select type",
+        "DESCRIPTION": "Additional Information",
+        "DESCRIPTION_PLACEHOLDER": "Notes, preferences or relevant client information..."
+      },
+      "TYPE_OPTIONS": {
+        "HOTEL": "Hotel",
+        "RESTAURANT": "Restaurant",
+        "RETAIL": "Retail",
+        "CORPORATE": "Corporate"
+      },
+      "BUTTONS": {
+        "CREATE": "Create Client",
+        "CREATING": "Creating...",
+        "CANCEL": "Cancel"
+      },
+      "INFO_NOTES": {
+        "REQUIRED_FIELDS": "Fields marked with * are required",
+        "DATA_PROTECTED": "All data is protected and encrypted",
+        "IMMEDIATE_LIST": "The client will appear immediately in your list"
+      },
+      "RECENT_ITEMS": {
+        "FIRST": {
+          "NAME": "Royal Palace Hotel",
+          "TIME": "2 hours ago"
+        },
+        "SECOND": {
+          "NAME": "Luna Restaurant",
+          "TIME": "Yesterday"
+        }
+      },
+      "MOBILE": {
+        "EMAIL_LABEL": "Email",
+        "DESCRIPTION_PLACEHOLDER": "Additional information about the client..."
+      }
+    },
+    "PROJECTS": {
+      "MOBILE": {
+        "TITLE": "Projects"
+      },
+      "HEADER": {
+        "TITLE": "Projects - {{clientName}}",
+        "SUBTITLE": "{{count}} projects • {{area}} m² total"
+      },
+      "STATS": {
+        "TOTAL": "Total Projects",
+        "IN_PROGRESS": "In Progress",
+        "COMPLETED": "Completed",
+        "TOTAL_AREA": "Total m²"
+      },
+      "STATUS": {
+        "NOT_STARTED": "Not Started",
+        "IN_PROGRESS": "In Progress",
+        "COMPLETED": "Completed"
+      },
+      "CARD": {
+        "TOTAL_METERS": "Total meters ordered",
+        "CHANGE_TO_IN_PROGRESS": "Change to: In Progress",
+        "CHANGE_TO_COMPLETED": "Change to: Completed",
+        "VIEW_DETAILS": "View Details"
+      },
+      "ACTIONS": {
+        "NEW_PROJECT": "New Project"
+      },
+      "DELETE_MODAL": {
+        "TITLE": "Delete project?",
+        "MESSAGE": "This action cannot be undone. Are you sure you want to delete this project?",
+        "CANCEL": "Cancel",
+        "CONFIRM": "Yes, Delete"
+      },
+      "EMPTY": {
+        "TITLE": "No projects registered"
+      }
+    }
+  },
+  "SETTINGS": {
+    "NAV": {
+      "BACK_TO_CLIENTS": "Back to Clients",
+      "TITLE": "Settings",
+      "SUBTITLE": "Manage team permissions and general settings",
+      "WORKERS": "Workers",
+      "GENERAL": "General"
+    },
+    "HEADER": {
+      "WORKERS_TITLE": "Worker Management",
+      "WORKERS_SUBTITLE": "Manage team permissions and access",
+      "GENERAL_TITLE": "General Settings",
+      "GENERAL_SUBTITLE": "Adjust application preferences"
+    },
+    "ACTIONS": {
+      "ADD_WORKER": "Add Worker",
+      "CREATE_WORKER": "Create Worker",
+      "PERMISSIONS": "Permissions",
+      "EDIT_PERMISSIONS": "Edit Permissions",
+      "SAVE_CHANGES": "Save Changes",
+      "SAVE_PERMISSIONS": "Save Permissions"
+    },
+    "WORKERS": {
+      "ASSIGNED_PERMISSIONS": "Assigned Permissions",
+      "ROLE_WORKER": "Worker",
+      "ROLE_SUPERVISOR": "Supervisor",
+      "ROLE_ADMINISTRATOR": "Administrator",
+      "DELETE_CONFIRM": "Are you sure you want to delete {{name}}?"
+    },
+    "PERMISSIONS": {
+      "VIEW_CLIENTS": "View Clients",
+      "VIEW_PROJECTS": "View Projects",
+      "VIEW_ORDERS": "View Orders",
+      "VIEW_REPORTS": "View Reports",
+      "EDIT_CLIENTS": "Edit Clients",
+      "EDIT_PROJECTS": "Edit Projects",
+      "EDIT_ORDERS": "Edit Orders",
+      "MANAGE_TEAM": "Manage Team",
+      "VIEW_ALL": "View All",
+      "EDIT_ALL": "Edit All"
+    },
+    "STATS": {
+      "TOTAL_WORKERS": "Total Workers",
+      "ACTIVE": "Active",
+      "SUPERVISORS": "Supervisors",
+      "PENDING": "Pending"
+    },
+    "GENERAL": {
+      "APP_LANGUAGE": "Application Language",
+      "LANGUAGE_ES": "Spanish",
+      "LANGUAGE_EN": "English",
+      "TIMEZONE": "Time Zone",
+      "TIMEZONE_MADRID": "Europe/Madrid (GMT+1)",
+      "TIMEZONE_NEW_YORK": "America/New_York (GMT-5)",
+      "TIMEZONE_TOKYO": "Asia/Tokyo (GMT+9)",
+      "APP_INFORMATION": "Application Information",
+      "ABOUT_APP": "About the App",
+      "VERSION": "Version",
+      "LAST_UPDATE": "Last Update",
+      "DEVELOPED_FOR": "Built for",
+      "HVAC_INSTALLERS": "HVAC Installers",
+      "TOTAL_WORKERS": "Total workers"
+    },
+    "MODALS": {
+      "NEW_WORKER": "New Worker",
+      "MANAGE_PERMISSIONS": "Manage Permissions",
+      "VIEW_PERMISSIONS": "Viewing Permissions",
+      "EDIT_PERMISSIONS": "Editing Permissions",
+      "FULL_NAME": "Full Name",
+      "FULL_NAME_PLACEHOLDER": "Ex: Ana Lopez",
+      "EMAIL": "Email",
+      "EMAIL_PLACEHOLDER": "ana.lopez@climatech.es",
+      "ROLE": "Role"
+    }
+  },
+  "LAYOUT": {
+    "SIDEBAR": {
+      "PROFILE": "Profile",
+      "ROLE_ADMIN": "Administrator",
+      "DASHBOARD": "Dashboard",
+      "MY_CLIENTS": "My Clients",
+      "EDIT_PROFILE": "Edit Profile",
+      "GO_PREMIUM": "Go Premium",
+      "UNLOCK_FEATURES": "Unlock all features",
+      "SETTINGS": "Settings",
+      "SUPPORT": "Support",
+      "LOGOUT": "Log Out"
+    }
+  },
+  "COMMON": {
+    "AND": "and"
+  }
 }

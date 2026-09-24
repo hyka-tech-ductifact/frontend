@@ -17,6 +17,18 @@ export const clientRoutes: Routes = [
       () => import('./pages/new-client/new-client.component').then((m) => m.NewClientComponent),
   },
   {
+    path: ':clientId/projects',
+    loadComponent:
+      /**
+       * Lazily loads ClientProjectsComponent for the client projects page.
+       * @returns {Promise<unknown>} Promise resolving to the ClientProjectsComponent class.
+       */
+      () =>
+        import('./pages/client-projects/client-projects.component').then(
+          (m) => m.ClientProjectsComponent,
+        ),
+  },
+  {
     path: '',
     loadComponent:
       /**

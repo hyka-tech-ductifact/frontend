@@ -50,7 +50,7 @@ export class SettingsWebComponent {
   readonly workerDelete = output<WorkerDeleteEvent>();
 
   /** Signal storing the active tab state. */
-  readonly activeTab = signal<SettingsTab>('workers');
+  readonly activeTab = signal<SettingsTab>('general');
 
   /** Signal controlling visibility of the add-worker modal. */
   readonly isAddWorkerModalOpen = signal(false);
