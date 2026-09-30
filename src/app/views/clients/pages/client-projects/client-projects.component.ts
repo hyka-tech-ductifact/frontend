@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import type { Client } from '../../../../core/models/client.model';
 import { DeviceService } from '../../../../core/services/device.service';
 import { ClientProjectsMobileComponent } from './pages/client-projects-mobile/client-projects-mobile.component';
@@ -19,6 +19,7 @@ import { ClientProjectsService } from './services/client-projects.service';
 })
 export class ClientProjectsComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   /** Service used to determine whether the app is running on a mobile device. */
   protected readonly deviceService = inject(DeviceService);
@@ -45,11 +46,11 @@ export class ClientProjectsComponent implements OnInit {
 
   /**
    * Handles the add-project action emitted by a child component.
-   * Placeholder hook for the future "new project" flow.
+   * Navigates to the new-project form for the current client.
    * @returns {void}
    */
   protected onAddProject(): void {
-    // Intended to open a new-project modal or navigation form.
+    void this.router.navigate(['/client', this.clientId, 'projects', 'new']);
   }
 
   /**

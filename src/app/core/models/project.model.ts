@@ -19,3 +19,12 @@ export interface Project {
   totalSquareMeters: number;
   createdAt?: string;
 }
+
+/** Payload accepted by the "create project" endpoint. */
+export interface CreateProjectDto {
+  name: string;
+  address?: string;
+  managerName?: string;
+  phone?: string;
+  description?: string;
+}

@@ -204,6 +204,35 @@
       "EMPTY": {
         "TITLE": "No projects registered"
       }
+    },
+    "NEW_PROJECT": {
+      "TITLE": "New Project",
+      "SUBTITLE": "Define the project details",
+      "FIELDS": {
+        "NAME": "Project Name",
+        "NAME_PLACEHOLDER": "Ex: Climate Control Floors 1 and 2",
+        "ADDRESS": "Address",
+        "ADDRESS_PLACEHOLDER": "Ex: Main Street 123",
+        "MANAGER_NAME": "Manager",
+        "MANAGER_NAME_PLACEHOLDER": "Manager's name",
+        "PHONE": "Phone",
+        "PHONE_PLACEHOLDER": "+34 600 000 000",
+        "DESCRIPTION": "Project Description",
+        "DESCRIPTION_PLACEHOLDER": "Describe the project's goals and scope..."
+      },
+      "BUTTONS": {
+        "CREATE": "Create Project",
+        "CREATING": "Creating...",
+        "CANCEL": "Cancel"
+      },
+      "SIDEBAR": {
+        "CLIENT_LABEL": "Client",
+        "TIP": "Complete all fields marked with * to create the project.",
+        "REQUIRED_FIELDS": "Required Fields:"
+      },
+      "ERRORS": {
+        "CREATE_FAILED": "Could not create the project. Please try again."
+      }
     }
   },
   "SETTINGS": {

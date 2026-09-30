@@ -1,9 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
-import { Observable, catchError, of, tap } from 'rxjs';
+import { Observable, catchError, map, of, tap } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
 import type { Client } from '../../../../../core/models/client.model';
-import type { Project, ProjectStatus } from '../../../../../core/models/project.model';
+import type {
+  CreateProjectDto,
+  Project,
+  ProjectStatus,
+} from '../../../../../core/models/project.model';
+
+/** Shape of a single project as returned by the backend API. */
+interface ProjectApiResponse {
+  id: string;
+  name: string;
+  address: string;
+  manager_name: string;
+  phone: string;
+  description: string;
+  client_id: string;
+}
+
+/** Shape of the paginated project list response returned by the backend API. */
+interface ListProjectApiResponse {
+  data: ProjectApiResponse[];
+}
 
 /** Mock client used as a fallback when the API is unavailable during development. */
 const MOCK_CLIENT: Client = {
@@ -54,6 +74,47 @@ const NEXT_STATUS: Record<ProjectStatus, ProjectStatus> = {
 };
 
 /**
+ * Maps a backend project record to the frontend `Project` model.
+ * The backend contract does not yet expose `status`/`totalSquareMeters`, so
+ * newly resolved projects default to a fresh, not-started state.
+ * @param {ProjectApiResponse} response - Raw project record returned by the API.
+ * @returns {Project} The mapped frontend project.
+ */
+function mapProjectResponse(response: ProjectApiResponse): Project {
+  return {
+    id: response.id,
+    clientId: response.client_id,
+    name: response.name,
+    description: response.description || undefined,
+    address: response.address || undefined,
+    managerName: response.manager_name || undefined,
+    phone: response.phone || undefined,
+    status: 'not_started',
+    totalSquareMeters: 0,
+  };
+}
+
+/**
+ * Ensures the mock demo projects are present for the mock demo client,
+ * appending any that are missing from the resolved list so the design
+ * mockup cards stay visible alongside real, API-created projects.
+ * @param {Project[]} projects - Projects resolved from the API.
+ * @param {string} clientId - Identifier of the client the projects belong to.
+ * @returns {Project[]} Projects guaranteed to include the mock demo projects.
+ */
+function ensureMockProjectsPresent(projects: Project[], clientId: string): Project[] {
+  if (clientId !== MOCK_CLIENT.id) return projects;
+
+  const existingIds = new Set(projects.map((project) => project.id));
+  const missingMocks = MOCK_PROJECTS.filter((mock) => !existingIds.has(mock.id)).map((mock) => ({
+    ...mock,
+    clientId,
+  }));
+
+  return [...projects, ...missingMocks];
+}
+
+/**
  * API service for the "Client Projects" feature.
  * Resolves the owning client and lists its projects, falling back to mock
  * data so the feature renders cleanly while the backend contract evolves.
@@ -84,6 +145,7 @@ export class ClientProjectsService {
 
   /**
    * Loads the projects owned by a client and syncs the `projects` signal.
+   * Falls back to mock projects for the demo client when the request fails.
    * @param {string} clientId - Unique client identifier.
    * @returns {Observable<Project[]>} Stream emitting the client's projects.
    */
@@ -91,12 +153,48 @@ export class ClientProjectsService {
     this.isLoading.set(true);
     this.error.set(null);
 
-    return of(MOCK_PROJECTS.map((project) => ({ ...project, clientId }))).pipe(
-      tap((projects) => {
-        this.projects.set(projects);
-        this.isLoading.set(false);
-      }),
-    );
+    return this.http
+      .get<ListProjectApiResponse>(`${environment.apiUrl}/clients/${clientId}/projects`)
+      .pipe(
+        map((response) => response.data.map((project) => mapProjectResponse(project))),
+        map((projects) => ensureMockProjectsPresent(projects, clientId)),
+        tap((projects) => {
+          this.projects.set(projects);
+          this.isLoading.set(false);
+        }),
+        catchError(() => {
+          const fallbackProjects = MOCK_PROJECTS.map((project) => ({ ...project, clientId }));
+          this.projects.set(fallbackProjects);
+          this.isLoading.set(false);
+          return of(fallbackProjects);
+        }),
+      );
+  }
+
+  /**
+   * Creates a project for a client through the API and appends it to the
+   * local project list on success.
+   * @param {string} clientId - Unique client identifier.
+   * @param {CreateProjectDto} payload - The project payload to submit.
+   * @returns {Observable<Project>} Stream emitting the created project.
+   */
+  createProject(clientId: string, payload: CreateProjectDto): Observable<Project> {
+    const body = {
+      name: payload.name,
+      address: payload.address ?? '',
+      manager_name: payload.managerName ?? '',
+      phone: payload.phone ?? '',
+      description: payload.description ?? '',
+    };
+
+    return this.http
+      .post<ProjectApiResponse>(`${environment.apiUrl}/clients/${clientId}/projects`, body)
+      .pipe(
+        map((response) => mapProjectResponse(response)),
+        tap((project) => {
+          this.projects.update((projects) => [...projects, project]);
+        }),
+      );
   }
 
   /**

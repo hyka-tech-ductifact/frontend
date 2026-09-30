@@ -1,0 +1,194 @@
+<header
+  class="px-8 py-6 text-white"
+  style="background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #38bdf8 100%)"
+>
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="w-10 h-10 rounded-xl bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors backdrop-blur-sm border border-white/30"
+      >
+        <i class="fa-solid fa-arrow-left text-white"></i>
+      </button>
+      <div>
+        <h1 class="text-3xl font-bold tracking-tight">
+          {{ 'CLIENTS.NEW_PROJECT.TITLE' | translate }}
+        </h1>
+        <p class="text-sky-100 mt-1 opacity-90">
+          {{ 'CLIENTS.NEW_PROJECT.SUBTITLE' | translate }}
+        </p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="flex-1 p-8 overflow-y-auto bg-bgLight">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+    <!-- Main Form Section -->
+    <div class="lg:col-span-2">
+      <div class="bg-white rounded-2xl shadow-soft border border-slate-100 p-8">
+        @if (errorMessage()) {
+          <div
+            class="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+          >
+            {{ errorMessage() | translate }}
+          </div>
+        }
+        <form [formGroup]="projectForm()" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label for="project-name" class="block text-slate-700 font-semibold text-sm ml-1">
+                {{ 'CLIENTS.NEW_PROJECT.FIELDS.NAME' | translate }}
+                <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="project-name"
+                formControlName="name"
+                [placeholder]="'CLIENTS.NEW_PROJECT.FIELDS.NAME_PLACEHOLDER' | translate"
+                class="w-full bg-sky-50/50 border border-sky-100 text-slate-800 text-sm rounded-xl focus:bg-white focus:border-sky-400 focus:ring-2 focus:ring-sky-100 block p-4 outline-none transition-all duration-200 placeholder-slate-400 font-medium"
+              />
+            </div>
+
+            <div class="space-y-2">
+              <label for="project-address" class="block text-slate-700 font-semibold text-sm ml-1">
+                {{ 'CLIENTS.NEW_PROJECT.FIELDS.ADDRESS' | translate }}
+                <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="project-address"
+                formControlName="address"
+                [placeholder]="'CLIENTS.NEW_PROJECT.FIELDS.ADDRESS_PLACEHOLDER' | translate"
+                class="w-full bg-sky-50/50 border border-sky-100 text-slate-800 text-sm rounded-xl focus:bg-white focus:border-sky-400 focus:ring-2 focus:ring-sky-100 block p-4 outline-none transition-all duration-200 placeholder-slate-400 font-medium"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label for="project-manager" class="block text-slate-700 font-semibold text-sm ml-1">
+                {{ 'CLIENTS.NEW_PROJECT.FIELDS.MANAGER_NAME' | translate }}
+                <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="project-manager"
+                formControlName="managerName"
+                [placeholder]="'CLIENTS.NEW_PROJECT.FIELDS.MANAGER_NAME_PLACEHOLDER' | translate"
+                class="w-full bg-sky-50/50 border border-sky-100 text-slate-800 text-sm rounded-xl focus:bg-white focus:border-sky-400 focus:ring-2 focus:ring-sky-100 block p-4 outline-none transition-all duration-200 placeholder-slate-400 font-medium"
+              />
+            </div>
+
+            <div class="space-y-2">
+              <label for="project-phone" class="block text-slate-700 font-semibold text-sm ml-1">
+                {{ 'CLIENTS.NEW_PROJECT.FIELDS.PHONE' | translate }}
+                <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="tel"
+                id="project-phone"
+                formControlName="phone"
+                [placeholder]="'CLIENTS.NEW_PROJECT.FIELDS.PHONE_PLACEHOLDER' | translate"
+                class="w-full bg-sky-50/50 border border-sky-100 text-slate-800 text-sm rounded-xl focus:bg-white focus:border-sky-400 focus:ring-2 focus:ring-sky-100 block p-4 outline-none transition-all duration-200 placeholder-slate-400 font-medium"
+              />
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <label
+              for="project-description"
+              class="block text-slate-700 font-semibold text-sm ml-1"
+            >
+              {{ 'CLIENTS.NEW_PROJECT.FIELDS.DESCRIPTION' | translate }}
+            </label>
+            <textarea
+              id="project-description"
+              formControlName="description"
+              rows="4"
+              [placeholder]="'CLIENTS.NEW_PROJECT.FIELDS.DESCRIPTION_PLACEHOLDER' | translate"
+              class="w-full bg-sky-50/50 border border-sky-100 text-slate-800 text-sm rounded-xl focus:bg-white focus:border-sky-400 focus:ring-2 focus:ring-sky-100 block p-4 outline-none transition-all duration-200 placeholder-slate-400 font-medium resize-none"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div class="flex gap-4 mt-6">
+        <button
+          type="button"
+          (click)="onSubmit()"
+          [disabled]="isSubmitting()"
+          class="flex-1 bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 active:from-sky-800 active:to-blue-800 text-white font-semibold rounded-xl py-4 px-6 shadow-float flex items-center justify-center gap-3 active:scale-[0.98] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          <i class="fa-regular fa-floppy-disk text-lg"></i>
+          <span>{{
+            (isSubmitting()
+              ? 'CLIENTS.NEW_PROJECT.BUTTONS.CREATING'
+              : 'CLIENTS.NEW_PROJECT.BUTTONS.CREATE'
+            ) | translate
+          }}</span>
+        </button>
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="px-8 bg-white text-slate-700 font-semibold rounded-xl py-4 border border-sky-100 hover:bg-sky-50 active:scale-[0.98] transition-all"
+        >
+          {{ 'CLIENTS.NEW_PROJECT.BUTTONS.CANCEL' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Client Info Sidebar -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-2xl shadow-card p-6 sticky top-8 border border-slate-100">
+        <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-info-circle text-sky-600"></i>
+          {{ 'CLIENTS.NEW_PROJECT.SIDEBAR.CLIENT_LABEL' | translate }}: {{ client()?.name }}
+        </h3>
+
+        @if (client()?.phone) {
+          <div class="bg-sky-50 rounded-xl p-4 mb-4 border border-sky-100">
+            <div class="flex items-center text-slate-700 text-sm font-medium">
+              <i class="fa-solid fa-phone w-5 text-center mr-2 text-sky-600"></i>
+              <span>{{ client()?.phone }}</span>
+            </div>
+          </div>
+        }
+
+        <div class="space-y-4 text-sm">
+          <div class="bg-sky-50 rounded-xl p-4 border border-sky-100">
+            <p class="text-slate-600 leading-relaxed">
+              <i class="fa-solid fa-lightbulb text-sky-600 mr-2"></i>
+              {{ 'CLIENTS.NEW_PROJECT.SIDEBAR.TIP' | translate }}
+            </p>
+          </div>
+
+          <div class="border-t border-sky-100 pt-4">
+            <h4 class="font-semibold text-slate-700 mb-3">
+              {{ 'CLIENTS.NEW_PROJECT.SIDEBAR.REQUIRED_FIELDS' | translate }}
+            </h4>
+            <ul class="space-y-2 text-slate-600">
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-sky-600 mt-1"></i>
+                <span>{{ 'CLIENTS.NEW_PROJECT.FIELDS.NAME' | translate }}</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-sky-600 mt-1"></i>
+                <span>{{ 'CLIENTS.NEW_PROJECT.FIELDS.ADDRESS' | translate }}</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-sky-600 mt-1"></i>
+                <span>{{ 'CLIENTS.NEW_PROJECT.FIELDS.MANAGER_NAME' | translate }}</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-sky-600 mt-1"></i>
+                <span>{{ 'CLIENTS.NEW_PROJECT.FIELDS.PHONE' | translate }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

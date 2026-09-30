@@ -1,0 +1,58 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.new-project-mobile-shell {
+  position: relative;
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+  flex-direction: column;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+ion-header,
+ion-toolbar {
+  overflow: visible;
+}
+
+.new-project-header-toolbar {
+  --background: transparent;
+  --border-width: 0;
+  --min-height: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.new-project-content {
+  --background: #f8fafc;
+  flex: 1;
+  overflow: hidden;
+}
+
+.new-project-content::part(scroll) {
+  padding-bottom: 8rem;
+}
+
+.new-project-scroll {
+  min-height: 100%;
+}
+
+.new-project-footer-shell {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.new-project-footer {
+  width: 100%;
+  overflow: visible;
+  flex-shrink: 0;
+}
