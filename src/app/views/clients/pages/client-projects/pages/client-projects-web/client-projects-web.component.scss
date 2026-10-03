@@ -1,3 +1,123 @@
 :host {
   display: contents;
 }
+
+.client-add-button {
+  /* Flex alignment for perfectly centered content */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Clear Ionic button constraints */
+  border-radius: 1rem; // matches rounded-2xl
+  width: 160px;
+  min-width: 160px;
+  height: 48px;
+  min-height: 48px;
+  box-sizing: border-box;
+  /* Prevent global CSS resets from overriding border radius */
+  overflow: hidden;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.btn-actions {
+  /* Layout & Sizing */
+  width: 3.5rem;
+  /* Tailwind w-14 */
+  flex-shrink: 0;
+  /* Tailwind flex-shrink-0 */
+  align-self: stretch;
+  /* Stretches height to match adjacent button */
+  /* Flex Centering */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Shape & Borders */
+  border-radius: 0.75rem !important;
+  /* Forces rounded corners */
+  border: 1px solid #ffe4e6;
+  /* Tailwind border-rose-100 */
+  /* Colors */
+  background-color: #fff1f2;
+  /* Tailwind bg-rose-50 */
+  color: #f43f5e;
+  /* Tailwind text-rose-500 */
+  /* Animations */
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  /* Hover State */
+  &:hover {
+    background-color: #ffe4e6;
+    /* Tailwind hover:bg-rose-100 */
+  }
+  /* Active/Click State */
+  &:active {
+    transform: scale(0.95);
+    /* Tailwind active:scale-95 */
+  }
+  height: 3.5rem;
+}
+
+.btn-popup {
+  /* Layout & Flex */
+  flex: 1;
+  /* Typography */
+  color: #ffffff;
+  /* text-white */
+  font-weight: 700;
+  /* font-bold */
+  /* Spacing */
+  padding-top: 0.75rem;
+  /* py-3 (top) */
+  padding-bottom: 0.75rem;
+  /* py-3 (bottom) */
+  /* Shape & Borders */
+  border-radius: 0.75rem !important;
+  /* Forces rounded corners */
+  border: none;
+  /* Colors */
+  background-color: #e11d48;
+  /* Tailwind rose-600 */
+  /* Animations */
+  transition:
+    background-color 0.15s ease-in-out,
+    color 0.15s ease-in-out;
+  cursor: pointer;
+  /* Hover State */
+  &:hover {
+    background-color: #be123c;
+    /* Tailwind rose-700 */
+  }
+}
+
+.btn-cancel {
+  /* Layout & Flex */
+  flex: 1;
+  /* Typography */
+  color: #334155;
+  /* Tailwind slate-700 */
+  font-weight: 700;
+  /* font-bold */
+  /* Spacing */
+  padding-top: 0.75rem;
+  /* py-3 (top) */
+  padding-bottom: 0.75rem;
+  /* py-3 (bottom) */
+  /* Shape & Borders */
+  border-radius: 0.75rem !important;
+  /* Forces rounded corners */
+  border: none;
+  /* Colors */
+  background-color: #f1f5f9;
+  /* Tailwind slate-100 */
+  /* Animations */
+  transition:
+    background-color 0.15s ease-in-out,
+    color 0.15s ease-in-out;
+  cursor: pointer;
+  /* Hover State */
+  &:hover {
+    background-color: #e2e8f0;
+    /* Tailwind slate-200 */
+  }
+}

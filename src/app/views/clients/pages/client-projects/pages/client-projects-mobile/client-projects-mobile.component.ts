@@ -8,7 +8,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { IonHeader, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonIcon, IonToolbar } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import type { Client } from '../../../../../../core/models/client.model';
 import type { Project, ProjectStatus } from '../../../../../../core/models/project.model';
@@ -20,7 +20,7 @@ import type { Project, ProjectStatus } from '../../../../../../core/models/proje
  */
 @Component({
   selector: 'app-client-projects-mobile',
-  imports: [IonHeader, IonToolbar, TranslatePipe],
+  imports: [IonHeader, IonToolbar, TranslatePipe, IonIcon, IonContent, IonHeader],
   templateUrl: './client-projects-mobile.component.html',
   styleUrl: './client-projects-mobile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

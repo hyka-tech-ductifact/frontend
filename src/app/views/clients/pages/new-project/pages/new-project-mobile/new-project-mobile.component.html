@@ -9,7 +9,7 @@
           <button
             type="button"
             (click)="onCancel()"
-            class="w-10 h-10 flex items-center justify-center rounded-full bg-white/15 hover:bg-white/25 transition-colors mr-2"
+            class="w-10 h-10 flex items-center justify-center !rounded-full bg-white/15 hover:bg-white/25 transition-colors mr-2"
           >
             <i class="fa-solid fa-arrow-left text-xl"></i>
           </button>
@@ -111,12 +111,7 @@
       <div
         class="new-project-footer bg-white border-t border-sky-100 p-4 sm:p-6 space-y-3 shadow-[0_-12px_30px_rgba(15,23,42,0.08)] rounded-t-3xl pointer-events-auto"
       >
-        <button
-          type="button"
-          (click)="onSubmit()"
-          [disabled]="isSubmitting()"
-          class="w-full bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 active:from-sky-800 active:to-blue-800 text-white font-semibold rounded-2xl py-4 px-4 shadow-float flex items-center justify-center gap-3 active:scale-[0.98] transition-all disabled:opacity-60 disabled:cursor-not-allowed pointer-events-auto"
-        >
+        <button type="button" (click)="onSubmit()" [disabled]="isSubmitting()" class="btn-submit">
           <i class="fa-regular fa-floppy-disk text-lg"></i>
           <span>{{
             (isSubmitting()
@@ -125,11 +120,7 @@
             ) | translate
           }}</span>
         </button>
-        <button
-          type="button"
-          (click)="onCancel()"
-          class="w-full bg-white text-slate-700 font-semibold rounded-2xl py-4 px-4 border border-sky-100 hover:bg-sky-50 active:scale-[0.98] transition-all pointer-events-auto"
-        >
+        <button type="button" (click)="onCancel()" class="btn-cancel-outlined">
           {{ 'CLIENTS.NEW_PROJECT.BUTTONS.CANCEL' | translate }}
         </button>
       </div>

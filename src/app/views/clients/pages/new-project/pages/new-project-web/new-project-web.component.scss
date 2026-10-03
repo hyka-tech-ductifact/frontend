@@ -1,3 +1,115 @@
 :host {
   display: contents;
 }
+
+.btn-submit {
+  /* Layout & Flex */
+  flex: 1;
+  /* flex-1 */
+  display: flex;
+  /* flex */
+  align-items: center;
+  /* items-center */
+  justify-content: center;
+  /* justify-center */
+  gap: 0.75rem;
+  /* gap-3 (12px) */
+  /* Typography */
+  color: #ffffff;
+  /* text-white */
+  font-weight: 600;
+  /* font-semibold */
+  /* Spacing */
+  padding: 1rem 1.5rem;
+  /* py-4 (16px) px-6 (24px) */
+  /* Shape & Borders */
+  border-radius: 0.75rem !important;
+  /* rounded-xl (12px) overriding resets */
+  border: none;
+  /* Color Gradient & Shadow */
+  background: linear-gradient(to right, #0284c7, #2563eb);
+  /* bg-gradient-to-r from-sky-600 to-blue-600 */
+  box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.4);
+  /* shadow-float */
+  /* Animations & Transitions */
+  transition: all 0.2s ease-in-out;
+  /* transition-all */
+  cursor: pointer;
+  /* Mobile Touch Optimizations */
+  -webkit-tap-highlight-color: transparent;
+  /* Removes gray box on mobile tap */
+  touch-action: manipulation;
+  /* Eliminates tap delay on mobile webview */
+  user-select: none;
+  /* Prevents text selection on hold */
+  /* Hover State (Desktop) */
+  &:hover {
+    background: linear-gradient(to right, #0369a1, #1d4ed8);
+    /* hover:from-sky-700 hover:to-blue-700 */
+    box-shadow: 0 12px 28px -5px rgba(2, 132, 199, 0.5);
+  }
+  /* Active / Mobile Tap State */
+  &:active {
+    background: linear-gradient(to right, #075985, #1e40af);
+    /* active:from-sky-800 active:to-blue-800 */
+    transform: scale(0.98);
+    /* active:scale-[0.98] */
+  }
+  /* Disabled State */
+  &:disabled {
+    opacity: 0.6;
+    /* disabled:opacity-60 */
+    cursor: not-allowed;
+    /* disabled:cursor-not-allowed */
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.btn-cancel-outlined {
+  /* Layout & Flex */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Typography */
+  color: #334155;
+  /* text-slate-700 */
+  font-weight: 600;
+  /* font-semibold */
+  /* Spacing */
+  padding: 1rem 2rem;
+  /* py-4 (16px) px-8 (32px) */
+  /* Shape & Borders */
+  border-radius: 0.75rem !important;
+  /* rounded-xl (12px) overriding resets */
+  border: 1px solid #e0f2fe;
+  /* border border-sky-100 */
+  /* Colors */
+  background-color: #ffffff;
+  /* bg-white */
+  /* Animations & Transitions */
+  transition: all 0.2s ease-in-out;
+  /* transition-all */
+  cursor: pointer;
+  /* Mobile Touch Optimizations */
+  -webkit-tap-highlight-color: transparent;
+  /* Removes gray box on mobile tap */
+  touch-action: manipulation;
+  /* Eliminates tap delay on mobile webview */
+  user-select: none;
+  /* Prevents text selection on hold */
+  /* Hover State (Desktop) */
+  &:hover {
+    background-color: #f0f9ff;
+    /* hover:bg-sky-50 */
+    border-color: #bae6fd;
+    /* sky-200 on hover */
+  }
+  /* Active / Mobile Tap State */
+  &:active {
+    transform: scale(0.98);
+    /* active:scale-[0.98] */
+    background-color: #e0f2fe;
+    /* sky-100 for touch feedback */
+  }
+}

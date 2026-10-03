@@ -33,3 +33,197 @@ ion-toolbar {
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
+
+.mobile-add-wrap {
+  position: relative;
+  z-index: 50;
+  margin-top: -28px;
+}
+
+.mobile-add-button {
+  position: relative;
+  z-index: 50;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  font-weight: 700;
+  background-color: #ffffff;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+  border-radius: 1rem;
+  color: #0284c7;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-add-button:hover {
+  background: #f8fbff;
+}
+
+.mobile-add-button__icon {
+  color: #0284c7;
+}
+
+.btn-delete-mobile {
+  /* Sizing & Flex */
+  width: 3.5rem;
+  height: 3rem;
+  /* w-14 */
+  flex-shrink: 0;
+  /* flex-shrink-0 */
+  align-self: stretch;
+  /* Stretches to match the height of adjacent action button */
+  /* Centering */
+  display: flex;
+  /* flex */
+  align-items: center;
+  /* items-center */
+  justify-content: center;
+  /* justify-center */
+  /* Shape & Borders */
+  border-radius: 0.75rem !important;
+  /* 12px rounded corners overriding resets */
+  border: 1px solid #ffe4e6;
+  /* border border-rose-100 */
+  /* Colors */
+  background-color: #fff1f2;
+  /* bg-rose-50 */
+  color: #f43f5e;
+  /* text-rose-500 */
+  /* Animations & Transitions */
+  transition: all 0.15s ease-in-out;
+  /* transition-colors */
+  cursor: pointer;
+  /* Mobile Touch Optimizations */
+  -webkit-tap-highlight-color: transparent;
+  /* Removes gray box on mobile tap */
+  touch-action: manipulation;
+  /* Eliminates tap delay on mobile webview */
+  user-select: none;
+  /* Prevents text selection when holding down */
+  /* Hover State (Web/Desktop Preview) */
+  &:hover {
+    background-color: #ffe4e6;
+    /* hover:bg-rose-100 */
+  }
+  /* Active / Mobile Tap State */
+  &:active {
+    transform: scale(0.95);
+    /* active:scale-95 */
+    background-color: #fecdd3;
+    /* Rose-200 for clear tactile feedback */
+  }
+}
+
+.btn-confirm-delete {
+  /* Layout & Sizing */
+  width: 100%;
+  /* w-full */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Typography */
+  color: #ffffff;
+  /* text-white */
+  font-weight: 700;
+  /* font-bold */
+  font-size: 0.875rem;
+  /* 14px text-sm */
+  /* Spacing */
+  padding-top: 0.875rem;
+  /* py-3.5 (14px) */
+  padding-bottom: 0.875rem;
+  /* py-3.5 (14px) */
+  /* Shape & Borders */
+  border-radius: 0.75rem !important;
+  /* rounded-xl (12px) overriding Ionic resets */
+  border: none;
+  /* Colors & Elevation */
+  background-color: #e11d48;
+  /* bg-rose-600 */
+  box-shadow:
+    0 10px 15px -3px rgba(254, 205, 211, 0.8),
+    0 4px 6px -4px rgba(254, 205, 211, 0.4);
+  /* shadow-lg shadow-rose-200 */
+  /* Animations & Transitions */
+  transition:
+    transform 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  /* transition-transform */
+  cursor: pointer;
+  /* Mobile Touch Optimizations */
+  -webkit-tap-highlight-color: transparent;
+  /* Removes blue/gray box on mobile tap */
+  touch-action: manipulation;
+  /* Eliminates tap delay on mobile webview */
+  user-select: none;
+  /* Prevents text highlighting on press */
+  /* Hover State (Desktop) */
+  &:hover {
+    background-color: #be123c;
+    /* hover:bg-rose-700 */
+    box-shadow: 0 12px 20px -3px rgba(254, 205, 211, 0.9);
+  }
+  /* Active / Mobile Tap State */
+  &:active {
+    transform: scale(0.95);
+    /* active:scale-95 */
+    background-color: #be123c;
+    /* bg-rose-700 */
+  }
+}
+
+.btn-cancel-mobile {
+  /* Layout & Sizing */
+  width: 100%;
+  /* w-full */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Typography */
+  color: #334155;
+  /* text-slate-700 */
+  font-weight: 700;
+  /* font-bold */
+  font-size: 0.875rem;
+  /* 14px text-sm */
+  /* Spacing */
+  padding-top: 0.875rem;
+  /* py-3.5 (14px) */
+  padding-bottom: 0.875rem;
+  /* py-3.5 (14px) */
+  /* Shape & Borders */
+  border-radius: 0.75rem !important;
+  /* rounded-xl (12px) overriding resets */
+  border: none;
+  /* Colors */
+  background-color: #f1f5f9;
+  /* bg-slate-100 */
+  /* Animations & Transitions */
+  transition:
+    transform 0.15s ease-in-out,
+    background-color 0.15s ease-in-out;
+  /* transition-transform */
+  cursor: pointer;
+  /* Mobile Touch Optimizations */
+  -webkit-tap-highlight-color: transparent;
+  /* Removes gray box on tap */
+  touch-action: manipulation;
+  /* Eliminates tap delay on mobile webview */
+  user-select: none;
+  /* Prevents text highlighting on press */
+  /* Hover State (Desktop) */
+  &:hover {
+    background-color: #e2e8f0;
+    /* hover:bg-slate-200 */
+  }
+  /* Active / Mobile Tap State */
+  &:active {
+    transform: scale(0.95);
+    /* active:scale-95 */
+    background-color: #cbd5e1;
+    /* slate-300 for clear touch feedback */
+  }
+}
