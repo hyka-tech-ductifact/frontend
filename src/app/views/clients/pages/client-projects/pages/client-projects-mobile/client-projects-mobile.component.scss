@@ -3,19 +3,13 @@
   height: 100%;
 }
 
-.client-projects-mobile-shell {
-  position: relative;
-  display: flex;
-  height: 100vh;
-  height: 100dvh;
-  flex-direction: column;
-  overflow: hidden;
-  background: #f8fafc;
-}
-
 ion-header,
 ion-toolbar {
   overflow: visible;
+}
+
+.client-projects-content {
+  --padding-bottom: 6rem;
 }
 
 .client-projects-header-toolbar {
@@ -32,12 +26,6 @@ ion-toolbar {
   background: rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-.mobile-add-wrap {
-  position: relative;
-  z-index: 50;
-  margin-top: -28px;
 }
 
 .mobile-add-button {
