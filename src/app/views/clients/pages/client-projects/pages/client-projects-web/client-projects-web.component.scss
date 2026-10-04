@@ -1,5 +1,14 @@
 :host {
-  display: contents;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  :host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
 }
 
 .client-add-button {

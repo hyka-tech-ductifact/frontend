@@ -15,6 +15,7 @@ import { ClientProjectsService } from './services/client-projects.service';
   selector: 'app-client-projects',
   imports: [ClientProjectsMobileComponent, ClientProjectsWebComponent],
   templateUrl: './client-projects.component.html',
+  styleUrl: './client-projects.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientProjectsComponent implements OnInit {

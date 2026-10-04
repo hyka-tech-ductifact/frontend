@@ -38,108 +38,108 @@
         </div>
       </div>
     </div>
+    <!-- Floating Add Button (Scrolls up with the list) -->
+    <div class="px-6 -mt-7 relative z-20 mb-6">
+      <button type="button" (click)="onAdd()" class="mobile-add-button group">
+        <ion-icon
+          name="add-outline"
+          class="mobile-add-button__icon text-xl group-hover:scale-110 transition-transform"
+        ></ion-icon>
+        <span>{{ 'CLIENTS.PROJECTS.ACTIONS.NEW_PROJECT' | translate }}</span>
+      </button>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <!-- 2. CONTENT (Native momentum scrolling) -->
-<ion-content>
-  <!-- Floating Add Button (Scrolls up with the list) -->
-  <div class="px-6 -mt-7 relative z-20 mb-6">
-    <button type="button" (click)="onAdd()" class="mobile-add-button group">
-      <ion-icon
-        name="add-outline"
-        class="mobile-add-button__icon text-xl group-hover:scale-110 transition-transform"
-      ></ion-icon>
-      <span>{{ 'CLIENTS.PROJECTS.ACTIONS.NEW_PROJECT' | translate }}</span>
-    </button>
-  </div>
 
-  <!-- Project List -->
-  <div class="px-5 pb-8 space-y-5">
-    @if (isLoading()) {
-      <div class="flex flex-col items-center justify-center py-16 text-slate-400">
-        <div
-          class="h-10 w-10 animate-spin rounded-full border-4 border-sky-200 border-t-sky-500"
-        ></div>
-      </div>
-    } @else if (projects().length > 0) {
-      @for (project of projects(); track project.id) {
-        <article class="bg-white rounded-3xl p-5 shadow-soft border border-slate-100">
-          <div class="flex items-start mb-4">
-            <div
-              [class]="
-                'w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center flex-shrink-0 mr-4 shadow-md text-white ' +
-                getIconGradientClass(project.status)
-              "
-            >
-              <i class="fa-regular fa-folder-open text-2xl"></i>
-            </div>
-            <div>
-              <h3 class="text-lg font-bold text-slate-800 leading-tight mb-1">
-                {{ project.name }}
-              </h3>
-              @if (project.description) {
-                <p class="text-sm text-slate-500 leading-snug">{{ project.description }}</p>
-              }
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between mb-3">
-            <span
-              [class]="
-                'inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ' +
-                getStatusBadgeClass(project.status)
-              "
-            >
-              {{ getStatusLabelKey(project.status) | translate }}
-            </span>
-            @if (project.createdAt) {
-              <span class="text-xs text-slate-400 font-medium">{{ project.createdAt }}</span>
-            }
-          </div>
-
+<!-- <ion-content> -->
+<!-- Project List -->
+<div class="px-5 pb-8 space-y-5">
+  @if (isLoading()) {
+    <div class="flex flex-col items-center justify-center py-16 text-slate-400">
+      <div
+        class="h-10 w-10 animate-spin rounded-full border-4 border-sky-200 border-t-sky-500"
+      ></div>
+    </div>
+  } @else if (projects().length > 0) {
+    @for (project of projects(); track project.id) {
+      <article class="bg-white rounded-3xl p-5 shadow-soft border border-slate-100">
+        <div class="flex items-start mb-4">
           <div
             [class]="
-              'flex items-center justify-between py-3 px-3 rounded-xl border mb-4 ' +
-              getMetricsBoxClass(project.status)
+              'w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center flex-shrink-0 mr-4 shadow-md text-white ' +
+              getIconGradientClass(project.status)
             "
           >
-            <div class="flex items-center gap-2">
-              <i class="fa-solid fa-ruler text-slate-600"></i>
-              <span class="text-xs text-slate-600 font-medium">
-                {{ 'CLIENTS.PROJECTS.CARD.TOTAL_METERS' | translate }}
-              </span>
-            </div>
-            <span [class]="'text-base font-bold ' + getMetricsValueClass(project.status)">
-              {{ project.totalSquareMeters }} m²
+            <i class="fa-regular fa-folder-open text-2xl"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-800 leading-tight mb-1">
+              {{ project.name }}
+            </h3>
+            @if (project.description) {
+              <p class="text-sm text-slate-500 leading-snug">{{ project.description }}</p>
+            }
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between mb-3">
+          <span
+            [class]="
+              'inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ' +
+              getStatusBadgeClass(project.status)
+            "
+          >
+            {{ getStatusLabelKey(project.status) | translate }}
+          </span>
+          @if (project.createdAt) {
+            <span class="text-xs text-slate-400 font-medium">{{ project.createdAt }}</span>
+          }
+        </div>
+
+        <div
+          [class]="
+            'flex items-center justify-between py-3 px-3 rounded-xl border mb-4 ' +
+            getMetricsBoxClass(project.status)
+          "
+        >
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-ruler text-slate-600"></i>
+            <span class="text-xs text-slate-600 font-medium">
+              {{ 'CLIENTS.PROJECTS.CARD.TOTAL_METERS' | translate }}
             </span>
           </div>
+          <span [class]="'text-base font-bold ' + getMetricsValueClass(project.status)">
+            {{ project.totalSquareMeters }} m²
+          </span>
+        </div>
 
-          <div class="flex gap-3">
-            <!-- Advance Button -->
-            <button
-              type="button"
-              (click)="onAdvance(project)"
-              class="flex-1 py-3.5 rounded-xl border border-sky-100 bg-sky-50 text-sky-700 font-semibold text-sm hover:bg-sky-100 transition-colors active:scale-95 touch-manipulation"
-            >
-              {{ getActionLabelKey(project.status) | translate }}
-            </button>
+        <div class="flex gap-3">
+          <!-- Advance Button -->
+          <button
+            type="button"
+            (click)="onAdvance(project)"
+            class="flex-1 py-3.5 rounded-xl border border-sky-100 bg-sky-50 text-sky-700 font-semibold text-sm hover:bg-sky-100 transition-colors active:scale-95 touch-manipulation"
+          >
+            {{ getActionLabelKey(project.status) | translate }}
+          </button>
 
-            <!-- Refactored SCSS Delete Button -->
-            <button type="button" (click)="requestDelete(project)" class="btn-delete-mobile">
-              <i class="fa-regular fa-trash-can text-lg"></i>
-            </button>
-          </div>
-        </article>
-      }
-    } @else {
-      <div class="flex flex-col items-center justify-center py-16 text-slate-400">
-        <i class="fa-regular fa-folder-open text-5xl mb-4 text-slate-300"></i>
-        <p class="text-sm font-medium">{{ 'CLIENTS.PROJECTS.EMPTY.TITLE' | translate }}</p>
-      </div>
+          <!-- Refactored SCSS Delete Button -->
+          <button type="button" (click)="requestDelete(project)" class="btn-delete-mobile">
+            <i class="fa-regular fa-trash-can text-lg"></i>
+          </button>
+        </div>
+      </article>
     }
-  </div>
-</ion-content>
+  } @else {
+    <div class="flex flex-col items-center justify-center py-16 text-slate-400">
+      <i class="fa-regular fa-folder-open text-5xl mb-4 text-slate-300"></i>
+      <p class="text-sm font-medium">{{ 'CLIENTS.PROJECTS.EMPTY.TITLE' | translate }}</p>
+    </div>
+  }
+</div>
+<!-- </ion-content> -->
 
 <!-- 3. CUSTOM MODAL (Outside of content so it overlays the screen) -->
 @if (isDeleteModalOpen()) {
