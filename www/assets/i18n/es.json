@@ -235,6 +235,77 @@
       }
     }
   },
+  "ORDERS": {
+    "TITLE": "Pedidos",
+    "MOBILE": {
+      "NEW_ORDER": "Nuevo Pedido",
+      "STATS": {
+        "PENDING": "Pendientes",
+        "ORDERED": "Pedidos"
+      },
+      "CARD": {
+        "PIECES_COUNT": "{{count}} piezas",
+        "AREA_TOTAL": "{{area}} m² total"
+      },
+      "PROJECT": {
+        "TOTAL_METERS": "Total metros pedidos"
+      },
+      "SECTIONS": {
+        "PENDING": "Pendientes",
+        "ORDERED": "Ya Pedidos"
+      },
+      "ACTIONS": {
+        "MARK_AS_ORDERED": "Marcar como Pedido"
+      },
+      "DELETE_MODAL": {
+        "TITLE": "¿Eliminar pedido?",
+        "MESSAGE": "Esta acción no se puede deshacer. ¿Estás seguro de que quieres eliminar este pedido de la lista?",
+        "CONFIRM": "Sí, Eliminar",
+        "CANCEL": "Cancelar"
+      },
+      "EMPTY": {
+        "TITLE": "No hay pedidos registrados",
+        "SUBTITLE": "Crea el primer pedido para este proyecto"
+      }
+    },
+    "STATUS": {
+      "PENDING": "Pendiente",
+      "ORDERED": "Pedido"
+    },
+    "FORM": {
+      "TITLE": "Crear Nuevo Pedido",
+      "SUBTITLE": "Complete los detalles para crear un nuevo pedido",
+      "NAME": "Número de Pedido",
+      "NAME_PLACEHOLDER": "Ej: Conductos Rectangulares Planta 1",
+      "PRIORITY": "Prioridad",
+      "PRIORITY_NORMAL": "Normal",
+      "PRIORITY_HIGH": "Alta",
+      "PRIORITY_URGENT": "Urgente",
+      "DESCRIPTION": "Descripción",
+      "DESCRIPTION_PLACEHOLDER": "Describe el contenido del pedido...",
+      "CATEGORY": "Categoría",
+      "CATEGORY_DUCTS": "Conductos",
+      "CATEGORY_MATERIALS": "Materiales",
+      "CATEGORY_TOOLS": "Herramientas",
+      "DELIVERY_DATE": "Fecha de Entrega",
+      "CANCEL": "Cancelar",
+      "CREATE": "Crear Pedido"
+    },
+    "WEB": {
+      "PIECES_TITLE": "Piezas del Pedido",
+      "ADD_PIECE": "Agregar Pieza",
+      "EDIT_PIECE": "Editar Dimensiones y Cantidad",
+      "UNITS": "uds",
+      "DESCRIPTION_TITLE": "Descripción",
+      "NOTES_TITLE": "Notas Importantes",
+      "NO_NOTES": "No hay notas para este pedido",
+      "ACTIONS_TITLE": "Acciones",
+      "DELETE_ORDER": "Eliminar Pedido",
+      "TOTAL_MATERIAL": "Total Material",
+      "MARK_AS_ORDERED": "Marcar como Pedido",
+      "EMPTY_PIECES": "No hay piezas en este pedido"
+    }
+  },
   "SETTINGS": {
     "NAV": {
       "BACK_TO_CLIENTS": "Volver a Clientes",

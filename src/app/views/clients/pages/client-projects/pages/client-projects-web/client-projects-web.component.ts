@@ -41,6 +41,9 @@ export class ClientProjectsWebComponent {
   /** Emitted with the project id when the user advances its status. */
   readonly advanceStatus = output<string>();
 
+  /** Emitted with the project id when the user opens the project orders list. */
+  readonly viewOrders = output<string>();
+
   /** Emitted with the project id when the user confirms a project deletion. */
   readonly deleteProject = output<string>();
 
@@ -96,6 +99,15 @@ export class ClientProjectsWebComponent {
   protected onAdvance(project: Project): void {
     if (project.status === 'completed') return;
     this.advanceStatus.emit(project.id);
+  }
+
+  /**
+   * Forwards the project-order navigation action to the smart parent.
+   * @param {Project} project - Project whose orders should open.
+   * @returns {void}
+   */
+  protected onViewOrders(project: Project): void {
+    this.viewOrders.emit(project.id);
   }
 
   /**

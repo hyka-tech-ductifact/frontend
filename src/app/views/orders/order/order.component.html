@@ -1,0 +1,23 @@
+@if (deviceService.isMobile()) {
+  <app-order-mobile
+    [orders]="orders()"
+    [projectName]="project()?.name ?? ''"
+    [projectDescription]="project()?.description ?? ''"
+    (goBack)="goBack()"
+    (createOrder)="onCreateOrder($event)"
+    (selectOrder)="onSelectOrder($event)"
+    (markOrdered)="onMarkOrderAsOrdered($event)"
+    (deleteOrder)="onDeleteOrder($event)"
+  />
+} @else {
+  <app-order-web
+    [orders]="orders()"
+    [projectName]="project()?.name ?? ''"
+    [projectDescription]="project()?.description ?? ''"
+    (goBack)="goBack()"
+    (selectOrder)="onSelectOrder($event)"
+    (markOrdered)="onMarkOrderAsOrdered($event)"
+    (deleteOrder)="onDeleteOrder($event)"
+    (createOrder)="onCreateOrder($event)"
+  />
+}

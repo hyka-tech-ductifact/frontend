@@ -64,6 +64,15 @@ export class ClientProjectsComponent implements OnInit {
   }
 
   /**
+   * Navigates to the orders list for a selected project.
+   * @param {string} projectId - Unique identifier of the project whose orders should open.
+   * @returns {void}
+   */
+  protected onViewProjectOrders(projectId: string): void {
+    void this.router.navigate(['/client', this.clientId, 'projects', projectId, 'orders']);
+  }
+
+  /**
    * Handles the delete-project event emitted by a child component.
    * @param {string} projectId - Unique identifier of the project to delete.
    * @returns {void}

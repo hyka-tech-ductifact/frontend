@@ -16,6 +16,7 @@
   --color-brand-dark: #0c4a6e;
   /* Shadows */
   --shadow-soft: 0 10px 40px -10px rgba(14, 165, 233, 0.08);
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   --shadow-float:
     0 20px 25px -5px rgba(14, 165, 233, 0.15), 0 10px 10px -5px rgba(14, 165, 233, 0.04);
 }
@@ -24,6 +25,21 @@
 
 .gradient-header {
   background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 50%, #38bdf8 100%);
+}
+
+/* Centered card-style Ionic modal (opened with `cssClass: 'new-order-modal'`). */
+
+ion-modal.new-order-modal {
+  --width: calc(100% - 2rem);
+  --max-width: 28rem;
+  --height: 30rem;
+  --max-height: 90%;
+  --border-radius: 1.5rem;
+  --backdrop-opacity: 0.6;
+}
+
+ion-modal.new-order-modal::part(backdrop) {
+  backdrop-filter: blur(4px);
 }
 
 /* You can add global styles to this file, and also import other style files */

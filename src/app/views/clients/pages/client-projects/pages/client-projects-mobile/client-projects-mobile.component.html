@@ -64,7 +64,10 @@
       </div>
     } @else if (projects().length > 0) {
       @for (project of projects(); track project.id) {
-        <article class="bg-white rounded-3xl p-5 shadow-soft border border-slate-100">
+        <article
+          class="bg-white rounded-3xl p-5 shadow-soft border border-slate-100 cursor-pointer hover:shadow-lg transition-shadow"
+          (click)="onViewOrders(project)"
+        >
           <div class="flex items-start mb-4">
             <div
               [class]="
@@ -119,14 +122,18 @@
             <!-- Advance Button -->
             <button
               type="button"
-              (click)="onAdvance(project)"
+              (click)="$event.stopPropagation(); onAdvance(project)"
               class="flex-1 py-3.5 rounded-xl border border-sky-100 bg-sky-50 text-sky-700 font-semibold text-sm hover:bg-sky-100 transition-colors active:scale-95 touch-manipulation"
             >
               {{ getActionLabelKey(project.status) | translate }}
             </button>
 
             <!-- Refactored SCSS Delete Button -->
-            <button type="button" (click)="requestDelete(project)" class="btn-delete-mobile">
+            <button
+              type="button"
+              (click)="$event.stopPropagation(); requestDelete(project)"
+              class="btn-delete-mobile"
+            >
               <i class="fa-regular fa-trash-can text-lg"></i>
             </button>
           </div>

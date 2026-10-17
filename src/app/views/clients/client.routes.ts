@@ -17,6 +17,25 @@ export const clientRoutes: Routes = [
       () => import('./pages/new-client/new-client.component').then((m) => m.NewClientComponent),
   },
   {
+    path: ':clientId/projects/:projectId/order-details/:orderId',
+    loadComponent:
+      /**
+       * Lazily loads OrderDetailComponent for a specific order within a project.
+       * @returns {Promise<unknown>} Promise resolving to the OrderDetailComponent class.
+       */
+      () =>
+        import('../orders/order-detail/order-detail.component').then((m) => m.OrderDetailComponent),
+  },
+  {
+    path: ':clientId/projects/:projectId/orders',
+    loadComponent:
+      /**
+       * Lazily loads OrderComponent for the project's orders list.
+       * @returns {Promise<unknown>} Promise resolving to the OrderComponent class.
+       */
+      () => import('../orders/order/order.component').then((m) => m.OrderComponent),
+  },
+  {
     path: ':clientId/projects/new',
     loadComponent:
       /**

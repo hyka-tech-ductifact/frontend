@@ -1,0 +1,27 @@
+.new-order-modal-toolbar {
+  --background: #ffffff;
+  --border-width: 0;
+  --padding-top: 1rem;
+  --padding-bottom: 0;
+}
+
+.new-order-modal-title {
+  padding-inline: 3rem;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.new-order-modal-content {
+  --background: #ffffff;
+}
+
+.custom-rounded-btn::part(native) {
+  border-radius: 0.75rem !important;
+}
+
+.input-focus-ring:focus-within {
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+  border-color: #0ea5e9;
+}

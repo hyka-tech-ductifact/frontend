@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.glass-panel {
+  // background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.input-focus-ring:focus-within {
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+  border-color: #0ea5e9;
+}

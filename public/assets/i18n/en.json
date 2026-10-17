@@ -235,6 +235,77 @@
       }
     }
   },
+  "ORDERS": {
+    "TITLE": "Orders",
+    "MOBILE": {
+      "NEW_ORDER": "New Order",
+      "STATS": {
+        "PENDING": "Pending",
+        "ORDERED": "Ordered"
+      },
+      "CARD": {
+        "PIECES_COUNT": "{{count}} pieces",
+        "AREA_TOTAL": "{{area}} m² total"
+      },
+      "PROJECT": {
+        "TOTAL_METERS": "Total ordered meters"
+      },
+      "SECTIONS": {
+        "PENDING": "Pending",
+        "ORDERED": "Already Ordered"
+      },
+      "ACTIONS": {
+        "MARK_AS_ORDERED": "Mark as Ordered"
+      },
+      "DELETE_MODAL": {
+        "TITLE": "Delete order?",
+        "MESSAGE": "This action cannot be undone. Are you sure you want to remove this order from the list?",
+        "CONFIRM": "Yes, Delete",
+        "CANCEL": "Cancel"
+      },
+      "EMPTY": {
+        "TITLE": "No orders registered",
+        "SUBTITLE": "Create the first order for this project"
+      }
+    },
+    "STATUS": {
+      "PENDING": "Pending",
+      "ORDERED": "Ordered"
+    },
+    "FORM": {
+      "TITLE": "Create New Order",
+      "SUBTITLE": "Fill in the details to create a new order",
+      "NAME": "Order Number",
+      "NAME_PLACEHOLDER": "E.g. Rectangular Ducts Floor 1",
+      "PRIORITY": "Priority",
+      "PRIORITY_NORMAL": "Normal",
+      "PRIORITY_HIGH": "High",
+      "PRIORITY_URGENT": "Urgent",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_PLACEHOLDER": "Describe the order contents...",
+      "CATEGORY": "Category",
+      "CATEGORY_DUCTS": "Ducts",
+      "CATEGORY_MATERIALS": "Materials",
+      "CATEGORY_TOOLS": "Tools",
+      "DELIVERY_DATE": "Delivery Date",
+      "CANCEL": "Cancel",
+      "CREATE": "Create Order"
+    },
+    "WEB": {
+      "PIECES_TITLE": "Order Pieces",
+      "ADD_PIECE": "Add Piece",
+      "EDIT_PIECE": "Edit Dimensions and Quantity",
+      "UNITS": "units",
+      "DESCRIPTION_TITLE": "Description",
+      "NOTES_TITLE": "Important Notes",
+      "NO_NOTES": "There are no notes for this order",
+      "ACTIONS_TITLE": "Actions",
+      "DELETE_ORDER": "Delete Order",
+      "TOTAL_MATERIAL": "Total Material",
+      "MARK_AS_ORDERED": "Mark as Ordered",
+      "EMPTY_PIECES": "No pieces in this order"
+    }
+  },
   "SETTINGS": {
     "NAV": {
       "BACK_TO_CLIENTS": "Back to Clients",

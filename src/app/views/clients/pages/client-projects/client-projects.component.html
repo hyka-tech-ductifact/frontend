@@ -12,6 +12,7 @@
     [isLoading]="clientProjectsService.isLoading()"
     (addProject)="onAddProject()"
     (advanceStatus)="onAdvanceStatus($event)"
+    (viewOrders)="onViewProjectOrders($event)"
     (deleteProject)="onDeleteProject($event)"
   />
 } @else {
@@ -21,6 +22,7 @@
     [isLoading]="clientProjectsService.isLoading()"
     (addProject)="onAddProject()"
     (advanceStatus)="onAdvanceStatus($event)"
+    (viewOrders)="onViewProjectOrders($event)"
     (deleteProject)="onDeleteProject($event)"
   />
 }
