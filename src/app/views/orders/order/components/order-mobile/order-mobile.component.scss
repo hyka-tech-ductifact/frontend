@@ -9,41 +9,116 @@
 }
 
 .full-width-action-btn {
-  // Rename this class to fit your component
-  /* Layout & Flexbox (w-full flex items-center justify-center gap-3) */
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  /* Spacing (py-4) */
   padding-top: 1rem;
   padding-bottom: 1rem;
-  /* Typography (text-sky-700 font-bold) */
   color: #0369a1;
   font-weight: 700;
-  /* Background & Borders (bg-white border border-sky-100 !rounded-2xl) */
   background-color: #ffffff;
   border: 1px solid #e0f2fe;
   border-radius: 1rem !important;
-  /* Custom Shadow (shadow-float) */
   box-shadow:
     0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  /* Transitions (transition-colors) */
   transition:
     background-color 150ms ease,
     border-color 150ms ease,
     color 150ms ease,
     box-shadow 150ms ease;
-  /* Active State (active:bg-sky-50) */
-  /* Note: active state is generally preferred over hover for mobile touch feedback */
   &:active {
     background-color: #f0f9ff;
   }
-  /* Hover State (hover:shadow-soft) */
   &:hover {
     box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-    /* Placeholder for shadow-soft */
+  }
+}
+
+.on-mark-ordered-btn {
+  flex: 1 1 0%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+  color: #ffffff;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  background-image: linear-gradient(to right, #34d399, #22c55e);
+  border-radius: 0.75rem !important;
+  box-shadow:
+    0 4px 6px -1px rgba(209, 250, 229, 0.8),
+    0 2px 4px -2px rgba(209, 250, 229, 0.8);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    background-image: linear-gradient(to right, #10b981, #16a34a);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.delete-btn {
+  width: 3.5rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f43f5e;
+  background-color: #fff1f2;
+  border: 1px solid #fecdd3;
+  border-radius: 0.75rem !important;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+  &:hover {
+    background-color: #ffe4e6;
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.modal-confirm-btn {
+  width: 100%;
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+  color: #ffffff;
+  font-weight: 700;
+  background-color: #e11d48;
+  border-radius: 0.75rem !important;
+  box-shadow:
+    0 10px 15px -3px rgba(254, 205, 211, 0.8),
+    0 4px 6px -4px rgba(254, 205, 211, 0.8);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    background-color: #be123c;
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.modal-cancel-btn {
+  width: 100%;
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+  color: #334155;
+  font-weight: 700;
+  background-color: #f1f5f9;
+  border-radius: 0.75rem !important;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    background-color: #e2e8f0;
+  }
+  &:active {
+    transform: scale(0.95);
   }
 }

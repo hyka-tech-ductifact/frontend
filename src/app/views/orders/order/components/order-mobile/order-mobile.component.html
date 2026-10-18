@@ -69,6 +69,14 @@
         </span>
         {{ 'ORDERS.MOBILE.NEW_ORDER' | translate }}
       </button>
+      <!-- <ion-button type="button" (click)="onAdd()" class="full-width-action-btn group">
+        <span
+          class="bg-sky-50 w-8 h-8 rounded-full flex items-center justify-center group-hover:bg-sky-100 transition-colors"
+        >
+          <i class="fa-solid fa-plus text-sky-600 text-sm"></i>
+        </span>
+        {{ 'ORDERS.MOBILE.NEW_ORDER' | translate }}
+      </ion-button> -->
     </div>
 
     <!-- Content Area -->
@@ -138,7 +146,7 @@
                     <button
                       type="button"
                       (click)="$event.stopPropagation(); onMarkOrdered(order.id)"
-                      class="flex-1 bg-gradient-to-r from-emerald-400 to-green-500 hover:from-emerald-500 hover:to-green-600 text-white py-3.5 !rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-md shadow-emerald-100 active:scale-95 transform"
+                      class="on-mark-ordered-btn"
                     >
                       <i class="fa-regular fa-circle-check"></i>
                       {{ 'ORDERS.MOBILE.ACTIONS.MARK_AS_ORDERED' | translate }}
@@ -146,7 +154,7 @@
                     <button
                       type="button"
                       (click)="$event.stopPropagation(); requestDelete(order.id)"
-                      class="w-14 flex-shrink-0 flex items-center justify-center !rounded-xl bg-rose-50 text-rose-500 hover:bg-rose-100 border border-rose-200 transition-colors active:scale-95 transform"
+                      class="delete-btn"
                     >
                       <i class="fa-regular fa-trash-can text-lg"></i>
                     </button>
@@ -269,18 +277,10 @@
       </p>
 
       <div class="flex flex-col gap-3">
-        <button
-          type="button"
-          (click)="confirmDelete()"
-          class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3.5 !rounded-xl shadow-lg shadow-rose-200 active:scale-95 transition-all"
-        >
+        <button type="button" (click)="confirmDelete()" class="modal-confirm-btn">
           {{ 'ORDERS.MOBILE.DELETE_MODAL.CONFIRM' | translate }}
         </button>
-        <button
-          type="button"
-          (click)="cancelDelete()"
-          class="w-full bg-slate-100 text-slate-700 font-bold py-3.5 !rounded-xl hover:bg-slate-200 active:scale-95 transition-all"
-        >
+        <button type="button" (click)="cancelDelete()" class="modal-cancel-btn">
           {{ 'ORDERS.MOBILE.DELETE_MODAL.CANCEL' | translate }}
         </button>
       </div>
