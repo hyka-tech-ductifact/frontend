@@ -42,4 +42,44 @@ ion-modal.new-order-modal::part(backdrop) {
   backdrop-filter: blur(4px);
 }
 
+.client-add-button {
+  /* Flex alignment for perfectly centered content */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Clear Ionic button constraints */
+  border-radius: 1rem; // matches rounded-2xl
+  width: 160px;
+  min-width: 160px;
+  height: 48px;
+  min-height: 48px;
+  box-sizing: border-box;
+  /* Prevent global CSS resets from overriding border radius */
+  overflow: hidden;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.btn-actions {
+  width: 3.5rem;
+  flex-shrink: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem !important;
+  border: 1px solid #ffe4e6;
+  background-color: #fff1f2;
+  color: #f43f5e;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    background-color: #ffe4e6;
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+  height: 3.5rem;
+}
+
 /* You can add global styles to this file, and also import other style files */
