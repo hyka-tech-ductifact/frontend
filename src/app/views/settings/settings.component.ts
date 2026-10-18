@@ -7,8 +7,8 @@ import {
   SettingsWorker,
 } from '../../core/services/settings.service';
 import { StorageService } from '../../core/services/storage.service';
-import { SettingsMobileComponent } from './pages/settings-mobile/settings-mobile.component';
-import { SettingsWebComponent } from './pages/settings-web/settings-web.component';
+import { SettingsMobileComponent } from './components/settings-mobile/settings-mobile.component';
+import { SettingsWebComponent } from './components/settings-web/settings-web.component';
 
 /** Storage key used to persist the active app language. */
 const PREFERRED_LANG_KEY = 'preferred-lang';

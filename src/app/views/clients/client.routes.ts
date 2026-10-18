@@ -14,7 +14,7 @@ export const clientRoutes: Routes = [
        * Lazily loads NewClientComponent for client creation.
        * @returns {Promise<unknown>} Promise resolving to the NewClientComponent class.
        */
-      () => import('./pages/new-client/new-client.component').then((m) => m.NewClientComponent),
+      () => import('./new-client/new-client.component').then((m) => m.NewClientComponent),
   },
   {
     path: ':clientId/projects/:projectId/order-details/:orderId',
@@ -42,7 +42,7 @@ export const clientRoutes: Routes = [
        * Lazily loads NewProjectComponent for project creation.
        * @returns {Promise<unknown>} Promise resolving to the NewProjectComponent class.
        */
-      () => import('./pages/new-project/new-project.component').then((m) => m.NewProjectComponent),
+      () => import('./new-project/new-project.component').then((m) => m.NewProjectComponent),
   },
   {
     path: ':clientId/projects',
@@ -52,7 +52,7 @@ export const clientRoutes: Routes = [
        * @returns {Promise<unknown>} Promise resolving to the ClientProjectsComponent class.
        */
       () =>
-        import('./pages/client-projects/client-projects.component').then(
+        import('./client-projects/client-projects.component').then(
           (m) => m.ClientProjectsComponent,
         ),
   },
@@ -63,6 +63,6 @@ export const clientRoutes: Routes = [
        * Lazily loads ClientMainComponent for the client dashboard.
        * @returns {Promise<unknown>} Promise resolving to the ClientMainComponent class.
        */
-      () => import('./pages/client-main/client-main.component').then((m) => m.ClientMainComponent),
+      () => import('./client-main/client-main.component').then((m) => m.ClientMainComponent),
   },
 ];

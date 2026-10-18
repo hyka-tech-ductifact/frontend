@@ -11,7 +11,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { DeviceService } from '../../../core/services/device.service';
-import { ClientProjectsService } from '../../clients/pages/client-projects/services/client-projects.service';
+import { ClientProjectsService } from '../../../core/services/client-projects.service';
 import { NewOrderPayload, Order, OrderService } from '../services/order.service';
 import { OrderMobileComponent } from './components/order-mobile/order-mobile.component';
 import { OrderWebComponent } from './components/order-web/order-web.component';

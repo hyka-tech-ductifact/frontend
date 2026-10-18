@@ -18,7 +18,7 @@ export const routes: Routes = [
        * Lazily loads LoginComponent for the authentication page.
        * @returns {Promise<unknown>} Promise resolving to the LoginComponent class.
        */
-      () => import('./views/auth/pages/login/login.component').then((m) => m.LoginComponent),
+      () => import('./views/auth/login/login.component').then((m) => m.LoginComponent),
   },
   {
     path: 'client',
