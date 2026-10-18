@@ -46,6 +46,14 @@ export class ClientProjectsComponent implements OnInit {
   }
 
   /**
+   * Navigates back to the client list.
+   * @returns {void}
+   */
+  protected onBack(): void {
+    void this.router.navigate(['/client']);
+  }
+
+  /**
    * Handles the add-project action emitted by a child component.
    * Navigates to the new-project form for the current client.
    * @returns {void}

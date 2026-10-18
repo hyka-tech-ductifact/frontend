@@ -1,13 +1,4 @@
-import { Location } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  input,
-  output,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { IonContent, IonHeader, IonIcon, IonToolbar } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import type { Client } from '../../../../../../core/models/client.model';
@@ -26,8 +17,6 @@ import type { Project, ProjectStatus } from '../../../../../../core/models/proje
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientProjectsMobileComponent {
-  private readonly location = inject(Location);
-
   /** Client that owns the displayed projects. */
   readonly client = input<Client | null>(null);
 
@@ -36,6 +25,9 @@ export class ClientProjectsMobileComponent {
 
   /** Whether a loading operation is in progress. */
   readonly isLoading = input(false);
+
+  /** Emitted when the user requests to return to the client list. */
+  readonly back = output<void>();
 
   /** Emitted when the user requests to create a new project. */
   readonly addProject = output<void>();
@@ -61,11 +53,11 @@ export class ClientProjectsMobileComponent {
   readonly isDeleteModalOpen = computed(() => this.projectPendingDelete() !== null);
 
   /**
-   * Navigates back to the client list.
+   * Forwards the back action to the smart parent.
    * @returns {void}
    */
   protected goBack(): void {
-    this.location.back();
+    this.back.emit();
   }
 
   /**
