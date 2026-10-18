@@ -1,4 +1,4 @@
-<div class="block h-auto bg-slate-50 md:h-full md:flex md:flex-col md:overflow-hidden">
+<div class="flex flex-col h-full overflow-hidden bg-slate-50">
   <!-- Top Header (Fixed) -->
   <header class="gradient-header py-6 px-8 shadow-lg flex-shrink-0">
     <div class="flex items-center justify-between">
@@ -37,84 +37,81 @@
     </div>
   </header>
 
-  <!-- Scrollable Content -->
-  <div class="p-4 md:px-8 md:py-8 md:flex-1 md:min-h-0 md:overflow-y-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      <section class="lg:col-span-8">
-        <div class="flex justify-between items-center mb-6">
+  <!-- Two-column layout (locked; only the pieces list scrolls on lg+) -->
+  <div class="p-4 md:px-8 md:py-8 flex-1 min-h-0 overflow-y-auto lg:overflow-hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:h-full lg:overflow-hidden">
+      <section class="lg:col-span-8 flex flex-col lg:h-full lg:overflow-hidden">
+        <div class="flex-shrink-0 flex justify-between items-center mb-6">
           <h2 class="text-2xl font-bold text-gray-900">
             {{ 'ORDERS.WEB.PIECES_TITLE' | translate }}
           </h2>
-          <button
-            type="button"
-            class="bg-gradient-to-r from-sky-500 to-sky-600 text-white text-sm font-bold px-6 py-3 !rounded-xl shadow-md hover:shadow-lg transition-all flex items-center gap-2"
-          >
+          <button type="button" class="add-piece-action-btn">
             <i class="fa-solid fa-plus"></i> {{ 'ORDERS.WEB.ADD_PIECE' | translate }}
           </button>
         </div>
 
-        @if (pieceViews().length > 0) {
-          @for (view of pieceViews(); track view.piece.id) {
-            <article
-              class="bg-white rounded-2xl p-6 shadow-card border border-sky-100 relative mb-6"
-            >
-              <button
-                type="button"
-                (click)="onDeletePiece(view.piece.id)"
-                class="absolute top-6 right-6 text-red-400 hover:text-red-600 transition-colors p-2"
+        <div class="flex-1 min-h-0 overflow-y-auto pb-4">
+          @if (pieceViews().length > 0) {
+            @for (view of pieceViews(); track view.piece.id) {
+              <article
+                class="bg-white rounded-2xl p-6 shadow-card border border-sky-100 relative mb-6"
               >
-                <i class="fa-regular fa-trash-can text-lg"></i>
-              </button>
-              <div class="flex items-start gap-6 mb-6">
-                <div
-                  class="w-20 h-20 rounded-2xl bg-gradient-to-br from-sky-500 to-sky-600 flex items-center justify-center text-white font-bold text-2xl shadow-md flex-shrink-0"
+                <button
+                  type="button"
+                  (click)="onDeletePiece(view.piece.id)"
+                  class="absolute top-6 right-6 text-red-400 hover:text-red-600 transition-colors p-2"
                 >
-                  {{ view.initials }}
-                </div>
-                <div class="pr-12">
-                  <h3 class="font-bold text-gray-900 text-2xl leading-tight mb-2">
-                    {{ view.piece.name }}
-                  </h3>
-                  <p class="text-slate-600 text-base leading-relaxed">
-                    {{ view.piece.description }}
-                  </p>
-                </div>
-              </div>
-
-              <div class="flex flex-wrap gap-3 mb-6">
-                @for (dimension of view.dimensions; track dimension.label) {
-                  <span
-                    class="inline-flex items-center px-4 py-2 rounded-lg bg-sky-50 text-sky-700 text-base font-medium"
+                  <i class="fa-regular fa-trash-can text-lg"></i>
+                </button>
+                <div class="flex items-start gap-6 mb-6">
+                  <div
+                    class="w-20 h-20 rounded-2xl bg-gradient-to-br from-sky-500 to-sky-600 flex items-center justify-center text-white font-bold text-2xl shadow-md flex-shrink-0"
                   >
-                    <span class="font-bold mr-2">{{ dimension.label }}:</span> {{ dimension.value }}
+                    {{ view.initials }}
+                  </div>
+                  <div class="pr-12">
+                    <h3 class="font-bold text-gray-900 text-2xl leading-tight mb-2">
+                      {{ view.piece.name }}
+                    </h3>
+                    <p class="text-slate-600 text-base leading-relaxed">
+                      {{ view.piece.description }}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap gap-3 mb-6">
+                  @for (dimension of view.dimensions; track dimension.label) {
+                    <span
+                      class="inline-flex items-center px-4 py-2 rounded-lg bg-sky-50 text-sky-700 text-base font-medium"
+                    >
+                      <span class="font-bold mr-2">{{ dimension.label }}:</span>
+                      {{ dimension.value }}
+                    </span>
+                  }
+                </div>
+
+                <div class="flex items-center justify-between text-base mb-6 px-2">
+                  <span class="text-slate-600">
+                    {{ view.piece.unitArea | number: '1.2-2' }} m² x {{ view.piece.quantity }}
+                    {{ 'ORDERS.WEB.UNITS' | translate }}
                   </span>
-                }
-              </div>
+                  <span class="font-bold text-sky-700 text-lg">
+                    = {{ view.lineTotal | number: '1.2-2' }} m²
+                  </span>
+                </div>
 
-              <div class="flex items-center justify-between text-base mb-6 px-2">
-                <span class="text-slate-600">
-                  {{ view.piece.unitArea | number: '1.2-2' }} m² x {{ view.piece.quantity }}
-                  {{ 'ORDERS.WEB.UNITS' | translate }}
-                </span>
-                <span class="font-bold text-sky-700 text-lg">
-                  = {{ view.lineTotal | number: '1.2-2' }} m²
-                </span>
-              </div>
-
-              <button
-                type="button"
-                class="w-full py-4 !rounded-xl border border-sky-100 bg-sky-50 text-sky-700 font-semibold text-base hover:bg-sky-100 transition-colors flex items-center justify-center gap-2"
-              >
-                <i class="fa-solid fa-pen"></i> {{ 'ORDERS.WEB.EDIT_PIECE' | translate }}
-              </button>
-            </article>
+                <button type="button" class="edite-piece-action-btn">
+                  <i class="fa-solid fa-pen"></i> {{ 'ORDERS.WEB.EDIT_PIECE' | translate }}
+                </button>
+              </article>
+            }
+          } @else {
+            <div class="flex flex-col items-center justify-center h-48 text-slate-400">
+              <i class="fa-regular fa-folder-open text-4xl mb-3 text-slate-300"></i>
+              <p class="text-sm font-medium">{{ 'ORDERS.WEB.EMPTY_PIECES' | translate }}</p>
+            </div>
           }
-        } @else {
-          <div class="flex flex-col items-center justify-center h-48 text-slate-400">
-            <i class="fa-regular fa-folder-open text-4xl mb-3 text-slate-300"></i>
-            <p class="text-sm font-medium">{{ 'ORDERS.WEB.EMPTY_PIECES' | translate }}</p>
-          </div>
-        }
+        </div>
       </section>
 
       <aside class="lg:col-span-4">
@@ -144,15 +141,11 @@
                 type="button"
                 [disabled]="isOrdered()"
                 (click)="onMarkAsOrdered()"
-                class="w-full bg-gradient-to-r from-sky-500 to-sky-600 text-white font-bold text-base py-4 !rounded-xl shadow-lg hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                class="mark-as-ordered-btn"
               >
                 {{ 'ORDERS.WEB.MARK_AS_ORDERED' | translate }}
               </button>
-              <button
-                type="button"
-                (click)="requestDeleteOrder()"
-                class="w-full bg-red-50 text-red-600 font-bold text-base py-4 !rounded-xl border border-red-100 hover:bg-red-100 transition-all flex items-center justify-center gap-2"
-              >
+              <button type="button" (click)="requestDeleteOrder()" class="request-delete-btn">
                 <i class="fa-regular fa-trash-can"></i>
                 {{ 'ORDERS.WEB.DELETE_ORDER' | translate }}
               </button>
