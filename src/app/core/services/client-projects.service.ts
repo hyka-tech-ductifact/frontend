@@ -3,11 +3,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import type { Client } from '../models/client.model';
-import type {
-  CreateProjectDto,
-  Project,
-  ProjectStatus,
-} from '../models/project.model';
+import type { CreateProjectDto, Project, ProjectStatus } from '../models/project.model';
 
 /** Shape of a single project as returned by the backend API. */
 interface ProjectApiResponse {
