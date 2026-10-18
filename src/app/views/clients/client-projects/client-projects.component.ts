@@ -1,0 +1,91 @@
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import type { Client } from '../../../core/models/client.model';
+import { DeviceService } from '../../../core/services/device.service';
+import { ClientProjectsMobileComponent } from './components/client-projects-mobile/client-projects-mobile.component';
+import { ClientProjectsWebComponent } from './components/client-projects-web/client-projects-web.component';
+import { ClientProjectsService } from '../../../core/services/client-projects.service';
+
+/**
+ * Smart (container) component for the client projects page.
+ * Resolves the client and its projects for the current route and delegates
+ * presentation to platform-specific sub-components.
+ */
+@Component({
+  selector: 'app-client-projects',
+  imports: [ClientProjectsMobileComponent, ClientProjectsWebComponent],
+  templateUrl: './client-projects.component.html',
+  styleUrl: './client-projects.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ClientProjectsComponent implements OnInit {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+
+  /** Service used to determine whether the app is running on a mobile device. */
+  protected readonly deviceService = inject(DeviceService);
+
+  /** Service that resolves the client and manages its project list. */
+  protected readonly clientProjectsService = inject(ClientProjectsService);
+
+  /** Identifier of the client whose projects are displayed, read from the route. */
+  private readonly clientId = this.route.snapshot.paramMap.get('clientId') ?? '';
+
+  /** Client resolved for the current route. */
+  protected readonly client = signal<Client | null>(null);
+
+  /**
+   * Loads the client and its projects for the current route.
+   * @returns {void}
+   */
+  ngOnInit(): void {
+    this.clientProjectsService.getClientById(this.clientId).subscribe((client) => {
+      this.client.set(client);
+    });
+    void this.clientProjectsService.getClientProjects(this.clientId).subscribe();
+  }
+
+  /**
+   * Navigates back to the client list.
+   * @returns {void}
+   */
+  protected onBack(): void {
+    void this.router.navigate(['/client']);
+  }
+
+  /**
+   * Handles the add-project action emitted by a child component.
+   * Navigates to the new-project form for the current client.
+   * @returns {void}
+   */
+  protected onAddProject(): void {
+    void this.router.navigate(['/client', this.clientId, 'projects', 'new']);
+  }
+
+  /**
+   * Handles the advance-status event emitted by a child component.
+   * @param {string} projectId - Unique identifier of the project to advance.
+   * @returns {void}
+   */
+  protected onAdvanceStatus(projectId: string): void {
+    this.clientProjectsService.advanceProjectStatus(projectId);
+  }
+
+  /**
+   * Navigates to the orders list for a selected project.
+   * @param {string} projectId - Unique identifier of the project whose orders should open.
+   * @returns {void}
+   */
+  protected onViewProjectOrders(projectId: string): void {
+    void this.router.navigate(['/client', this.clientId, 'projects', projectId, 'orders']);
+  }
+
+  /**
+   * Handles the delete-project event emitted by a child component.
+   * @param {string} projectId - Unique identifier of the project to delete.
+   * @returns {void}
+   */
+  protected onDeleteProject(projectId: string): void {
+    this.clientProjectsService.deleteProject(projectId);
+  }
+}

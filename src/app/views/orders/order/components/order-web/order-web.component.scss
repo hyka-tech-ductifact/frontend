@@ -1,0 +1,94 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.glass-panel {
+  // background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.input-focus-ring:focus-within {
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+  border-color: #0ea5e9;
+}
+
+.delete-action-btn {
+  // You can rename this class to fit your component (e.g., for a delete or cancel button)
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: #ffffff;
+  font-weight: 700;
+  background-color: #e11d48;
+  border-radius: 0.75rem !important;
+  box-shadow:
+    0 10px 15px -3px rgba(254, 205, 211, 0.8),
+    0 4px 6px -4px rgba(254, 205, 211, 0.8);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    background-color: #be123c;
+  }
+}
+
+.cancel-delete-action-btn {
+  // Rename this class based on its purpose
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: #334155;
+  font-weight: 700;
+  background-color: #f1f5f9;
+  border-radius: 0.75rem !important;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    background-color: #e2e8f0;
+  }
+}
+
+.submit-modal-btn {
+  flex: 1 1 0%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: #ffffff;
+  font-weight: 600;
+  background-image: linear-gradient(to right, #0ea5e9, #2563eb);
+  border-radius: 0.75rem !important;
+  box-shadow:
+    0 10px 15px -3px rgba(186, 230, 253, 0.5),
+    0 4px 6px -4px rgba(186, 230, 253, 0.5);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover:not(:disabled) {
+    background-image: linear-gradient(to right, #0284c7, #1d4ed8);
+  }
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.close-modal-btn {
+  flex: 1 1 0%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: #334155;
+  font-weight: 600;
+  background-color: #f1f5f9;
+  border-radius: 0.75rem !important;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    background-color: #e2e8f0;
+  }
+}

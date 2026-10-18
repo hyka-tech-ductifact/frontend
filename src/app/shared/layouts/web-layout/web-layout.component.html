@@ -68,7 +68,7 @@
       <nav class="flex-1 py-6 overflow-y-auto">
         <div class="space-y-2 px-4">
           <!-- Dashboard -->
-          <button
+          <!-- <button
             class="w-full px-4 py-3 flex items-center gap-3 hover:bg-sky-50 rounded-xl transition-colors text-left group active:scale-95"
           >
             <div
@@ -95,7 +95,7 @@
                 >{{ 'LAYOUT.SIDEBAR.DASHBOARD' | translate }}</span
               >
             }
-          </button>
+          </button> -->
 
           <!-- Clients (active) -->
           <button
@@ -134,7 +134,7 @@
           </button>
 
           <!-- Edit Profile -->
-          <button
+          <!-- <button
             class="w-full px-4 py-3 flex items-center gap-3 hover:bg-sky-50 rounded-xl transition-colors text-left group active:scale-95"
           >
             <div
@@ -161,7 +161,7 @@
                 >{{ 'LAYOUT.SIDEBAR.EDIT_PROFILE' | translate }}</span
               >
             }
-          </button>
+          </button> -->
 
           <!-- Premium -->
           <button
@@ -198,6 +198,10 @@
 
           <!-- Settings -->
           <button
+            type="button"
+            routerLink="/settings"
+            routerLinkActive="bg-sky-50"
+            [routerLinkActiveOptions]="{ exact: true }"
             class="w-full px-4 py-3 flex items-center gap-3 hover:bg-sky-50 rounded-xl transition-colors text-left group active:scale-95"
           >
             <div
@@ -232,9 +236,7 @@
           </button>
 
           <!-- Support -->
-          <button
-            class="w-full px-4 py-3 flex items-center gap-3 hover:bg-sky-50 rounded-xl transition-colors text-left group active:scale-95"
-          >
+          <!-- <button class="w-full px-4 py-3 flex items-center gap-3 hover:bg-sky-50 rounded-xl transition-colors text-left group active:scale-95">
             <div
               class="w-10 h-10 bg-sky-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-sky-200 transition-colors"
             >
@@ -259,7 +261,7 @@
                 >{{ 'LAYOUT.SIDEBAR.SUPPORT' | translate }}</span
               >
             }
-          </button>
+          </button> -->
         </div>
 
         <!-- Divider -->

@@ -9,6 +9,30 @@ import type {
   UpdateClientDto,
 } from '../models/client.model';
 
+/** Mock client used as a fallback so the UI renders during development when the API is unreachable. */
+const MOCK_CLIENTS: Client[] = [
+  {
+    id: '550e8400-e29b-41d4-a716-446655440000',
+    name: 'Hotel Mediterráneo',
+    phone: '+34 963 123 456',
+    email: 'contact@hotelmediterraneo.es',
+    description: 'Main construction partner',
+    user_id: '550e8400-e29b-41d4-a716-446655440000',
+  },
+];
+
+/**
+ * Ensures the mock demo client is present in a resolved client list, appending
+ * it when the API response doesn't already include it (e.g. a fresh/staging
+ * database with no matching record) so the client-projects demo is reachable.
+ * @param {Client[]} clients - Clients resolved from the API.
+ * @returns {Client[]} Clients guaranteed to include the mock demo client.
+ */
+function ensureMockClientPresent(clients: Client[]): Client[] {
+  const hasMockClient = clients.some((client) => client.id === MOCK_CLIENTS[0].id);
+  return hasMockClient ? clients : [...clients, ...MOCK_CLIENTS];
+}
+
 @Injectable({ providedIn: 'root' })
 export class ClientsService {
   private readonly http = inject(HttpClient);
@@ -38,12 +62,13 @@ export class ClientsService {
       })
       .pipe(
         tap((response) => {
-          this.clients.set(response.data);
-          this.totalClients.set(response.total_items);
+          const clientsWithMock = ensureMockClientPresent(response.data);
+          this.clients.set(clientsWithMock);
+          this.totalClients.set(clientsWithMock.length);
         }),
         catchError((error: unknown) => {
-          this.clients.set([]);
-          this.totalClients.set(0);
+          this.clients.set(MOCK_CLIENTS);
+          this.totalClients.set(MOCK_CLIENTS.length);
           this.error.set(this.extractErrorMessage(error));
           return EMPTY;
         }),

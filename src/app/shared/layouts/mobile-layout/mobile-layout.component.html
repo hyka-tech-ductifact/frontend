@@ -62,7 +62,7 @@
           </ion-menu-toggle>
 
           <!-- Editar Perfil -->
-          <ion-menu-toggle>
+          <!-- <ion-menu-toggle>
             <ion-item button class="menu-item" detail="false">
               <div slot="start" class="menu-icon-wrap bg-sky-100">
                 <ion-icon name="create-outline" class="text-sky-600 text-xl"></ion-icon>
@@ -71,7 +71,7 @@
                 'LAYOUT.SIDEBAR.EDIT_PROFILE' | translate
               }}</ion-label>
             </ion-item>
-          </ion-menu-toggle>
+          </ion-menu-toggle> -->
 
           <!-- Premium -->
           <ion-menu-toggle>
@@ -95,7 +95,13 @@
 
           <!-- Ajustes -->
           <ion-menu-toggle>
-            <ion-item button class="menu-item" detail="false">
+            <ion-item
+              button
+              class="menu-item"
+              detail="false"
+              routerLink="/settings"
+              routerLinkActive="menu-item-active"
+            >
               <div slot="start" class="menu-icon-wrap bg-sky-100">
                 <ion-icon name="settings-outline" class="text-sky-600 text-xl"></ion-icon>
               </div>
@@ -104,14 +110,14 @@
           </ion-menu-toggle>
 
           <!-- Soporte -->
-          <ion-menu-toggle>
+          <!-- <ion-menu-toggle>
             <ion-item button class="menu-item" detail="false">
               <div slot="start" class="menu-icon-wrap bg-sky-100">
                 <ion-icon name="headset-outline" class="text-sky-600 text-xl"></ion-icon>
               </div>
               <ion-label class="menu-label">{{ 'LAYOUT.SIDEBAR.SUPPORT' | translate }}</ion-label>
             </ion-item>
-          </ion-menu-toggle>
+          </ion-menu-toggle> -->
 
           <div class="my-4 mx-6 border-t border-slate-100"></div>
 

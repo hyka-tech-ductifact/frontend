@@ -1,0 +1,416 @@
+<div class="flex flex-col h-full overflow-hidden bg-slate-50">
+  <!-- Header Section -->
+  <header class="gradient-header px-8 py-6 flex-shrink-0">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <button
+          type="button"
+          (click)="onBack()"
+          class="w-10 h-10 flex items-center justify-center !rounded-xl bg-white/20 text-white hover:bg-white/30 transition-colors backdrop-blur-sm border border-white/30"
+        >
+          <i class="fa-solid fa-arrow-left text-lg"></i>
+        </button>
+        <h1 class="text-3xl font-bold text-white tracking-tight">
+          {{ 'ORDERS.TITLE' | translate }}
+        </h1>
+      </div>
+      <button
+        type="button"
+        (click)="openNewOrderModal()"
+        class="client-add-button flex items-center justify-center gap-2.5 bg-white text-[#1d6fa5] hover:bg-sky-50 font-bold px-7 h-12 rounded-2xl shadow-md transition-all active:scale-95 border-none cursor-pointer"
+      >
+        <i class="fa-solid fa-plus text-lg text-sky-600"></i>
+        <span class="text-base leading-none">{{ 'ORDERS.MOBILE.NEW_ORDER' | translate }}</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex flex-col flex-1 min-h-0 overflow-hidden p-4 md:p-8">
+    <!-- Static top section -->
+    <div class="flex-shrink-0">
+      <!-- Project Info and Stats Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        <!-- Project Info Card -->
+        <div class="lg:col-span-2 glass-panel rounded-2xl p-6 text-white shadow-lg gradient-header">
+          <h2 class="text-2xl font-bold mb-2">{{ projectName() }}</h2>
+          @if (projectDescription()) {
+            <p class="text-sky-100 font-light leading-relaxed opacity-90 mb-4">
+              {{ projectDescription() }}
+            </p>
+          }
+          <div class="flex items-center justify-between pt-4 border-t border-white/20">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-ruler text-sky-200 text-xl"></i>
+              <span class="text-sky-100 opacity-80">
+                {{ 'ORDERS.MOBILE.PROJECT.TOTAL_METERS' | translate }}
+              </span>
+            </div>
+            <span class="text-3xl font-bold text-white"
+              >{{ totalArea() | number: '1.1-1' }} m²</span
+            >
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 gap-4">
+          <!-- Pending Card -->
+          <div
+            class="bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl p-6 text-white shadow-float"
+          >
+            <div class="flex items-center gap-3 mb-3 opacity-90">
+              <i class="fa-regular fa-clock text-xl"></i>
+              <span class="font-medium">{{ 'ORDERS.MOBILE.STATS.PENDING' | translate }}</span>
+            </div>
+            <div class="text-4xl font-bold">{{ pendingOrders().length }}</div>
+          </div>
+
+          <!-- Orders Card -->
+          <div
+            class="bg-gradient-to-br from-emerald-400 to-green-500 rounded-2xl p-6 text-white shadow-float"
+          >
+            <div class="flex items-center gap-3 mb-3 opacity-90">
+              <i class="fa-regular fa-circle-check text-xl"></i>
+              <span class="font-medium">{{ 'ORDERS.MOBILE.STATS.ORDERED' | translate }}</span>
+            </div>
+            <div class="text-4xl font-bold">{{ orderedOrders().length }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scrollable orders section -->
+    <div class="flex-1 min-h-0 overflow-y-auto">
+      @if (orders().length > 0) {
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          <!-- Pending Section -->
+          <section>
+            <div
+              class="flex items-center gap-3 mb-6 text-amber-600 font-bold text-lg tracking-wide uppercase"
+            >
+              <i class="fa-solid fa-circle-exclamation text-xl"></i>
+              <h2>{{ 'ORDERS.MOBILE.SECTIONS.PENDING' | translate }}</h2>
+            </div>
+
+            <div class="space-y-6">
+              @for (order of pendingOrders(); track order.id) {
+                <!-- Pending Item Card -->
+                <div
+                  class="bg-white rounded-2xl p-6 shadow-card border border-amber-50 hover:shadow-soft transition-shadow cursor-pointer"
+                  (click)="onSelect(order.id)"
+                >
+                  <div class="flex gap-4 mb-6">
+                    <div
+                      class="w-16 h-16 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0 text-white shadow-md"
+                    >
+                      <i class="fa-solid fa-cubes text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                      <h3 class="font-bold text-slate-800 text-xl leading-tight mb-2">
+                        {{ order.code }}
+                      </h3>
+                      <p class="text-slate-500 mb-4">{{ order.description }}</p>
+                      <div class="flex flex-wrap items-center gap-4">
+                        <div class="flex items-center gap-2 text-slate-600">
+                          <i class="fa-solid fa-ruler text-amber-500"></i>
+                          <span class="font-medium">{{ order.totalArea }} m²</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-600">
+                          <i class="fa-solid fa-dollar-sign text-emerald-500"></i>
+                          <span class="font-medium">
+                            {{ order.totalPrice | currency: 'USD' : 'symbol' : '1.0-0' }}
+                          </span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-600">
+                          <i class="fa-solid fa-box text-sky-500"></i>
+                          <span class="font-medium">
+                            {{
+                              'ORDERS.MOBILE.CARD.AREA_TOTAL' | translate: { area: order.totalArea }
+                            }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex justify-start mb-6">
+                    <span
+                      class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 text-amber-700 text-sm font-semibold border border-amber-200"
+                    >
+                      <i class="fa-solid fa-circle-exclamation"></i>
+                      {{ 'ORDERS.STATUS.PENDING' | translate }}
+                    </span>
+                  </div>
+
+                  <div class="flex gap-4">
+                    <button
+                      type="button"
+                      (click)="$event.stopPropagation(); onMarkOrdered(order.id)"
+                      class="flex-1 bg-gradient-to-r from-emerald-400 to-green-500 hover:from-emerald-500 hover:to-green-600 text-white py-4 !rounded-xl font-semibold flex items-center justify-center gap-2 transition-all shadow-md shadow-emerald-100"
+                    >
+                      <i class="fa-regular fa-circle-check"></i>
+                      {{ 'ORDERS.MOBILE.ACTIONS.MARK_AS_ORDERED' | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      (click)="$event.stopPropagation(); requestDelete(order.id)"
+                      class="btn-actions"
+                    >
+                      <i class="fa-regular fa-trash-can text-xl"></i>
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          </section>
+
+          <!-- Completed Orders Section -->
+          <section>
+            <div
+              class="flex items-center gap-3 mb-6 text-emerald-600 font-bold text-lg tracking-wide uppercase"
+            >
+              <i class="fa-regular fa-circle-check text-xl"></i>
+              <h2>{{ 'ORDERS.MOBILE.SECTIONS.ORDERED' | translate }}</h2>
+            </div>
+
+            <div class="space-y-6">
+              @for (order of orderedOrders(); track order.id) {
+                <!-- Completed Item Card -->
+                <div
+                  class="bg-white rounded-2xl p-6 shadow-card border border-emerald-50 relative hover:shadow-soft transition-shadow cursor-pointer"
+                  (click)="onSelect(order.id)"
+                >
+                  <div
+                    class="absolute left-0 top-8 bottom-8 w-1 bg-gradient-to-b from-emerald-400 to-green-500 rounded-r-full"
+                  ></div>
+                  <div class="flex gap-4 pl-4">
+                    <div
+                      class="w-16 h-16 rounded-xl bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center flex-shrink-0 text-white shadow-md"
+                    >
+                      <i class="fa-solid fa-box-open text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                      <h3 class="font-bold text-slate-800 text-xl leading-tight mb-2">
+                        {{ order.code }}
+                      </h3>
+                      <p class="text-slate-500 mb-4">{{ order.description }}</p>
+                      <div class="flex flex-wrap items-center gap-4 mb-4">
+                        <div class="flex items-center gap-2 text-slate-600">
+                          <i class="fa-solid fa-box text-sky-500"></i>
+                          <span class="font-medium">
+                            {{
+                              'ORDERS.MOBILE.CARD.AREA_TOTAL' | translate: { area: order.totalArea }
+                            }}
+                          </span>
+                        </div>
+                        <div class="flex items-center gap-2 text-emerald-600">
+                          <i class="fa-regular fa-calendar"></i>
+                          <span class="font-medium">{{
+                            order.createdAt | date: 'dd/MM/yyyy'
+                          }}</span>
+                        </div>
+                      </div>
+                      <span
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 text-emerald-700 text-sm font-semibold border border-emerald-200"
+                      >
+                        <i class="fa-solid fa-check"></i>
+                        {{ 'ORDERS.STATUS.ORDERED' | translate }}
+                      </span>
+                    </div>
+                    <div class="flex items-start">
+                      <button
+                        type="button"
+                        (click)="$event.stopPropagation(); requestDelete(order.id)"
+                        class="w-12 h-12 flex items-center justify-center !rounded-full bg-slate-50 text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-colors"
+                      >
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </section>
+        </div>
+      } @else {
+        <div class="flex flex-col items-center justify-center text-center py-16">
+          <div
+            class="w-24 h-24 bg-sky-100 rounded-full flex items-center justify-center mb-6 shadow-sm"
+          >
+            <i class="fa-solid fa-box-open text-4xl text-sky-600"></i>
+          </div>
+          <h3 class="text-slate-800 font-bold text-lg mb-2">
+            {{ 'ORDERS.MOBILE.EMPTY.TITLE' | translate }}
+          </h3>
+          <p class="text-slate-500 text-sm max-w-[240px] leading-relaxed">
+            {{ 'ORDERS.MOBILE.EMPTY.SUBTITLE' | translate }}
+          </p>
+        </div>
+      }
+    </div>
+  </main>
+</div>
+
+<!-- New Order Modal -->
+@if (isNewOrderModalOpen()) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center p-4"
+    style="background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px)"
+    (click)="closeNewOrderModal()"
+  >
+    <div
+      class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- Form Header -->
+      <div class="gradient-header px-8 py-6 text-center">
+        <h2 class="text-2xl font-bold text-white mb-2">{{ 'ORDERS.FORM.TITLE' | translate }}</h2>
+        <p class="text-sky-100 text-sm opacity-90">{{ 'ORDERS.FORM.SUBTITLE' | translate }}</p>
+      </div>
+
+      <!-- Form Content -->
+      <form
+        [formGroup]="orderForm"
+        (ngSubmit)="submitNewOrder()"
+        class="p-8 space-y-6 max-h-[70vh] overflow-y-auto"
+      >
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Order Number Field -->
+          <div class="space-y-3">
+            <label for="order-name" class="block text-sm font-semibold text-slate-700">
+              {{ 'ORDERS.FORM.NAME' | translate }} <span class="text-rose-500">*</span>
+            </label>
+            <div class="relative input-focus-ring rounded-xl transition-all duration-200">
+              <input
+                type="text"
+                id="order-name"
+                formControlName="code"
+                [placeholder]="'ORDERS.FORM.NAME_PLACEHOLDER' | translate"
+                class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:border-sky-400 focus:bg-white block p-4 outline-none transition-all font-medium placeholder-slate-400"
+              />
+            </div>
+          </div>
+
+          <!-- Priority Field -->
+          <div class="space-y-3">
+            <label for="order-priority" class="block text-sm font-semibold text-slate-700">
+              {{ 'ORDERS.FORM.PRIORITY' | translate }}
+            </label>
+            <div class="relative input-focus-ring rounded-xl transition-all duration-200">
+              <select
+                id="order-priority"
+                formControlName="priority"
+                class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:border-sky-400 focus:bg-white block p-4 outline-none transition-all font-medium"
+              >
+                <option value="normal">{{ 'ORDERS.FORM.PRIORITY_NORMAL' | translate }}</option>
+                <option value="alta">{{ 'ORDERS.FORM.PRIORITY_HIGH' | translate }}</option>
+                <option value="urgente">{{ 'ORDERS.FORM.PRIORITY_URGENT' | translate }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description Field -->
+        <div class="space-y-3">
+          <label for="order-desc" class="block text-sm font-semibold text-slate-700">
+            {{ 'ORDERS.FORM.DESCRIPTION' | translate }} <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative input-focus-ring rounded-xl transition-all duration-200">
+            <textarea
+              id="order-desc"
+              rows="4"
+              formControlName="description"
+              [placeholder]="'ORDERS.FORM.DESCRIPTION_PLACEHOLDER' | translate"
+              class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:border-sky-400 focus:bg-white block p-4 outline-none resize-none transition-all font-medium placeholder-slate-400"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Additional Info Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Category Field -->
+          <div class="space-y-3">
+            <label for="order-category" class="block text-sm font-semibold text-slate-700">
+              {{ 'ORDERS.FORM.CATEGORY' | translate }}
+            </label>
+            <div class="relative input-focus-ring rounded-xl transition-all duration-200">
+              <select
+                id="order-category"
+                formControlName="category"
+                class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:border-sky-400 focus:bg-white block p-4 outline-none transition-all font-medium"
+              >
+                <option value="conductos">{{ 'ORDERS.FORM.CATEGORY_DUCTS' | translate }}</option>
+                <option value="materiales">
+                  {{ 'ORDERS.FORM.CATEGORY_MATERIALS' | translate }}
+                </option>
+                <option value="herramientas">{{ 'ORDERS.FORM.CATEGORY_TOOLS' | translate }}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Delivery Date Field -->
+          <div class="space-y-3">
+            <label for="delivery-date" class="block text-sm font-semibold text-slate-700">
+              {{ 'ORDERS.FORM.DELIVERY_DATE' | translate }}
+            </label>
+            <div class="relative input-focus-ring rounded-xl transition-all duration-200">
+              <input
+                type="date"
+                id="delivery-date"
+                formControlName="deliveryDate"
+                class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl focus:border-sky-400 focus:bg-white block p-4 outline-none transition-all font-medium"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-4 pt-4">
+          <button type="button" (click)="closeNewOrderModal()" class="close-modal-btn">
+            <i class="fa-solid fa-xmark text-sm"></i>
+            <span>{{ 'ORDERS.FORM.CANCEL' | translate }}</span>
+          </button>
+          <button type="submit" [disabled]="orderForm.invalid" class="submit-modal-btn">
+            <span>{{ 'ORDERS.FORM.CREATE' | translate }}</span>
+            <i
+              class="fa-solid fa-arrow-right text-sm opacity-70 group-hover:translate-x-1 transition-transform"
+            ></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+<!-- Delete Confirmation Modal -->
+@if (isDeleteModalOpen()) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center"
+    style="background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px)"
+    (click)="cancelDelete()"
+  >
+    <div
+      class="w-full max-w-md bg-white rounded-3xl p-8 shadow-2xl relative"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="w-16 h-16 rounded-full bg-rose-50 flex items-center justify-center mb-6 mx-auto">
+        <i class="fa-solid fa-triangle-exclamation text-rose-500 text-2xl"></i>
+      </div>
+      <h3 class="text-2xl font-bold text-slate-800 text-center mb-3">
+        {{ 'ORDERS.MOBILE.DELETE_MODAL.TITLE' | translate }}
+      </h3>
+      <p class="text-center text-slate-500 mb-8">
+        {{ 'ORDERS.MOBILE.DELETE_MODAL.MESSAGE' | translate }}
+      </p>
+
+      <div class="flex flex-col gap-4">
+        <button type="button" (click)="confirmDelete()" class="delete-action-btn">
+          {{ 'ORDERS.MOBILE.DELETE_MODAL.CONFIRM' | translate }}
+        </button>
+        <button type="button" (click)="cancelDelete()" class="cancel-delete-action-btn">
+          {{ 'ORDERS.MOBILE.DELETE_MODAL.CANCEL' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

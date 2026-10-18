@@ -1,0 +1,19 @@
+@if (deviceService.isMobile()) {
+  <app-new-project-mobile
+    [projectForm]="projectForm"
+    [client]="client()"
+    [isSubmitting]="isSubmitting()"
+    [errorMessage]="errorMessage()"
+    (projectSubmit)="onSubmit()"
+    (cancelAction)="onCancel()"
+  />
+} @else {
+  <app-new-project-web
+    [projectForm]="projectForm"
+    [client]="client()"
+    [isSubmitting]="isSubmitting()"
+    [errorMessage]="errorMessage()"
+    (projectSubmit)="onSubmit()"
+    (cancelAction)="onCancel()"
+  />
+}
