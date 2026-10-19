@@ -1,0 +1,208 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="order-detail-header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button class="custom-rounded-btn" fill="clear" color="light" (click)="onBack()">
+        <i class="fa-solid fa-arrow-left text-xl"></i>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ order()?.code }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="order-detail-mobile-content">
+  <div class="flex flex-col bg-slate-50">
+    <!-- Order summary (status + total material) -->
+    <div class="gradient-header pb-6 px-4 shadow-lg flex-shrink-0">
+      <div class="flex flex-col gap-4">
+        <div>
+          <span
+            [class]="
+              'inline-block text-sm font-bold px-4 py-1.5 rounded-full ' +
+              (isOrdered() ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700')
+            "
+          >
+            {{ (isOrdered() ? 'ORDERS.STATUS.ORDERED' : 'ORDERS.STATUS.PENDING') | translate }}
+          </span>
+        </div>
+
+        <div class="glass-card rounded-2xl p-5 flex items-center gap-4 text-sky-700 shadow-lg">
+          <div
+            class="w-14 h-14 rounded-xl bg-sky-100 flex items-center justify-center flex-shrink-0"
+          >
+            <i class="fa-solid fa-calculator text-2xl text-sky-600"></i>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-slate-600">
+              {{ 'ORDERS.WEB.TOTAL_MATERIAL' | translate }}
+            </p>
+            <p class="text-3xl font-bold text-sky-700">
+              {{ totalMaterial() | number: '1.2-2' }} m²
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4">
+      <div class="grid grid-cols-1 gap-6">
+        <section class="flex flex-col">
+          <div class="flex-shrink-0 flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-900">
+              {{ 'ORDERS.WEB.PIECES_TITLE' | translate }}
+            </h2>
+            <button type="button" class="add-piece-action-btn">
+              <i class="fa-solid fa-plus"></i> {{ 'ORDERS.WEB.ADD_PIECE' | translate }}
+            </button>
+          </div>
+
+          <div class="pb-4">
+            @if (pieceViews().length > 0) {
+              @for (view of pieceViews(); track view.piece.id) {
+                <article
+                  class="bg-white rounded-2xl p-6 shadow-card border border-sky-100 relative mb-6"
+                >
+                  <button
+                    type="button"
+                    (click)="onDeletePiece(view.piece.id)"
+                    class="absolute top-6 right-6 text-red-400 hover:text-red-600 transition-colors p-2"
+                  >
+                    <i class="fa-regular fa-trash-can text-lg"></i>
+                  </button>
+                  <div class="flex items-start gap-6 mb-6">
+                    <div
+                      class="w-20 h-20 rounded-2xl bg-gradient-to-br from-sky-500 to-sky-600 flex items-center justify-center text-white font-bold text-2xl shadow-md flex-shrink-0"
+                    >
+                      {{ view.initials }}
+                    </div>
+                    <div class="pr-12">
+                      <h3 class="font-bold text-gray-900 text-2xl leading-tight mb-2">
+                        {{ view.piece.name }}
+                      </h3>
+                      <p class="text-slate-600 text-base leading-relaxed">
+                        {{ view.piece.description }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap gap-3 mb-6">
+                    @for (dimension of view.dimensions; track dimension.label) {
+                      <span
+                        class="inline-flex items-center px-4 py-2 rounded-lg bg-sky-50 text-sky-700 text-base font-medium"
+                      >
+                        <span class="font-bold mr-2">{{ dimension.label }}:</span>
+                        {{ dimension.value }}
+                      </span>
+                    }
+                  </div>
+
+                  <div class="flex items-center justify-between text-base mb-6 px-2">
+                    <span class="text-slate-600">
+                      {{ view.piece.unitArea | number: '1.2-2' }} m² x {{ view.piece.quantity }}
+                      {{ 'ORDERS.WEB.UNITS' | translate }}
+                    </span>
+                    <span class="font-bold text-sky-700 text-lg">
+                      = {{ view.lineTotal | number: '1.2-2' }} m²
+                    </span>
+                  </div>
+
+                  <button type="button" class="edite-piece-action-btn">
+                    <i class="fa-solid fa-pen"></i> {{ 'ORDERS.WEB.EDIT_PIECE' | translate }}
+                  </button>
+                </article>
+              }
+            } @else {
+              <div class="flex flex-col items-center justify-center h-48 text-slate-400">
+                <i class="fa-regular fa-folder-open text-4xl mb-3 text-slate-300"></i>
+                <p class="text-sm font-medium">{{ 'ORDERS.WEB.EMPTY_PIECES' | translate }}</p>
+              </div>
+            }
+          </div>
+        </section>
+
+        <aside>
+          <div class="space-y-6">
+            <section class="bg-white rounded-2xl p-6 shadow-card border border-sky-100">
+              <h2 class="text-xl font-bold text-gray-900 mb-3">
+                {{ 'ORDERS.WEB.DESCRIPTION_TITLE' | translate }}
+              </h2>
+              <p class="text-slate-600 text-base leading-relaxed">{{ order()?.description }}</p>
+            </section>
+
+            <section class="bg-white rounded-2xl p-6 shadow-card border border-sky-100">
+              <div class="flex justify-between items-center mb-3">
+                <h2 class="text-xl font-bold text-gray-900">
+                  {{ 'ORDERS.WEB.NOTES_TITLE' | translate }}
+                </h2>
+              </div>
+              <p class="text-slate-400 text-base italic">
+                {{ 'ORDERS.WEB.NO_NOTES' | translate }}
+              </p>
+            </section>
+
+            <section class="bg-white rounded-2xl p-6 shadow-card border border-sky-100">
+              <h2 class="text-xl font-bold text-gray-900 mb-4">
+                {{ 'ORDERS.WEB.ACTIONS_TITLE' | translate }}
+              </h2>
+              <div class="space-y-3">
+                <button
+                  type="button"
+                  [disabled]="isOrdered()"
+                  (click)="onMarkAsOrdered()"
+                  class="mark-as-ordered-btn"
+                >
+                  {{ 'ORDERS.WEB.MARK_AS_ORDERED' | translate }}
+                </button>
+                <button type="button" (click)="requestDeleteOrder()" class="request-delete-btn">
+                  <i class="fa-regular fa-trash-can"></i>
+                  {{ 'ORDERS.WEB.DELETE_ORDER' | translate }}
+                </button>
+              </div>
+            </section>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  @if (isDeleteModalOpen()) {
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center"
+      style="background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px)"
+      (click)="cancelDeleteOrder()"
+    >
+      <div
+        class="w-[90%] max-w-[400px] bg-white rounded-2xl p-6 shadow-2xl"
+        (click)="$event.stopPropagation()"
+      >
+        <div
+          class="w-12 h-12 rounded-full bg-rose-50 flex items-center justify-center mb-4 mx-auto"
+        >
+          <i class="fa-solid fa-triangle-exclamation text-rose-500 text-xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-slate-800 text-center mb-2">
+          {{ 'ORDERS.MOBILE.DELETE_MODAL.TITLE' | translate }}
+        </h3>
+        <p class="text-center text-slate-500 text-sm mb-6">
+          {{ 'ORDERS.MOBILE.DELETE_MODAL.MESSAGE' | translate }}
+        </p>
+        <div class="flex gap-3">
+          <button
+            type="button"
+            (click)="cancelDeleteOrder()"
+            class="flex-1 bg-slate-100 text-slate-700 font-bold py-3.5 !rounded-xl hover:bg-slate-200 transition-colors"
+          >
+            {{ 'ORDERS.MOBILE.DELETE_MODAL.CANCEL' | translate }}
+          </button>
+          <button
+            type="button"
+            (click)="confirmDeleteOrder()"
+            class="flex-1 bg-rose-600 hover:bg-rose-700 text-white font-bold py-3.5 !rounded-xl shadow-lg shadow-rose-200 transition-colors"
+          >
+            {{ 'ORDERS.MOBILE.DELETE_MODAL.CONFIRM' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</ion-content>

@@ -9,17 +9,19 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { DeviceService } from '../../../core/services/device.service';
 import { Order, OrderPiece, OrderService } from '../services/order.service';
+import { OrderDetailMobileComponent } from './components/order-detail-mobile/order-detail-mobile.component';
 import { OrderDetailWebComponent } from './components/order-detail-web/order-detail-web.component';
 
 /**
  * Smart (container) component for the detail of a single order.
  * Reads `clientId`/`projectId`/`orderId` from the route, loads the order and its
- * pieces from `OrderService` and delegates presentation to `OrderDetailWebComponent`.
+ * pieces from `OrderService` and delegates presentation to the mobile or web sub-component.
  */
 @Component({
   selector: 'app-order-detail',
-  imports: [OrderDetailWebComponent],
+  imports: [OrderDetailMobileComponent, OrderDetailWebComponent],
   templateUrl: './order-detail.component.html',
   styleUrl: './order-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,6 +30,9 @@ export class OrderDetailComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly orderService = inject(OrderService);
+
+  /** Service used to determine whether the app is running on a mobile device. */
+  protected readonly deviceService = inject(DeviceService);
 
   /** Identifier of the client owning the project, bound from the `:clientId` route segment. */
   public readonly clientId = input<string>();

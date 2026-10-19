@@ -8,7 +8,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { IonContent, ModalController } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import type { NewOrderPayload, Order } from '../../../services/order.service';
 import {
@@ -24,7 +24,7 @@ import {
  */
 @Component({
   selector: 'app-order-mobile',
-  imports: [IonContent, TranslatePipe, CurrencyPipe, DatePipe, DecimalPipe],
+  imports: [IonHeader, IonToolbar, IonContent, TranslatePipe, CurrencyPipe, DatePipe, DecimalPipe],
   templateUrl: './order-mobile.component.html',
   styleUrl: './order-mobile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

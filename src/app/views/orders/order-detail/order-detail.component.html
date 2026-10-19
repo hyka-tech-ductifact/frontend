@@ -1,8 +1,19 @@
-<app-order-detail-web
-  [order]="order()"
-  [pieces]="pieces()"
-  (goBack)="goBack()"
-  (markAsOrdered)="onMarkAsOrdered()"
-  (deleteOrder)="onDeleteOrder()"
-  (deletePiece)="onDeletePiece($event)"
-/>
+@if (deviceService.isMobile()) {
+  <app-order-detail-mobile
+    [order]="order()"
+    [pieces]="pieces()"
+    (goBack)="goBack()"
+    (markAsOrdered)="onMarkAsOrdered()"
+    (deleteOrder)="onDeleteOrder()"
+    (deletePiece)="onDeletePiece($event)"
+  />
+} @else {
+  <app-order-detail-web
+    [order]="order()"
+    [pieces]="pieces()"
+    (goBack)="goBack()"
+    (markAsOrdered)="onMarkAsOrdered()"
+    (deleteOrder)="onDeleteOrder()"
+    (deletePiece)="onDeletePiece($event)"
+  />
+}

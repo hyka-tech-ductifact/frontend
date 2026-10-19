@@ -1,5 +1,6 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }
 
@@ -8,8 +9,14 @@ ion-toolbar {
   overflow: visible;
 }
 
+ion-header {
+  flex-shrink: 0;
+}
+
 .client-projects-content {
   --padding-bottom: 6rem;
+  flex: 1 1 0%;
+  min-height: 0;
 }
 
 .client-projects-header-toolbar {
