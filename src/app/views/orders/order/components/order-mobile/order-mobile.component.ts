@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { IonContent, IonHeader, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
-import type { NewOrderPayload, Order } from '../../../services/order.service';
+import type { NewOrderPayload, Order } from '../../../../../core/services/order.service';
 import {
   NewOrderModalComponent,
   type NewOrderModalResult,

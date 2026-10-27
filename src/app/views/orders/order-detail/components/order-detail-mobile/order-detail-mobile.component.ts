@@ -9,7 +9,7 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
-import type { Order, OrderPiece } from '../../../services/order.service';
+import type { Order, OrderPiece } from '../../../../../core/services/order.service';
 
 /** A single labelled dimension chip of a piece (e.g. `a` / `0.4m`). */
 interface PieceDimension {

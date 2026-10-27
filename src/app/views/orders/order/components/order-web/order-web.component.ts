@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import type { NewOrderPayload, Order } from '../../../services/order.service';
+import type { NewOrderPayload, Order } from '../../../../../core/services/order.service';
 
 /**
  * Desktop/web presentation component for the order list of a project.

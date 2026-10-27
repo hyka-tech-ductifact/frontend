@@ -39,7 +39,24 @@ export class ClientMainComponent implements OnInit {
    * @returns {void}
    */
   onDeleteClient(id: string): void {
-    this.clientsService.deleteClient(id);
+    this.clientsService.deleteClient(id).subscribe({
+      /**
+       *
+       */
+      next: () => {
+        // ✅ HTTP call sent successfully! Update local signal state or refresh the list:
+        this.clientsService.clients.update((clients) =>
+          clients.filter((client) => client.id !== id),
+        );
+      },
+      /**
+       *
+       * @param error
+       */
+      error: (error) => {
+        console.error('Failed:', error);
+      },
+    });
   }
 
   /**

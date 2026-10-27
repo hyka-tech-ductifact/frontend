@@ -10,7 +10,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { DeviceService } from '../../../core/services/device.service';
-import { Order, OrderPiece, OrderService } from '../services/order.service';
+import { Order, OrderPiece, OrderService } from '../../../core/services/order.service';
 import { OrderDetailMobileComponent } from './components/order-detail-mobile/order-detail-mobile.component';
 import { OrderDetailWebComponent } from './components/order-detail-web/order-detail-web.component';
 

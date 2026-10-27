@@ -36,7 +36,6 @@ export class NewClientComponent {
     name: ['', [Validators.required]],
     phone: ['', [Validators.required]],
     email: [''],
-    address: [''],
     description: [''],
   });
 

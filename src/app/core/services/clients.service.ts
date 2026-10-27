@@ -106,11 +106,12 @@ export class ClientsService {
   }
 
   /**
-   * Placeholder for future client deletion flow.
-   * @param {string} id - The client identifier.
+   * Deletes an existing client by their unique identifier.
+   * @param {string} id - The unique identifier of the client to delete.
+   * @returns {Observable<void>} An observable that completes upon successful deletion.
    */
-  deleteClient(id: string): void {
-    void id;
+  public deleteClient(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/clients/${id}`);
   }
 
   /**

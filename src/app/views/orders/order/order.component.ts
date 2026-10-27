@@ -10,9 +10,9 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { DeviceService } from '../../../core/services/device.service';
 import { ClientProjectsService } from '../../../core/services/client-projects.service';
-import { NewOrderPayload, Order, OrderService } from '../services/order.service';
+import { DeviceService } from '../../../core/services/device.service';
+import { NewOrderPayload, Order, OrderService } from '../../../core/services/order.service';
 import { OrderMobileComponent } from './components/order-mobile/order-mobile.component';
 import { OrderWebComponent } from './components/order-web/order-web.component';
 
